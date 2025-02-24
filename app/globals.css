@@ -3,19 +3,42 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #00b8ff;
+  --primary-dark: #0021a7;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes flowBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-flowBorder {
+  animation: flowBorder 2s linear infinite;
 }
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%); /* Move by 1/4 since we have 4 sets */
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+  width: fit-content; /* Ensure container fits content exactly */
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
