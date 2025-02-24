@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion"
 import { Award, Clock, Code2, HeartHandshake, LineChart, Rocket, Shield, Users, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -118,6 +118,34 @@ const teamHighlights = [
   },
 ]
 
+// Add reference blocks data
+const referenceBlocks = [
+  {
+    title: "Enterprise Solutions",
+    description: "Custom software solutions for large-scale businesses",
+    stats: "50+ Enterprise Clients",
+    image: "/images/enterprise.jpg"
+  },
+  {
+    title: "Cloud Infrastructure",
+    description: "Scalable and secure cloud architecture solutions",
+    stats: "99.9% Uptime",
+    image: "/images/cloud.jpg"
+  },
+  {
+    title: "Digital Transformation",
+    description: "End-to-end digital transformation services",
+    stats: "200+ Projects",
+    image: "/images/digital.jpg"
+  },
+  {
+    title: "AI & Machine Learning",
+    description: "Advanced AI solutions for business automation",
+    stats: "30+ AI Models",
+    image: "/images/ai.jpg"
+  }
+]
+
 const WhyChooseUs = () => {
   return (
     <section className="relative py-24 overflow-hidden">
@@ -145,8 +173,74 @@ const WhyChooseUs = () => {
           <Counter value={50} title="Team Members" description="Dedicated professionals" />
         </div>
 
-        {/* Rest of the sections... */}
-        {/* Add the differentiators, process steps, and team highlights sections here */}
+        {/* Key Differentiators */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+          {differentiators.map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <div className="h-full p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div className="inline-flex rounded-lg p-3 bg-gradient-to-br from-[#00b8ff] to-[#0021a7] mb-4">
+                  <item.icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                <p className="text-white/60">{item.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Process Steps */}
+        <div className="mb-24">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl font-bold text-center mb-12"
+          >
+            Our Process
+          </motion.h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {processSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative"
+              >
+                <div className="h-full p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm relative z-10">
+                  <div className="inline-flex rounded-lg p-3 bg-gradient-to-br from-[#00b8ff] to-[#0021a7] mb-4">
+                    <step.icon className="h-6 w-6" />
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">{step.title}</h4>
+                  <p className="text-white/60">{step.description}</p>
+                </div>
+                {index < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-[#00b8ff] to-[#0021a7]" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Awards and Recognition */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5">
+            <Award className="h-5 w-5 text-[#00b8ff]" />
+            <span className="text-sm">Recognized as Top Technology Innovator 2024</span>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Logo from "@/components/ui/logo"
 import NavDropdown from "../ui/nav-dropdown"
-import MultiLevelDropdown from "../ui/multi-level-dropdown"
+import MultiLevelDropdown from "@/components/ui/multi-level-dropdown"
 import { navigationData } from "@/lib/navigation-data"
 
 // Update the type definitions
@@ -49,88 +49,94 @@ export default function MainNavigation() {
         isScrolled ? "bg-black/50 backdrop-blur-lg border-b border-white/10" : "bg-transparent",
       )}
     >
-      <nav className="container mx-auto px-4 h-20">
-        <div className="flex items-center justify-between h-full">
-          {/* Logo and Company Name */}
-          <Link href="/" className="flex items-center gap-2">
-            <Logo />
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
-              Tony Tech Insights
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8" onMouseLeave={() => setActiveDropdown(null)}>
-            <Link
-              href="/"
-              className={cn(
-                "relative py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
-                pathname === "/" && "text-white",
-              )}
-              onMouseEnter={() => setActiveDropdown(null)}
-            >
-              Home
-              {pathname === "/" && (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-[#00b8ff] to-[#0021a7]"
-                />
-              )}
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className="border-b border-white/10 bg-black/50 backdrop-blur-xl"
+      >
+        <div className="container mx-auto px-4">
+          <div className="flex h-20 items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2">
+              <Logo />
+              <span className="text-2xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+                Tony Tech Insights
+              </span>
             </Link>
 
-            <MultiLevelDropdown
-              title="Services"
-              items={navigationData.services}
-              isActive={pathname.startsWith("/services")}
-              isOpen={activeDropdown === "services"}
-              onOpenChange={(open) => setActiveDropdown(open ? "services" : null)}
-            />
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8" onMouseLeave={() => setActiveDropdown(null)}>
+              <Link
+                href="/"
+                className={cn(
+                  "relative py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
+                  pathname === "/" && "text-white",
+                )}
+                onMouseEnter={() => setActiveDropdown(null)}
+              >
+                Home
+                {pathname === "/" && (
+                  <motion.div
+                    layoutId="navbar-indicator"
+                    className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-gradient-to-r from-[#00b8ff] to-[#0021a7]"
+                  />
+                )}
+              </Link>
 
-            <NavDropdown
-              title="Work"
-              items={navigationData.work}
-              isActive={pathname.startsWith("/work")}
-              isOpen={activeDropdown === "work"}
-              onOpenChange={(open) => setActiveDropdown(open ? "work" : null)}
-            />
+              <MultiLevelDropdown
+                title="Services"
+                items={navigationData.services}
+                isActive={pathname.startsWith("/services")}
+                isOpen={activeDropdown === "services"}
+                onOpenChange={(open) => setActiveDropdown(open ? "services" : null)}
+              />
 
-            <NavDropdown
-              title="Resources"
-              items={navigationData.resources}
-              isActive={pathname.startsWith("/resources")}
-              isOpen={activeDropdown === "resources"}
-              onOpenChange={(open) => setActiveDropdown(open ? "resources" : null)}
-            />
+              <NavDropdown
+                title="Work"
+                items={navigationData.work}
+                isActive={pathname.startsWith("/work")}
+                isOpen={activeDropdown === "work"}
+                onOpenChange={(open) => setActiveDropdown(open ? "work" : null)}
+              />
 
-            <NavDropdown
-              title="About"
-              items={navigationData.about}
-              isActive={pathname.startsWith("/about")}
-              isOpen={activeDropdown === "about"}
-              onOpenChange={(open) => setActiveDropdown(open ? "about" : null)}
-            />
+              <NavDropdown
+                title="Resources"
+                items={navigationData.resources}
+                isActive={pathname.startsWith("/resources")}
+                isOpen={activeDropdown === "resources"}
+                onOpenChange={(open) => setActiveDropdown(open ? "resources" : null)}
+              />
 
-            <Link
-              href="/contact"
-              className={cn(
-                "px-4 py-2 text-sm font-medium rounded-lg",
-                "bg-gradient-to-r from-[#00b8ff] to-[#0021a7]",
-                "hover:opacity-90 transition-opacity",
-              )}
-              onMouseEnter={() => setActiveDropdown(null)}
+              <NavDropdown
+                title="About"
+                items={navigationData.about}
+                isActive={pathname.startsWith("/about")}
+                isOpen={activeDropdown === "about"}
+                onOpenChange={(open) => setActiveDropdown(open ? "about" : null)}
+              />
+
+              <Link
+                href="/contact"
+                className={cn(
+                  "px-4 py-2 text-sm font-medium rounded-lg",
+                  "bg-gradient-to-r from-[#00b8ff] to-[#0021a7]",
+                  "hover:opacity-90 transition-opacity",
+                )}
+                onMouseEnter={() => setActiveDropdown(null)}
+              >
+                Get in Touch
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 md:hidden text-white"
+              aria-label="Toggle mobile menu"
             >
-              Get in Touch
-            </Link>
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 md:hidden text-white"
-            aria-label="Toggle mobile menu"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
 
         {/* Mobile Navigation */}
@@ -208,7 +214,7 @@ export default function MainNavigation() {
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </motion.nav>
     </header>
   )
 }

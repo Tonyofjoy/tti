@@ -42,3 +42,22 @@
   animation-play-state: paused;
 }
 
+/* Hide Spline watermark - multiple selectors for better coverage */
+[data-spline-uiblock="true"],
+[data-spline-uiblock],
+.spline-watermark,
+#spline-watermark,
+[data-spline="true"],
+[data-spline-watermark="true"],
+canvas[data-engine="spline"] + div {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Additional catch-all for any Spline-related watermark */
+div[style*="position: fixed"][style*="bottom: 0"][style*="right: 0"] {
+  display: none !important;
+}
+

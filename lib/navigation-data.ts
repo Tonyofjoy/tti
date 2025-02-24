@@ -35,9 +35,9 @@ export const navigationData = {
     {
       name: "Cloud Services",
       subItems: [
-        { name: "Cloud Transformation", path: "/services/cloud/transformation" },
-        { name: "Cloud Operations", path: "/services/cloud/operations" },
-        { name: "Development Operations", path: "/services/cloud/devops" },
+        { name: "Infrastructure", path: "/services/cloud/infrastructure" },
+        { name: "DevOps", path: "/services/cloud/devops" },
+        { name: "Security", path: "/services/cloud/security" },
       ],
     },
   ],

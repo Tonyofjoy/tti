@@ -1,26 +1,26 @@
 import PageTemplate from "@/components/templates/page-template"
 
-export default function WebAppsPage() {
+export default function CloudInfrastructurePage() {
   return (
     <PageTemplate 
-      title="Modern Web Applications"
-      subtitle="Scalable and responsive web solutions"
+      title="Cloud Infrastructure"
+      subtitle="Build and manage scalable cloud environments"
     >
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <h2 className="text-2xl font-bold">Web Technologies</h2>
+          <h2 className="text-2xl font-bold">Infrastructure Services</h2>
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
-              <h3 className="text-xl font-bold mb-2">Frontend Development</h3>
-              <p className="text-white/70">React, Vue, and Next.js applications.</p>
+              <h3 className="text-xl font-bold mb-2">Cloud Migration</h3>
+              <p className="text-white/70">Seamless transition to cloud platforms.</p>
             </div>
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
-              <h3 className="text-xl font-bold mb-2">Backend Development</h3>
-              <p className="text-white/70">Node.js, Python, and Java services.</p>
+              <h3 className="text-xl font-bold mb-2">Infrastructure as Code</h3>
+              <p className="text-white/70">Automated infrastructure deployment.</p>
             </div>
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
-              <h3 className="text-xl font-bold mb-2">Database Solutions</h3>
-              <p className="text-white/70">SQL and NoSQL database integration.</p>
+              <h3 className="text-xl font-bold mb-2">Multi-Cloud Strategy</h3>
+              <p className="text-white/70">Optimize across cloud providers.</p>
             </div>
           </div>
         </div>
@@ -28,20 +28,20 @@ export default function WebAppsPage() {
           <h2 className="text-2xl font-bold">Key Features</h2>
           <div className="space-y-4">
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
-              <h3 className="text-xl font-bold mb-2">Responsive Design</h3>
-              <p className="text-white/70">Mobile-first and adaptive layouts.</p>
+              <h3 className="text-xl font-bold mb-2">Auto-scaling</h3>
+              <p className="text-white/70">Dynamic resource allocation.</p>
             </div>
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
-              <h3 className="text-xl font-bold mb-2">Performance</h3>
-              <p className="text-white/70">Optimized loading and runtime speed.</p>
+              <h3 className="text-xl font-bold mb-2">High Availability</h3>
+              <p className="text-white/70">Redundant and fault-tolerant systems.</p>
             </div>
             <div className="p-6 rounded-lg border border-white/10 bg-white/5">
               <h3 className="text-xl font-bold mb-2">Security</h3>
-              <p className="text-white/70">Industry-standard security practices.</p>
+              <p className="text-white/70">Advanced cloud security measures.</p>
             </div>
           </div>
         </div>
       </div>
     </PageTemplate>
   )
-}
+} 

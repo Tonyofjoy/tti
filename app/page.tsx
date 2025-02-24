@@ -5,6 +5,7 @@ import TechnologyStack from "@/components/sections/technology-stack"
 import WhyChooseUs from "@/components/sections/why-choose-us"
 import ClientsLogoCarousel from "@/components/sections/clients-logo-carousel"
 import LatestInsights from "@/components/sections/latest-insights"
+import SplineTestSection from "@/components/sections/spline-test-section"
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <CaseStudiesSection />
       <TechnologyStack />
       <WhyChooseUs />
+      <SplineTestSection />
       <ClientsLogoCarousel />
       <LatestInsights />
     </main>

@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -44,10 +43,10 @@ export default function MultiLevelDropdown({ title, items, isActive, isOpen, onO
         <div className="absolute top-full left-0 pt-2">
           <div className="w-[480px] grid grid-cols-2 gap-4 rounded-lg bg-black/95 backdrop-blur-sm border border-white/10 p-4">
             {items.map((section, idx) => (
-              <div key={idx}>
-                <h3 className="text-sm font-semibold text-white/40 mb-2">{section.heading}</h3>
+              <div key={idx} className="space-y-2">
+                <h3 className="text-sm font-semibold text-white">{section.name}</h3>
                 <div className="space-y-1">
-                  {section.links?.map((item) => (
+                  {section.subItems?.map((item) => (
                     <Link
                       key={item.path}
                       href={item.path}
