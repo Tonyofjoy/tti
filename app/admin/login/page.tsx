@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Lock, ArrowLeft } from "lucide-react"
+import { Lock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
@@ -56,16 +56,6 @@ export default function AdminLogin() {
     <div className="min-h-screen relative">
       {/* Background with gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black to-[#0021a7]/20" />
-
-      {/* Back Button */}
-      <div className="absolute top-8 left-8">
-        <Link href="/">
-          <Button variant="ghost" size="sm" className="group">
-            <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
-            Back to Home
-          </Button>
-        </Link>
-      </div>
 
       {/* Login Form */}
       <div className="relative pt-32 pb-16 px-4">

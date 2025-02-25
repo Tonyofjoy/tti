@@ -32,10 +32,30 @@ export default function SiteFooter() {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSubmitting(false)
-    setIsSubscribed(true)
+    
+    try {
+      const response = await fetch('/api/admin/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to subscribe')
+      }
+      
+      setIsSubscribed(true)
+      setEmail('')
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error)
+      alert('Failed to subscribe. Please try again later.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
