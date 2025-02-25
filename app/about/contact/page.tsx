@@ -34,7 +34,7 @@ export default function ContactPage() {
         throw new Error(data.error || 'Failed to submit form')
       }
 
-      // Redirect to thank you page instead of showing toast
+      // This is fine - it will redirect to your existing thank you page
       window.location.href = '/about/thank-you'
       
     } catch (error) {
