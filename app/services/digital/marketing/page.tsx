@@ -253,11 +253,7 @@ export default function DigitalMarketingPage() {
                 </div>
                 
                 <div className={`hidden md:block ${index % 2 === 0 ? "md:order-2" : "md:order-1"}`}>
-                  <div className="flex justify-center">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#00b8ff] to-[#0021a7] flex items-center justify-center z-10">
-                      <span className="font-bold">{process.step}</span>
-                    </div>
-                  </div>
+                  {/* Empty div to maintain layout */}
                 </div>
               </motion.div>
             ))}
