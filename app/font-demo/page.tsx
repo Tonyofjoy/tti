@@ -5,9 +5,9 @@ export default function FontDemoPage() {
     <div className="container mx-auto py-12 px-4">
       <h1 className="mb-8">This is an H1 with Deltha Font</h1>
       
-      <h2 className="mb-6">This is an H2 with BETELGUESSE Font</h2>
+      <h2 className="mb-6">This is an H2 with Deltha Font</h2>
       
-      <h3 className="mb-4">This is an H3 with BETELGUESSE Font</h3>
+      <h3 className="mb-4">This is an H3 with Deltha Font</h3>
       
       <p className="mb-8 text-lg">
         This is a paragraph with Raleway font. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -24,15 +24,19 @@ export default function FontDemoPage() {
         </Heading>
         
         <Heading level={2} className="mb-4">
-          Heading Level 2 (BETELGUESSE)
+          Heading Level 2 (Deltha)
         </Heading>
         
         <Heading level={3} className="mb-4">
-          Heading Level 3 (BETELGUESSE)
+          Heading Level 3 (Deltha)
         </Heading>
         
         <Heading level={4} className="mb-4">
-          Heading Level 4 (BETELGUESSE)
+          Heading Level 4 (Deltha)
+        </Heading>
+        
+        <Heading level={2} className="mb-4" useBrandFont={true}>
+          Heading Level 2 with Brand Font (BETELGUESSE)
         </Heading>
       </div>
       
@@ -40,21 +44,21 @@ export default function FontDemoPage() {
         <h2 className="mb-4">Font Samples</h2>
         
         <div className="mb-6">
-          <h3 className="text-sm text-gray-400 mb-2">Deltha Font</h3>
+          <h3 className="text-sm text-gray-400 mb-2">Deltha Font (Secondary - Headings)</h3>
           <p className="font-deltha text-3xl">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
           <p className="font-deltha text-3xl">abcdefghijklmnopqrstuvwxyz</p>
           <p className="font-deltha text-3xl">0123456789</p>
         </div>
         
         <div className="mb-6">
-          <h3 className="text-sm text-gray-400 mb-2">BETELGUESSE Font</h3>
-          <p className="font-betelgeuse text-3xl">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-          <p className="font-betelgeuse text-3xl">abcdefghijklmnopqrstuvwxyz</p>
-          <p className="font-betelgeuse text-3xl">0123456789</p>
+          <h3 className="text-sm text-gray-400 mb-2">BETELGUESSE Font (Primary - Brand)</h3>
+          <p className="brand-text text-3xl">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+          <p className="brand-text text-3xl">abcdefghijklmnopqrstuvwxyz</p>
+          <p className="brand-text text-3xl">0123456789</p>
         </div>
         
         <div>
-          <h3 className="text-sm text-gray-400 mb-2">Raleway Font</h3>
+          <h3 className="text-sm text-gray-400 mb-2">Raleway Font (Body Text)</h3>
           <p className="font-raleway text-3xl">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
           <p className="font-raleway text-3xl">abcdefghijklmnopqrstuvwxyz</p>
           <p className="font-raleway text-3xl">0123456789</p>

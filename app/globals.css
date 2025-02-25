@@ -14,14 +14,14 @@
     @apply font-raleway;
   }
   
-  /* Apply BETELGUESSE font for headlines */
+  /* Apply Deltha font (secondary) for all headlines and titles */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-betelgeuse;
+    @apply font-deltha;
   }
   
-  /* Override to apply Deltha font specifically for h1 */
-  h1 {
-    @apply font-deltha;
+  /* Company name and branding elements will still use BETELGUESSE */
+  .brand-text {
+    @apply font-betelgeuse;
   }
 }
 
