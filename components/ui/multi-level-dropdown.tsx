@@ -1,24 +1,27 @@
 "use client"
 
-import Link from "next/link"
 import { motion } from "framer-motion"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { navigationData } from "@/lib/navigation-data"
 
 interface MultiLevelDropdownProps {
   title: string
   items: Array<{
-    name: string;
-    subItems?: Array<{ name: string; path: string }>;
-    heading?: string;
-    links?: Array<{ name: string; path: string }>;
+    name: string
+    items: Array<{ name: string; path: string }>
   }>
   isActive: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
 }
 
-export default function MultiLevelDropdown({ title, items, isActive, isOpen, onOpenChange }: MultiLevelDropdownProps) {
+export default function MultiLevelDropdown({
+  title,
+  items,
+  isActive,
+  isOpen,
+  onOpenChange,
+}: MultiLevelDropdownProps) {
   return (
     <div
       className="relative"
@@ -27,7 +30,7 @@ export default function MultiLevelDropdown({ title, items, isActive, isOpen, onO
     >
       <button
         className={cn(
-          "relative py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
+          "py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
           isActive && "text-white"
         )}
       >
@@ -45,18 +48,16 @@ export default function MultiLevelDropdown({ title, items, isActive, isOpen, onO
           <div className="w-[480px] grid grid-cols-2 gap-4 rounded-lg bg-black/95 backdrop-blur-sm border border-white/10 p-4">
             {items.map((section, idx) => (
               <div key={idx} className="space-y-2">
-                <h3 className="text-sm font-semibold text-white">{section.name}</h3>
-                <div className="space-y-1">
-                  {section.subItems?.map((item) => (
-                    <Link
-                      key={item.path}
-                      href={item.path}
-                      className="block px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-md transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
+                <h3 className="text-sm font-semibold text-white/40 mb-2">{section.name}</h3>
+                {section.items.map((item) => (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className="block px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
             ))}
           </div>

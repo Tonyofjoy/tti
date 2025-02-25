@@ -8,7 +8,9 @@ import { navigationData } from "@/lib/navigation-data"
 
 interface NavDropdownProps {
   title: string
-  items: Array<{ links: Array<{ name: string; path: string }> }>
+  items: Array<{
+    items: Array<{ name: string; path: string }>
+  }>
   isActive: boolean
   isOpen: boolean
   onOpenChange: (open: boolean) => void
@@ -23,7 +25,7 @@ export default function NavDropdown({ title, items, isActive, isOpen, onOpenChan
     >
       <button
         className={cn(
-          "relative py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
+          "py-2 text-sm font-medium text-white/70 hover:text-white transition-colors",
           isActive && "text-white"
         )}
       >
@@ -38,8 +40,8 @@ export default function NavDropdown({ title, items, isActive, isOpen, onOpenChan
 
       {isOpen && (
         <div className="absolute top-full left-0 pt-2">
-          <div className="w-48 rounded-lg bg-black/95 backdrop-blur-sm border border-white/10 p-2">
-            {items[0].links?.map((item) => (
+          <div className="w-64 p-4 rounded-lg bg-black/95 backdrop-blur-sm border border-white/10">
+            {items[0]?.items.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}

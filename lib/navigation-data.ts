@@ -8,9 +8,14 @@ type NavigationSection = {
   items: NavigationItem[];
 }
 
-// Add type for the entire navigation data structure
 type NavigationData = {
-  [key: string]: NavigationSection[];
+  services: Array<{
+    name: string;
+    items: NavigationItem[];
+  }>;
+  work: NavigationSection[];
+  resources: NavigationSection[];
+  about: NavigationSection[];
 }
 
 export const navigationData: NavigationData = {
