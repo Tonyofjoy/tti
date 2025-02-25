@@ -6,6 +6,7 @@ export const navigationData = {
         { name: "Digital Marketing", path: "/services/digital/marketing" },
         { name: "Graphic Design", path: "/services/digital/design" },
         { name: "Brand Identity", path: "/services/digital/brand" },
+        { name: "Email Automation", path: "/services/digital/email-automation" },
       ],
     },
     {
@@ -69,6 +70,7 @@ export const navigationData = {
         { name: "Mission & Vision", path: "/about/mission" },
         { name: "Our Process", path: "/about/process" },
         { name: "Careers", path: "/about/careers" },
+        { name: "Contact Us", path: "/about/contact" },
       ],
     },
   ],

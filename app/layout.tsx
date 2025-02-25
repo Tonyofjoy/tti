@@ -5,14 +5,22 @@ import "./globals.css"
 import MainNavigation from "@/components/layout/main-navigation"
 import SiteFooter from "@/components/layout/site-footer"
 import { cn } from "@/lib/utils"
-import { ThemeProvider } from "@/components/ui/theme-provider"
 import LoadingScreen from "@/components/layout/loading-screen"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "TTI",
+  title: "Tony Tech Insights",
   description: "Technology Transformation Initiative",
+  icons: {
+    icon: '/images/logotonywhite.png',
+    shortcut: '/images/logotonywhite.png',
+    apple: '/images/logotonywhite.png',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/images/logotonywhite.png',
+    },
+  },
 }
 
 export default function RootLayout({
@@ -22,19 +30,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className={cn("min-h-screen antialiased", inter.className)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          suppressHydrationWarning
-        >
-          <LoadingScreen />
-          <MainNavigation />
-          <main>{children}</main>
-          <SiteFooter />
-        </ThemeProvider>
+      <body className={cn(
+        "min-h-screen antialiased bg-black text-white",
+        inter.className
+      )}>
+        <LoadingScreen />
+        <MainNavigation />
+        <main>{children}</main>
+        <SiteFooter />
       </body>
     </html>
   )

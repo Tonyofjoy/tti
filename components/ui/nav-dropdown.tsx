@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { navigationData } from "@/lib/navigation-data"
 
 interface NavDropdownProps {
   title: string
@@ -38,7 +39,7 @@ export default function NavDropdown({ title, items, isActive, isOpen, onOpenChan
       {isOpen && (
         <div className="absolute top-full left-0 pt-2">
           <div className="w-48 rounded-lg bg-black/95 backdrop-blur-sm border border-white/10 p-2">
-            {items[0].links.map((item) => (
+            {items[0].links?.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}

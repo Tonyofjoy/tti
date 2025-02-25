@@ -207,48 +207,6 @@ const LatestInsights = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Newsletter Signup */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-2xl mx-auto text-center"
-        >
-          <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
-          <p className="text-white/60 mb-6">Subscribe to our newsletter for the latest insights and updates.</p>
-
-          {isSubscribed ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="p-4 rounded-xl border border-[#00b8ff]/30 bg-[#00b8ff]/10"
-            >
-              <p className="text-[#00b8ff]">Thank you for subscribing! Check your email to confirm your subscription.</p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="flex-1"
-              />
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  "Subscribing..."
-                ) : (
-                  <>
-                    Subscribe
-                    <Send className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-            </form>
-          )}
-        </motion.div>
       </div>
     </section>
   )

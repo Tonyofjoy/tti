@@ -21,24 +21,31 @@ export default function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 mx-auto grid min-h-screen grid-cols-1 items-center gap-12 px-4 lg:grid-cols-2">
+      <div className="container relative z-10 mx-auto grid min-h-screen grid-cols-1 items-center gap-12 px-4 pt-20 md:pt-0 lg:grid-cols-2">
         {/* Text Content */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8 }}
+          className="text-center lg:text-left"
+        >
           <h1 className="bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-6xl font-bold text-transparent sm:text-7xl">
             Innovating for
             <br />
             Limitless Growth
           </h1>
-          <p className="mt-6 text-xl text-white/80">
+          <p className="mt-6 text-lg md:text-xl text-white/80 max-w-xl lg:max-w-none mx-auto lg:mx-0">
             We drive business growth through cutting-edge technology solutions
           </p>
 
           {/* CTA Button */}
-          <AnimatedButton />
+          <div className="mt-8 flex justify-center lg:justify-start">
+            <AnimatedButton />
+          </div>
         </motion.div>
 
         {/* 3D Spaceship */}
-        <div className="relative h-[600px]">
+        <div className="relative h-[400px] md:h-[500px] lg:h-[600px] -mt-20 lg:mt-0">
           <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
             <SpaceshipModel />
           </Canvas>

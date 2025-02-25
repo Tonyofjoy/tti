@@ -115,8 +115,9 @@ export default function MainNavigation() {
                 onOpenChange={(open) => setActiveDropdown(open ? "about" : null)}
               />
 
+              {/* Desktop CTA */}
               <Link
-                href="/contact"
+                href="/about/contact"
                 className={cn(
                   "px-4 py-2 text-sm font-medium rounded-lg",
                   "bg-gradient-to-r from-[#00b8ff] to-[#0021a7]",
@@ -124,7 +125,7 @@ export default function MainNavigation() {
                 )}
                 onMouseEnter={() => setActiveDropdown(null)}
               >
-                Get in Touch
+                Get In Touch
               </Link>
             </div>
 
@@ -146,9 +147,9 @@ export default function MainNavigation() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="absolute top-20 left-0 right-0 bg-black/95 backdrop-blur-lg border-b border-white/10 md:hidden"
+              className="fixed top-20 left-0 right-0 bottom-0 bg-black/95 backdrop-blur-lg border-b border-white/10 md:hidden overflow-y-auto"
             >
-              <div className="container mx-auto px-4 py-4">
+              <div className="container mx-auto px-4 py-4 pb-20">
                 <div className="flex flex-col gap-4">
                   <Link
                     href="/"
@@ -162,10 +163,10 @@ export default function MainNavigation() {
                   </Link>
 
                   {/* Mobile Dropdowns */}
-                  {Object.entries(navigationData as NavigationData).map(([key, items]) => (
+                  {Object.entries(navigationData).filter(([key]) => key !== 'cta').map(([key, items]) => (
                     <div key={key} className="border-t border-white/10 pt-4">
                       <h3 className="text-lg font-medium text-white mb-2 capitalize">{key}</h3>
-                      {items.map((section, idx) => (
+                      {(items as NavigationSection[]).map((section, idx) => (
                         <div key={idx} className="ml-4 mb-4">
                           {section.heading && (
                             <h4 className="text-sm font-semibold text-white/40 mb-2">{section.heading}</h4>
@@ -176,7 +177,7 @@ export default function MainNavigation() {
                                 key={item.path}
                                 href={item.path}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-white/70 hover:text-white transition-colors"
+                                className="py-2 text-white/70 hover:text-white transition-colors"
                               >
                                 {item.name}
                               </Link>
@@ -187,28 +188,16 @@ export default function MainNavigation() {
                     </div>
                   ))}
 
-                  <Link
-                    href="/about"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "py-2 text-lg font-medium text-white/70 hover:text-white transition-colors",
-                      pathname === "/about" && "text-white",
-                    )}
-                  >
-                    About
-                  </Link>
-
-                  <Link
-                    href="/contact"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "py-3 text-lg font-medium text-center rounded-lg",
-                      "bg-gradient-to-r from-[#00b8ff] to-[#0021a7]",
-                      "hover:opacity-90 transition-opacity",
-                    )}
-                  >
-                    Get in Touch
-                  </Link>
+                  {/* Mobile CTA */}
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <Link
+                      href="/about/contact"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block w-full py-3 text-center text-white font-medium rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7]"
+                    >
+                      Get In Touch
+                    </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>

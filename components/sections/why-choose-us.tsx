@@ -148,7 +148,7 @@ const referenceBlocks = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-24 overflow-hidden pb-16">
       {/* Background with gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
 
