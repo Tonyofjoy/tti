@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Tony Tech Insights",
+  title: "Tony Tech Insights | Technology Transformation Initiative",
   description: "Technology Transformation Initiative",
   icons: {
     icon: '/images/logotonywhite.png',

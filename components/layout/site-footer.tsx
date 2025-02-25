@@ -55,7 +55,7 @@ export default function SiteFooter() {
                   <div className="transition-transform duration-300 group-hover:scale-110">
                     <Logo />
                   </div>
-                  <span className="ml-2 text-2xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+                  <span className="ml-2 text-2xl font-bold font-betelgeuse bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
                     Tony Tech Insights
                   </span>
                 </Link>
@@ -184,7 +184,7 @@ export default function SiteFooter() {
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-white/60">
-                © {new Date().getFullYear()} Tony Tech Insights. All rights reserved.
+                © {new Date().getFullYear()} <span className="font-betelgeuse">Tony Tech Insights</span>. All rights reserved.
               </p>
 
               <ul className="flex flex-wrap gap-4 sm:gap-6">
