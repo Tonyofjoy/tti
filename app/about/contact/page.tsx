@@ -34,15 +34,9 @@ export default function ContactPage() {
         throw new Error(data.error || 'Failed to submit form')
       }
 
-      // Clear form
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: ""
-      })
-
-      toast.success('Message sent successfully! We\'ll be in touch soon.')
+      // Redirect to thank you page instead of showing toast
+      window.location.href = '/about/thank-you'
+      
     } catch (error) {
       console.error('Error submitting form:', error)
       toast.error(error instanceof Error ? error.message : 'Failed to send message. Please try again.')

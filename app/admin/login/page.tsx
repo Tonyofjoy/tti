@@ -3,98 +3,136 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import { Lock } from "lucide-react"
+import { Lock, ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { toast } from "sonner"
+import Link from "next/link"
 
 export default function AdminLogin() {
   const router = useRouter()
-  const [credentials, setCredentials] = useState({
+  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({
     username: "",
     password: ""
   })
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError("")
 
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       })
 
+      const data = await response.json()
+
       if (!response.ok) {
-        throw new Error('Invalid credentials')
+        throw new Error(data.error || 'Login failed')
       }
 
       router.push('/admin/dashboard')
+      
     } catch (error) {
-      setError('Invalid username or password')
+      console.error('Login error:', error)
+      toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md p-8 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm"
-      >
-        <div className="text-center mb-8">
-          <div className="inline-flex rounded-lg p-3 bg-gradient-to-br from-[#00b8ff] to-[#0021a7] mb-4">
-            <Lock className="h-6 w-6" />
-          </div>
-          <h1 className="text-2xl font-bold">Admin Login</h1>
-        </div>
+    <div className="min-h-screen relative">
+      {/* Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black to-[#0021a7]/20" />
 
-        {error && (
-          <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500">
-            {error}
-          </div>
-        )}
+      {/* Back Button */}
+      <div className="absolute top-8 left-8">
+        <Link href="/">
+          <Button variant="ghost" size="sm" className="group">
+            <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
+            Back to Home
+          </Button>
+        </Link>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={credentials.username}
-              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-[#00b8ff]"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={credentials.password}
-              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-              className="w-full px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-[#00b8ff]"
-              required
-            />
-          </div>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full inline-flex justify-center items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] rounded-lg text-white font-semibold disabled:opacity-50"
-            disabled={isLoading}
+      {/* Login Form */}
+      <div className="relative pt-32 pb-16 px-4">
+        <div className="container mx-auto max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="p-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl"
           >
-            {isLoading ? "Logging in..." : "Login"}
-          </motion.button>
-        </form>
-      </motion.div>
+            <div className="text-center mb-8">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex p-4 rounded-full bg-gradient-to-br from-[#00b8ff]/20 to-[#0021a7]/20 border border-[#00b8ff]/20 mb-4"
+              >
+                <Lock className="w-8 h-8 text-[#00b8ff]" />
+              </motion.div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+                Admin Login
+              </h1>
+              <p className="text-white/60 mt-2">
+                Enter your credentials to access the admin dashboard
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="username" className="block text-sm font-medium mb-2 text-white/80">
+                  Username
+                </label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={formData.username}
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium mb-2 text-white/80">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
+                  required
+                />
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-[#00b8ff] to-[#0021a7] hover:opacity-90 transition-opacity"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                    Logging in...
+                  </>
+                ) : (
+                  'Login'
+                )}
+              </Button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
     </div>
   )
 } 

@@ -1,33 +1,59 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { sign } from 'jsonwebtoken'
+import * as bcrypt from 'bcrypt'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin'
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'password'
+const JWT_SECRET = process.env.JWT_SECRET || ''
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || ''
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || ''
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { username, password } = await req.json()
+    const { username, password } = await request.json()
 
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      const token = sign({ username }, JWT_SECRET, { expiresIn: '1h' })
-      
-      cookies().set('admin_token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 60 * 60 // 1 hour
-      })
-
-      return NextResponse.json({ success: true })
+    // Validate input
+    if (!username || !password) {
+      return NextResponse.json(
+        { error: 'Username and password are required' },
+        { status: 400 }
+      )
     }
 
-    return NextResponse.json(
-      { error: 'Invalid credentials' },
-      { status: 401 }
+    // Check credentials against environment variables
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      return NextResponse.json(
+        { error: 'Invalid credentials' },
+        { status: 401 }
+      )
+    }
+
+    // Generate JWT token
+    const token = sign(
+      { 
+        username,
+        role: 'admin'
+      },
+      JWT_SECRET,
+      { expiresIn: '1h' }
     )
+
+    // Create response with cookie
+    const response = NextResponse.json({
+      message: 'Login successful'
+    })
+
+    // Set the cookie on the response
+    response.cookies.set('admin_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 3600 // 1 hour
+    })
+
+    return response
+
   } catch (error) {
+    console.error('Login error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

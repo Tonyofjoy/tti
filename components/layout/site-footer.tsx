@@ -1,102 +1,190 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { navigationData } from "@/lib/navigation-data"
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react"
+import { Facebook, Github, Instagram, Linkedin, Mail, MapPin, Phone, Send, Twitter } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import Logo from "@/components/ui/logo"
+import { cn } from "@/lib/utils"
+import { footerLinks } from "@/lib/navigation-data"
+
+const socialLinks = [
+  { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
+  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+  { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
+  { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
+  { name: "GitHub", icon: Github, href: "https://github.com" },
+]
 
 export default function SiteFooter() {
+  const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubscribed, setIsSubscribed] = useState(false)
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setIsSubmitting(false)
+    setIsSubscribed(true)
+  }
+
   return (
-    <footer className="border-t border-white/10 bg-black">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* Company Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Tony Tech</h3>
-            <p className="text-white/60 mb-6">
-              Transforming businesses through innovative technology solutions.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-white/60 hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
+    <footer className="relative mt-24 border-t border-white/10">
+      {/* Background with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black to-[#0021a7]/20" />
+
+      <div className="relative">
+        {/* Main Footer Content */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* Company Info */}
+            <div className="space-y-8">
+              {/* Logo and Description */}
+              <div>
+                <Link href="/" className="flex items-center group mb-4">
+                  <div className="transition-transform duration-300 group-hover:scale-110">
+                    <Logo />
+                  </div>
+                  <span className="ml-2 text-2xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+                    Tony Tech Insights
+                  </span>
+                </Link>
+                <p className="text-white/60 max-w-md">
+                  Empowering businesses through innovative technology solutions. We help organizations navigate their
+                  digital transformation journey with expertise and precision.
+                </p>
+              </div>
+
+              {/* Contact Info */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-white/60">
+                  <MapPin className="h-5 w-5 text-[#00b8ff]" />
+                  <span>123 Innovation Drive, Tech City, TC 12345</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/60">
+                  <Phone className="h-5 w-5 text-[#00b8ff]" />
+                  <span>+1 (555) 123-4567</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/60">
+                  <Mail className="h-5 w-5 text-[#00b8ff]" />
+                  <span>contact@tonytechinsights.com</span>
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="flex gap-4">
+                {socialLinks.map((social) => (
+                  <Link
+                    key={social.name}
+                    href={social.href}
+                    className={cn(
+                      "p-2 rounded-lg border border-white/10",
+                      "bg-white/5 hover:bg-white/10",
+                      "transition-colors duration-200",
+                    )}
+                    aria-label={social.name}
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Services */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
-            <ul className="space-y-2">
-              {navigationData.services.map((service) => (
-                <li key={service.name}>
-                  <Link
-                    href={service.subItems[0].path}
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    {service.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {/* Newsletter and Links */}
+            <div className="grid gap-8 sm:grid-cols-2 lg:pl-8">
+              {/* Links */}
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <h3 className="font-semibold mb-4">Services</h3>
+                  <ul className="space-y-3">
+                    {footerLinks.services.map((link) => (
+                      <li key={link.name}>
+                        <Link href={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-4">Company</h3>
+                  <ul className="space-y-3">
+                    {footerLinks.company.map((link) => (
+                      <li key={link.name}>
+                        <Link href={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-          {/* Resources */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              {navigationData.resources[0].links.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.path}
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              {/* Newsletter */}
+              <div className="sm:col-span-2">
+                <h3 className="font-semibold mb-4">Subscribe to Our Newsletter</h3>
+                <p className="text-sm text-white/60 mb-4">
+                  Stay updated with our latest insights and news. No spam, we promise.
+                </p>
 
-          {/* Company */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
-            <ul className="space-y-2">
-              {navigationData.about[0].links.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.path}
-                    className="text-white/60 hover:text-white transition-colors"
+                {isSubscribed ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-4 rounded-xl border border-[#00b8ff]/30 bg-[#00b8ff]/10"
                   >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    <p className="text-[#00b8ff]">
+                      Thank you for subscribing! Check your email to confirm your subscription.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubscribe} className="flex gap-2">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="flex-1"
+                    />
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        "Subscribing..."
+                      ) : (
+                        <>
+                          Subscribe
+                          <Send className="w-4 h-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/60 text-sm">
-              © {new Date().getFullYear()} Tony Tech. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-sm">
-              <Link href="/privacy" className="text-white/60 hover:text-white transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-white/60 hover:text-white transition-colors">
-                Terms of Service
-              </Link>
+        <div className="border-t border-white/10">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-white/60">
+                © {new Date().getFullYear()} Tony Tech Insights. All rights reserved.
+              </p>
+
+              <ul className="flex flex-wrap gap-4 sm:gap-6">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.name}>
+                    <Link href={link.href} className="text-sm text-white/60 hover:text-white transition-colors">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>

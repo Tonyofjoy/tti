@@ -5,10 +5,12 @@ import clientPromise from '@/lib/mongodb'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 
-export async function GET(req: Request) {
+export async function GET(request: Request) {
   try {
-    // Verify admin token
-    const token = cookies().get('admin_token')
+    // Get and verify token
+    const cookieStore = await cookies()
+    const token = cookieStore.get('admin_token')
+
     if (!token) {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -25,7 +27,7 @@ export async function GET(req: Request) {
       )
     }
 
-    // Fix MongoDB connection string
+    // Get contacts from database
     const client = await clientPromise
     const db = client.db("tony_tech")
     

@@ -7,7 +7,10 @@ import SiteFooter from "@/components/layout/site-footer"
 import { cn } from "@/lib/utils"
 import LoadingScreen from "@/components/layout/loading-screen"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Tony Tech Insights",
@@ -33,7 +36,7 @@ export default function RootLayout({
       <body className={cn(
         "min-h-screen antialiased bg-black text-white",
         inter.className
-      )}>
+      )} suppressHydrationWarning>
         <LoadingScreen />
         <MainNavigation />
         <main>{children}</main>
