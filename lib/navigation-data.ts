@@ -21,30 +21,45 @@ type NavigationData = {
 export const navigationData: NavigationData = {
   services: [
     {
-      name: "Digital Services",
+      name: "Digital Experience & Branding",
       items: [
         { name: "Digital Marketing", path: "/services/digital/marketing" },
-        { name: "Graphic Design", path: "/services/digital/design" },
-        { name: "Brand Identity", path: "/services/digital/brand" },
+        { name: "Design & Animation", path: "/services/digital/design" },
+        { name: "Brand Strategy", path: "/services/digital/brand" },
         { name: "Email Automation", path: "/services/digital/email-automation" },
       ],
     },
     {
-      name: "Development",
+      name: "Custom Software Solutions",
       items: [
-        { name: "Enterprise Solutions", path: "/services/application/enterprise-solutions" },
+        { name: "Enterprise Software", path: "/services/application/enterprise-solutions" },
         { name: "Mobile Apps", path: "/services/application/mobile-apps" },
         { name: "Web Applications", path: "/services/application/web-apps" },
         { name: "Rapid Development", path: "/services/application/rapid-development" },
       ],
     },
     {
-      name: "Cloud & Data",
+      name: "Data Intelligence & Analytics",
+      items: [
+        { name: "Data Architecture", path: "/services/data/architecture" },
+        { name: "Data Pipeline", path: "/services/data/pipeline" },
+        { name: "Business Intelligence", path: "/services/data/business-intelligence" },
+      ],
+    },
+    {
+      name: "AI-Powered Solutions",
+      items: [
+        { name: "Conversational AI", path: "/services/ai/conversational" },
+        { name: "AI Solutions", path: "/services/ai/solutions" },
+      ],
+    },
+    {
+      name: "Cloud & Infrastructure",
       items: [
         { name: "Cloud Infrastructure", path: "/services/cloud/infrastructure" },
+        { name: "Cloud Operations", path: "/services/cloud/operations" },
         { name: "DevOps Services", path: "/services/cloud/devops" },
-        { name: "Security Solutions", path: "/services/cloud/security" },
-        { name: "Data Architecture", path: "/services/data/architecture" },
+        { name: "Cloud Security", path: "/services/cloud/security" },
       ],
     },
   ],
@@ -83,11 +98,11 @@ export const navigationData: NavigationData = {
 
 export const footerLinks = {
   services: [
-    { name: "Digital Transformation", href: "/services/digital/transformation" },
-    { name: "Application Development", href: "/services/application/enterprise-solutions" },
-    { name: "Cloud Services", href: "/services/cloud/infrastructure" },
-    { name: "AI & Automation", href: "/services/ai/solutions" },
-    { name: "Data Services", href: "/services/data/architecture" },
+    { name: "Digital Experience & Branding", href: "/services/digital/marketing" },
+    { name: "Custom Software Solutions", href: "/services/application/enterprise-solutions" },
+    { name: "Cloud & Infrastructure", href: "/services/cloud/infrastructure" },
+    { name: "AI-Powered Solutions", href: "/services/ai/solutions" },
+    { name: "Data Intelligence & Analytics", href: "/services/data/architecture" },
   ],
   company: [
     { name: "About Us", href: "/about" },

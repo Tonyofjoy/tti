@@ -56,7 +56,11 @@ LoadingComponent.displayName = 'LoadingComponent';
 const RapidDevExperience = dynamic(
   () => import('./rapid-dev-experience').catch(() => {
     console.error('Failed to load rapid-dev-experience component');
-    return () => <RapidDevFallback />;
+    return () => {
+      const FallbackComponent = () => <RapidDevFallback />;
+      FallbackComponent.displayName = 'FallbackComponentInner';
+      return <FallbackComponent />;
+    };
   }), 
   { 
     ssr: false, 
@@ -383,7 +387,7 @@ function AnimatedCodeEditor() {
   }, [currentLine, selectedFile, isTyping]);
 
   return (
-    <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700 shadow-xl">
+    <div className="bg-slate-900 rounded-lg overflow-hidden border border-slate-700">
       <div className="flex items-center bg-slate-800 px-4 py-2 border-b border-slate-700">
         <div className="flex space-x-2">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
