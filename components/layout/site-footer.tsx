@@ -69,11 +69,11 @@ export default function SiteFooter() {
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-white/60">
                   <MapPin className="h-5 w-5 text-[#00b8ff]" />
-                  <span>123 Innovation Drive, Tech City, TC 12345</span>
+                  <span>31 Dan Toc, Tan Thanh, Tan Phu</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/60">
                   <Phone className="h-5 w-5 text-[#00b8ff]" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+84937124110</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/60">
                   <Mail className="h-5 w-5 text-[#00b8ff]" />

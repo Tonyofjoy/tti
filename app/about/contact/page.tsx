@@ -63,25 +63,25 @@ export default function ContactPage() {
             {
               icon: Mail,
               title: "Email",
-              info: "info@tonytech.com",
+              info: "contact@tonytechinsights.com",
               description: "Send us an email anytime"
             },
             {
               icon: Phone,
               title: "Phone",
-              info: "+1 (555) 123-4567",
-              description: "Mon-Fri from 8am to 5pm"
+              info: "+84937124110",
+              description: "Mon-Fri from 9am to 5:30pm"
             },
             {
               icon: MapPin,
               title: "Location",
-              info: "New York, NY",
-              description: "123 Tech Street, Suite 100"
+              info: "Tan Phu",
+              description: "31 Dan Toc, Tan Thanh, Tan Phu"
             },
             {
               icon: Clock,
               title: "Business Hours",
-              info: "9:00 AM - 6:00 PM",
+              info: "9:00 AM - 5:30 PM",
               description: "Monday to Friday"
             }
           ].map((item, index) => (

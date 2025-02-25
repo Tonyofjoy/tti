@@ -97,9 +97,9 @@ export default function TermsOfServicePage() {
               If you have any questions about these Terms, please contact us at:
             </p>
             <div className="mt-4">
-              <p><strong>Email:</strong> legal@tonytechinsights.com</p>
-              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-              <p><strong>Address:</strong> 123 Innovation Drive, Tech City, TC 12345</p>
+              <p><strong>Email:</strong> contact@tonytechinsights.com</p>
+              <p><strong>Phone:</strong> +84937124110</p>
+              <p><strong>Address:</strong> 31 Dan Toc, Tan Thanh, Tan Phu</p>
             </div>
           </section>
         </div>
