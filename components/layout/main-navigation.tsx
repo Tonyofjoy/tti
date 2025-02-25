@@ -45,7 +45,7 @@ export default function MainNavigation() {
             <div className="transition-transform duration-300 group-hover:scale-110">
               <Logo />
             </div>
-            <span className="ml-2 text-2xl font-bold font-deltha bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+            <span className="ml-2 text-2xl font-bold font-raleway bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
               Tony Tech Insights
             </span>
           </Link>
