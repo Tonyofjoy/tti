@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Facebook, Github, Instagram, Linkedin, Mail, MapPin, Phone, Send, Twitter } from "lucide-react"
@@ -22,6 +22,12 @@ export default function SiteFooter() {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Only render the form after client-side hydration
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -141,7 +147,7 @@ export default function SiteFooter() {
                       Thank you for subscribing! Check your email to confirm your subscription.
                     </p>
                   </motion.div>
-                ) : (
+                ) : isMounted ? (
                   <form onSubmit={handleSubscribe} className="flex gap-2">
                     <Input
                       type="email"
@@ -162,6 +168,11 @@ export default function SiteFooter() {
                       )}
                     </Button>
                   </form>
+                ) : (
+                  <div className="h-10 flex gap-2">
+                    <div className="flex-1 rounded-md border border-white/10 bg-white/5"></div>
+                    <div className="w-32 rounded-md bg-primary"></div>
+                  </div>
                 )}
               </div>
             </div>

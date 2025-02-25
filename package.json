@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test-db": "npx ts-node scripts/test-db.ts",
     "verify-db": "npx ts-node --project tsconfig.scripts.json scripts/verify-db.ts"
   },
   "dependencies": {

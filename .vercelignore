@@ -1,0 +1,26 @@
+# Development files
+.git
+.github
+.vscode
+.idea
+*.log
+
+# Test files
+scripts/test-db.ts
+
+# Environment files (these will be set in Vercel dashboard)
+.env.local
+.env.development
+.env.test
+
+# Build artifacts
+.next
+node_modules
+
+# Documentation
+README.md
+LICENSE
+
+# Other
+.DS_Store
+Thumbs.db 

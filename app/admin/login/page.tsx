@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { Lock, ArrowLeft } from "lucide-react"
@@ -16,6 +16,12 @@ export default function AdminLogin() {
     username: "",
     password: ""
   })
+  const [isMounted, setIsMounted] = useState(false)
+
+  // Only render the form after client-side hydration
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -86,50 +92,64 @@ export default function AdminLogin() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="username" className="block text-sm font-medium mb-2 text-white/80">
-                  Username
-                </label>
-                <Input
-                  id="username"
-                  type="text"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
-                  required
-                />
-              </div>
+            {isMounted ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="username" className="block text-sm font-medium mb-2 text-white/80">
+                    Username
+                  </label>
+                  <Input
+                    id="username"
+                    type="text"
+                    value={formData.username}
+                    onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                    className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium mb-2 text-white/80">
-                  Password
-                </label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
-                  required
-                />
-              </div>
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium mb-2 text-white/80">
+                    Password
+                  </label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="bg-white/5 border-white/10 focus:border-[#00b8ff]/50 focus:ring-[#00b8ff]/50"
+                    required
+                  />
+                </div>
 
-              <Button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-[#00b8ff] to-[#0021a7] hover:opacity-90 transition-opacity"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                    Logging in...
-                  </>
-                ) : (
-                  'Login'
-                )}
-              </Button>
-            </form>
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-[#00b8ff] to-[#0021a7] hover:opacity-90 transition-opacity"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                      Logging in...
+                    </>
+                  ) : (
+                    'Login'
+                  )}
+                </Button>
+              </form>
+            ) : (
+              <div className="space-y-6">
+                <div>
+                  <div className="block text-sm font-medium mb-2 text-white/80">Username</div>
+                  <div className="h-10 rounded-md border border-white/10 bg-white/5"></div>
+                </div>
+                <div>
+                  <div className="block text-sm font-medium mb-2 text-white/80">Password</div>
+                  <div className="h-10 rounded-md border border-white/10 bg-white/5"></div>
+                </div>
+                <div className="h-10 w-full rounded-md bg-gradient-to-r from-[#00b8ff]/50 to-[#0021a7]/50"></div>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
