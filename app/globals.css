@@ -7,6 +7,24 @@
   --primary-dark: #0021a7;
 }
 
+/* Font styling */
+@layer base {
+  /* Apply Raleway as the default font for all text */
+  body {
+    @apply font-raleway;
+  }
+  
+  /* Apply BETELGUESSE font for headlines */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-betelgeuse;
+  }
+  
+  /* Override to apply Deltha font specifically for h1 */
+  h1 {
+    @apply font-deltha;
+  }
+}
+
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }

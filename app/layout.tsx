@@ -6,6 +6,7 @@ import MainNavigation from "@/components/layout/main-navigation"
 import SiteFooter from "@/components/layout/site-footer"
 import { cn } from "@/lib/utils"
 import LoadingScreen from "@/components/layout/loading-screen"
+import { betelgeuse, raleway, deltha } from "@/lib/fonts"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,10 +33,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${betelgeuse.variable} ${raleway.variable} ${deltha.variable}`}>
       <body className={cn(
         "min-h-screen antialiased bg-black text-white",
-        inter.className
+        raleway.className
       )} suppressHydrationWarning>
         <LoadingScreen />
         <MainNavigation />
