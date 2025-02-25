@@ -23,9 +23,9 @@ export function Heading({
     1: `text-4xl md:text-5xl lg:text-6xl ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-6`,
     2: `text-3xl md:text-4xl ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-4`,
     3: `text-2xl md:text-3xl ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-3`,
-    4: `text-xl md:text-2xl ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-2`,
-    5: `text-lg md:text-xl ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-2`,
-    6: `text-base md:text-lg ${useBrandFont ? 'font-betelgeuse' : 'font-deltha'} mb-1`,
+    4: `text-xl md:text-2xl ${useBrandFont ? 'font-betelgeuse' : 'font-raleway font-bold'} mb-2`,
+    5: `text-lg md:text-xl ${useBrandFont ? 'font-betelgeuse' : 'font-raleway font-bold'} mb-2`,
+    6: `text-base md:text-lg ${useBrandFont ? 'font-betelgeuse' : 'font-raleway font-bold'} mb-1`,
   };
   
   return React.createElement(
