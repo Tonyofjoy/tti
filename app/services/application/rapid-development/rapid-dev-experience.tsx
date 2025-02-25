@@ -1,159 +1,119 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { useGLTF, Environment, Float, PresentationControls, ContactShadows } from "@react-three/drei"
-import * as THREE from "three"
-import { Euler } from "three"
+import { useRef, useEffect } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { motion } from 'framer-motion'
+import { MotionConfig } from 'framer-motion'
+import { Mesh } from 'three'
 
-// Simple cube that changes color over time
-function AnimatedCube({ position, size, rotationSpeed = 0.01 }: { position: [number, number, number], size: number, rotationSpeed?: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const [hovered, setHovered] = useState(false)
-  const [color, setColor] = useState(0x4f46e5) // Indigo
-
-  useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * rotationSpeed
-      meshRef.current.rotation.y += delta * rotationSpeed * 1.5
-    }
-  })
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Cycle between different blue/cyan shades
-      setColor(current => {
-        const colors = [0x4f46e5, 0x3b82f6, 0x06b6d4, 0x0891b2]
-        const currentIndex = colors.indexOf(current)
-        return colors[(currentIndex + 1) % colors.length]
-      })
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [])
-
+// Main 3D experience component
+const RapidDevExperience = () => {
   return (
-    <mesh
-      ref={meshRef}
-      position={position}
-      scale={hovered ? size * 1.1 : size}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={`#${color.toString(16)}`} metalness={0.5} roughness={0.2} />
-    </mesh>
-  )
-}
-
-// Floating code blocks to represent rapid development
-function CodeBlock({ position, rotation, scale }: { position: [number, number, number], rotation: [number, number, number], scale: number }) {
-  const meshRef = useRef<THREE.Group>(null)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      // Gentle floating animation
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.5) * 0.1
-    }
-  })
-
-  return (
-    <group ref={meshRef} position={position} rotation={new Euler(...rotation)} scale={scale}>
-      <mesh>
-        <boxGeometry args={[2, 0.2, 1.3]} />
-        <meshStandardMaterial color="#1e293b" metalness={0.3} roughness={0.5} />
-      </mesh>
-      {/* Code lines */}
-      {[...Array(5)].map((_, i) => (
-        <mesh key={i} position={[0, 0.11, 0.4 - i * 0.2]}>
-          <boxGeometry args={[1.5, 0.03, 0.05]} />
-          <meshStandardMaterial color={i % 2 === 0 ? "#60a5fa" : "#a5b4fc"} emissive={i % 2 === 0 ? "#60a5fa" : "#a5b4fc"} emissiveIntensity={0.2} />
-        </mesh>
-      ))}
-    </group>
-  )
-}
-
-// Floating gear to represent development processes
-function DevGear({ position, rotation, scale }: { position: [number, number, number], rotation: [number, number, number], scale: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      // Rotate the gear
-      meshRef.current.rotation.z -= 0.01
-    }
-  })
-
-  return (
-    <mesh ref={meshRef} position={position} rotation={new Euler(...rotation)} scale={scale}>
-      <cylinderGeometry args={[1, 1, 0.2, 16]} />
-      <meshStandardMaterial color="#0284c7" metalness={0.7} roughness={0.2} />
-      {/* Gear teeth */}
-      {[...Array(8)].map((_, i) => {
-        const angle = (i / 8) * Math.PI * 2
-        const x = Math.cos(angle) * 1
-        const z = Math.sin(angle) * 1
-        return (
-          <mesh key={i} position={[x, 0, z]} rotation={[0, -angle, 0]}>
-            <boxGeometry args={[0.3, 0.3, 0.5]} />
-            <meshStandardMaterial color="#0284c7" metalness={0.7} roughness={0.2} />
-          </mesh>
-        )
-      })}
-    </mesh>
-  )
-}
-
-export default function RapidDevExperience() {
-  return (
-    <div className="h-full w-full">
-      <Canvas
-        shadows
-        camera={{ position: [0, 0, 8], fov: 50 }}
-        gl={{ preserveDrawingBuffer: true }}
-      >
-        <color attach="background" args={['#0f172a']} />
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
-        
-        <PresentationControls
-          global
-          rotation={[0.1, 0.1, 0]}
-          polar={[-0.4, 0.2]}
-          azimuth={[-1, 1]}
-          speed={1.5}
-          zoom={1.5}
-          snap
-        >
-          <Float rotationIntensity={0.4} floatIntensity={0.2}>
-            {/* Central element */}
-            <AnimatedCube position={[0, 0, 0]} size={1.5} rotationSpeed={0.005} />
-            
-            {/* Orbiting elements */}
-            <AnimatedCube position={[-2.5, 1, -1]} size={0.8} rotationSpeed={0.02} />
-            <AnimatedCube position={[2.5, -1, -1]} size={0.8} rotationSpeed={0.015} />
-            
-            {/* Code blocks */}
-            <CodeBlock position={[3, 1.5, 0]} rotation={[0.2, -0.5, 0.1]} scale={0.8} />
-            <CodeBlock position={[-3, -1.5, 0]} rotation={[-0.2, 0.5, -0.1]} scale={0.8} />
-            
-            {/* Development gears */}
-            <DevGear position={[0, -2, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.7} />
-            <DevGear position={[0, 2, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.7} />
-          </Float>
-        </PresentationControls>
-        
-        <ContactShadows 
-          position={[0, -2.5, 0]} 
-          opacity={0.4} 
-          scale={10} 
-          blur={2.5} 
-          far={4} 
-        />
-        <Environment preset="city" />
-      </Canvas>
+    <div className="h-[50vh] sm:h-[500px] w-full bg-slate-950 rounded-xl overflow-hidden">
+      <MotionConfig transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}>
+        <Canvas shadows dpr={[1, 2]}>
+          <ambientLight intensity={0.5} />
+          <directionalLight 
+            position={[5, 5, 5]} 
+            intensity={1} 
+            castShadow 
+            shadow-mapSize-width={1024} 
+            shadow-mapSize-height={1024} 
+          />
+          <PrototypeScene />
+          <OrbitControls 
+            enableZoom={false}
+            enablePan={false}
+            rotateSpeed={0.5}
+            autoRotate
+            autoRotateSpeed={0.5}
+          />
+        </Canvas>
+      </MotionConfig>
     </div>
   )
-} 
+}
+
+// Set display name for the component
+RapidDevExperience.displayName = 'RapidDevExperience';
+
+// Component for the prototype scene
+const PrototypeScene = () => {
+  const cubesRef = useRef<(Mesh | null)[]>([]);
+  const { viewport } = useThree();
+  
+  useEffect(() => {
+    // Initialize cube positions
+    cubesRef.current.forEach((cube, i) => {
+      if (!cube) return;
+      
+      const angle = (i / 5) * Math.PI * 2;
+      const radius = 2;
+      cube.position.x = Math.cos(angle) * radius;
+      cube.position.z = Math.sin(angle) * radius;
+      cube.position.y = Math.sin(i * 0.5) * 0.5;
+      
+      // Random rotation
+      cube.rotation.x = Math.random() * Math.PI;
+      cube.rotation.y = Math.random() * Math.PI;
+      cube.rotation.z = Math.random() * Math.PI;
+    });
+  }, []);
+  
+  useFrame((_, delta) => {
+    // Animate cubes
+    cubesRef.current.forEach((cube, i) => {
+      if (!cube) return;
+      
+      cube.rotation.x += 0.01 * (i % 2 ? 1 : -1);
+      cube.rotation.y += 0.01 * (i % 3 ? 1 : -1);
+      
+      // Gentle floating motion
+      cube.position.y += Math.sin(Date.now() * 0.001 + i) * 0.001;
+    });
+  });
+  
+  return (
+    <>
+      <PerspectiveCamera makeDefault position={[0, 2, 5]} />
+      
+      {/* Central structure representing a development prototype */}
+      <mesh
+        position={[0, 0, 0]}
+        scale={1}
+        rotation={[0, 0, 0]}
+      >
+        <sphereGeometry args={[0.8, 16, 16]} />
+        <meshStandardMaterial 
+          color="#4F46E5" 
+          emissive="#4F46E5"
+          emissiveIntensity={0.2}
+          roughness={0.3}
+          metalness={0.8}
+        />
+      </mesh>
+      
+      {/* Orbital cubes representing features or components */}
+      {[...Array(5)].map((_, i) => (
+        <mesh
+          key={i}
+          ref={(el: Mesh | null) => { cubesRef.current[i] = el }}
+          position={[0, 0, 0]}
+        >
+          <boxGeometry args={[0.4, 0.4, 0.4]} />
+          <meshStandardMaterial 
+            color={["#38BDF8", "#818CF8", "#C084FC", "#60A5FA", "#34D399"][i]} 
+            roughness={0.5}
+            metalness={0.6}
+          />
+        </mesh>
+      ))}
+    </>
+  );
+};
+
+// Set display name
+PrototypeScene.displayName = 'PrototypeScene';
+
+export default RapidDevExperience; 

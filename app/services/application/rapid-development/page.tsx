@@ -31,17 +31,39 @@ import {
   Users
 } from "lucide-react"
 
-// Dynamically import 3D components to avoid SSR issues
-const RapidDevExperience = dynamic(() => import('./rapid-dev-experience').catch(() => () => (
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+// Create a named fallback component
+const RapidDevFallback = () => (
   <div className="flex items-center justify-center h-full flex-col">
     <Rocket className="h-16 w-16 text-indigo-400" />
     <p className="text-indigo-300 mt-4">Interactive Rapid Development Demo</p>
   </div>
-)), { ssr: false, loading: () => (
+);
+RapidDevFallback.displayName = 'RapidDevFallback';
+
+// Create a named loading component
+const LoadingComponent = () => (
   <div className="flex items-center justify-center h-full">
     <div className="h-32 w-32 rounded-full border-t-2 border-indigo-500 animate-spin"></div>
   </div>
-)});
+);
+LoadingComponent.displayName = 'LoadingComponent';
+
+// Dynamically import 3D components to avoid SSR issues
+const RapidDevExperience = dynamic(
+  () => import('./rapid-dev-experience').catch(() => {
+    console.error('Failed to load rapid-dev-experience component');
+    return () => <RapidDevFallback />;
+  }), 
+  { 
+    ssr: false, 
+    loading: () => <LoadingComponent />
+  }
+);
+RapidDevExperience.displayName = 'DynamicRapidDevExperience';
 
 // Define particle type
 interface Particle {
@@ -94,6 +116,7 @@ function ParticleFlow() {
     </div>
   );
 }
+ParticleFlow.displayName = 'ParticleFlow';
 
 // Rapid development methodologies
 const rapidMethodologies = [
@@ -537,6 +560,29 @@ function Workflow({ className, ...props }: LucideProps) {
     </svg>
   )
 }
+
+// Define CodeBlock component with display name
+const CodeBlock = ({ language, filename, code, active }: {
+  language: string;
+  filename: string;
+  code: string;
+  active: boolean;
+}) => {
+  return (
+    <div className={`bg-slate-950 rounded-lg border border-slate-800 overflow-hidden transition-all duration-500 ${active ? 'shadow-lg shadow-indigo-500/20' : 'opacity-50'}`}>
+      <div className="px-4 py-2 bg-slate-900 text-slate-400 text-xs font-mono flex justify-between items-center border-b border-slate-800">
+        <span>{filename}</span>
+        <span className="text-indigo-400">{language}</span>
+      </div>
+      <pre className="p-4 text-xs md:text-sm text-slate-300 font-mono overflow-auto max-h-[300px]">
+        <code>{code}</code>
+      </pre>
+    </div>
+  );
+};
+
+// Set display name
+CodeBlock.displayName = 'CodeBlock';
 
 export default function RapidDevelopmentPage() {
   const ref = useRef<HTMLDivElement>(null);
