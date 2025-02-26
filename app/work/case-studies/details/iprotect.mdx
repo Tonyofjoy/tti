@@ -1,0 +1,345 @@
+---
+title: 'Iprotect - Advanced Security Solutions'
+description: 'A comprehensive security platform connecting clients with security experts'
+date: '2023-11-15'
+tags: ['Security', 'Mobile App', 'Protection Services']
+image: '/images/case-studies/iprotect-banner.jpg'
+---
+
+# Iprotect: Advanced Security Solutions Platform
+
+## Project Overview
+
+Iprotect is a comprehensive security platform designed to connect clients seeking protection services with qualified security experts. The platform offers various security services including personal protection, property protection, and event security through an intuitive mobile application.
+
+## Tech Stack
+
+### Backend Architecture
+- **Framework**: NestJS (Node.js TypeScript framework)
+- **Database**: PostgreSQL with TypeORM and Kysely
+- **Authentication**: JWT, Passport
+- **Real-time Communication**: Socket.io
+- **Messaging/Queue**: BullMQ
+- **Caching**: Redis
+- **Storage**: AWS S3, Google Cloud Storage
+- **Email**: Mailtrap
+- **Internationalization**: nestjs-i18n
+
+### Mobile Application
+- **Framework**: Flutter (SDK ≥3.4.0)
+- **State Management**: flutter_bloc (BLoC pattern)
+- **Routing**: auto_route
+- **HTTP Client**: dio with retrofit
+- **Dependency Injection**: get_it with injectable
+- **Localization**: easy_localization
+- **Maps Integration**: Google Maps Flutter
+
+### Content Management System
+- **Framework**: Next.js 15
+- **UI Library**: Chakra UI
+- **State Management**: Zustand
+- **Data Fetching**: React Query (Tanstack Query)
+- **Forms**: React Hook Form with Zod validation
+- **Maps**: Leaflet (react-leaflet)
+- **Styling**: Tailwind CSS with Emotion
+
+## User Flow Chart
+
+### 1. App Startup and Authentication Flow
+
+```
+App Launch
+    ↓
+Splash Screen
+    ↓
+First Launch? → Yes → Onboarding Screens
+    ↓ No          ↓
+Already Logged In? → Yes → Home Screen (based on user role)
+    ↓ No              ↓
+Login Screen
+    ↓
+[User Login Options]
+    ↓
+    ├── Login with Credentials → Success → Home Screen
+    ↓                          ↓ Failure → Error Message
+    └── Forgot Password → Verification Method Selection
+                            ↓
+                        Input Email/Phone
+                            ↓
+                        Verification Code
+                            ↓
+                        Set New Password
+                            ↓
+                        Login Screen
+```
+
+### 2. Registration Flow
+
+```
+Login Screen
+    ↓
+Register Button
+    ↓
+Select Role
+    ↓
+    ├── Client Registration
+    │       ↓
+    │   Input Personal Information
+    │       ↓
+    │   Verification Method Selection
+    │       ↓
+    │   Verification (OTP)
+    │       ↓
+    │   Registration Success
+    │       ↓
+    │   Home Screen
+    │
+    └── Partner Registration (Security Expert)
+            ↓
+        View 1: Basic Information
+            ↓
+        View 2: Professional Information
+            ↓
+        View 3: Additional Details
+            ↓
+        Verification
+            ↓
+        Registration Processing
+            ↓
+        Registration Success/Processing
+            ↓
+        Home Screen (or Login Screen if approval needed)
+```
+
+### 3. Client User Main Navigation Flow
+
+```
+Home Screen (Bottom Navigation)
+    ↓
+    ├── Home Tab
+    │   ↓
+    │   └── Service Options
+    │       ↓
+    │       ├── Personal Protection
+    │       │   ↓
+    │       │   ├── Book Now → Personal Protection Booking
+    │       │   │               ↓
+    │       │   │           Select Location → Map/Search
+    │       │   │               ↓
+    │       │   │           Set Date/Time
+    │       │   │               ↓
+    │       │   │           Threat Assessment Form
+    │       │   │               ↓
+    │       │   │           Booking Summary
+    │       │   │               ↓
+    │       │   │           Payment
+    │       │   │               ↓
+    │       │   │           Booking Result
+    │       │   │
+    │       │   └── Long-term → Long Term Booking
+    │       │                     ↓
+    │       │                   [Similar flow to Book Now]
+    │       │                     ↓
+    │       │                   Booking Long Term Result
+    │       │
+    │       ├── Property Protection
+    │       │   ↓
+    │       │   Property Protection Booking
+    │       │   ↓
+    │       │   [Similar flow to Personal Protection]
+    │       │
+    │       └── Event Security
+    │           ↓
+    │           Event Security Booking
+    │           ↓
+    │           [Similar flow to Personal Protection]
+    │
+    ├── My Bookings Tab
+    │   ↓
+    │   ├── Upcoming Bookings
+    │   │   ↓
+    │   │   Booking Details
+    │   │   ↓
+    │   │   Ongoing Service (during active booking)
+    │   │       ↓
+    │   │       Chat with Expert
+    │   │
+    │   ├── Past Bookings
+    │   │   ↓
+    │   │   Booking Details
+    │   │   ↓
+    │   │   Leave Review
+    │   │
+    │   └── Canceled Bookings
+    │
+    ├── Notifications Tab
+    │   ↓
+    │   Notification List
+    │   ↓
+    │   Notification Details
+    │
+    ├── SOS Button (appears on screen)
+    │   ↓
+    │   SOS Activation
+    │   ↓
+    │   Emergency Contacts Notification
+    │   ↓
+    │   Help Request Sent
+    │
+    └── Account Tab
+        ↓
+        ├── Profile Settings
+        │   ↓
+        │   Edit Profile
+        │
+        ├── Language Settings
+        │
+        ├── Payment Methods
+        │   ↓
+        │   ├── Add Payment Card
+        │   └── Edit Payment Card
+        │
+        ├── Vouchers
+        │
+        ├── Emergency Contacts
+        │
+        └── Logout
+```
+
+### 4. Partner (Expert) User Flow
+
+```
+Expert Home Screen
+    ↓
+    ├── Home Tab
+    │   ↓
+    │   ├── Available Jobs
+    │   │   ↓
+    │   │   Job Details
+    │   │   ↓
+    │   │   Accept/Decline Job
+    │   │
+    │   └── Upcoming Assignments
+    │       ↓
+    │       Assignment Details
+    │
+    ├── Bookings Tab
+    │   ↓
+    │   ├── Current Bookings
+    │   │   ↓
+    │   │   Booking Details
+    │   │   ↓
+    │   │   Expert Ongoing Service
+    │   │   ↓
+    │   │   Mark Job Done
+    │   │
+    │   └── Past Bookings
+    │       ↓
+    │       Booking Details
+    │
+    ├── Chat Tab
+    │   ↓
+    │   Chat List
+    │   ↓
+    │   Chat Room
+    │
+    └── Account Tab
+        ↓
+        ├── Expert Profile
+        │   ↓
+        │   Edit Profile
+        │
+        ├── Withdraw Income
+        │   ↓
+        │   Select Payment Method
+        │   ↓
+        │   Withdrawal Confirmation
+        │
+        ├── Currency Settings
+        │
+        └── Logout
+```
+
+### 5. Payment Flow
+
+```
+Booking Summary
+    ↓
+    ├── Review Booking Details
+    ↓
+    ├── Apply Voucher (Optional)
+    ↓
+    ├── Select Payment Method
+    │   ↓
+    │   ├── Saved Payment Methods
+    │   └── Add New Payment Method
+    ↓
+    ├── Process Payment
+    ↓
+    └── Booking Confirmation
+```
+
+### 6. Ongoing Service Flow
+
+```
+Active Booking
+    ↓
+    ├── Track Expert Location
+    ↓
+    ├── Chat with Expert/Client
+    ↓
+    ├── Emergency Options
+    ↓
+    └── Service Completion
+        ↓
+        ├── Expert: Mark as Complete
+        └── Client: Rate & Review
+```
+
+## Project Architecture
+
+### System Architecture
+The Iprotect platform consists of three main components:
+
+1. **Backend API Server (NestJS)**
+   - Handles business logic, authentication, and data persistence
+   - Provides RESTful APIs and WebSocket connections
+   - Manages integrations with third-party services
+
+2. **Mobile Application (Flutter)**
+   - Client-facing interface for users seeking protection services
+   - Expert interface for security professionals providing services
+   - Real-time location tracking and communication
+
+3. **Content Management System (NextJS)**
+   - Administrative dashboard for platform management
+   - Analytics and reporting tools
+   - User and service management
+
+### Key Features
+
+- **Multi-language Support**: English, Vietnamese, Filipino, Chinese, Korean
+- **Role-based Access Control**: Different interfaces for clients and security experts
+- **Real-time Location Tracking**: Monitor security personnel during active assignments
+- **Emergency SOS System**: Quick access to help in critical situations
+- **Secure Payment Processing**: Multiple payment method support
+- **Booking Management**: Complete lifecycle from booking to completion
+- **Rating and Review System**: Quality assurance through user feedback
+- **Chat System**: Direct communication between clients and security experts
+
+## Development Practices
+
+- **Linting and Formatting**: ESLint, Prettier
+- **Git Workflow**: Husky for git hooks, commitlint
+- **CI/CD**: GitLab CI
+- **Documentation**: Swagger for API, README files
+- **Testing**: Jest for backend testing
+- **Environment Configuration**: Dotenv for environment variables
+- **Containerization**: Docker and Docker Compose for backend
+- **Process Management**: PM2 for the CMS
+
+## Conclusion
+
+Iprotect represents a comprehensive security solution that bridges the gap between clients seeking protection services and qualified security experts. The platform's intuitive user flows, robust architecture, and feature-rich mobile application provide a seamless experience for all stakeholders while maintaining high security standards.
+
+The modular architecture ensures scalability and maintainability, while the use of modern technologies across the stack enables rapid development and deployment of new features. The multi-language support and responsive design make the platform accessible to a global audience. 
