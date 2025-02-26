@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import PageTemplate from "@/components/templates/page-template"
@@ -189,7 +189,8 @@ const coreValues = [
   }
 ]
 
-export default function AboutPage() {
+// Create a client component that uses useSearchParams
+function AboutPageClient() {
   const searchParams = useSearchParams()
   const sectionParam = searchParams.get("section")
   
@@ -593,5 +594,16 @@ export default function AboutPage() {
         </motion.div>
       )}
     </PageTemplate>
+  )
+}
+
+// Main component with Suspense boundary
+export default function AboutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen pt-32 pb-20 flex items-center justify-center">
+      <div className="animate-pulse text-xl text-white/70">Loading...</div>
+    </div>}>
+      <AboutPageClient />
+    </Suspense>
   )
 } 
