@@ -5,8 +5,10 @@ import { CheckCircle, ArrowLeft, Mail } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export default function ThankYouPage() {
+// Client component that uses useSearchParams
+function ThankYouPageClient() {
   const searchParams = useSearchParams()
   const type = searchParams.get('type') || 'contact' // Default to contact if no type specified
   
@@ -80,5 +82,16 @@ export default function ThankYouPage() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+// Main component with Suspense boundary
+export default function ThankYouPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen pt-32 pb-20 flex items-center justify-center">
+      <div className="animate-pulse text-xl text-white/70">Loading...</div>
+    </div>}>
+      <ThankYouPageClient />
+    </Suspense>
   )
 } 
