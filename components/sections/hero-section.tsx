@@ -40,7 +40,7 @@ export default function HeroSection() {
 
           {/* CTA Button */}
           <div className="mt-8 flex justify-center lg:justify-start">
-            <AnimatedButton />
+            <AnimatedButton href="#contact">Get In Touch</AnimatedButton>
           </div>
         </motion.div>
 

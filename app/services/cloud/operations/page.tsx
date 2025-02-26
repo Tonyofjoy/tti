@@ -287,26 +287,8 @@ export default function OperationsPage() {
                   </span> Services
                 </h1>
                 <p className="text-xl text-white/70 mb-8 max-w-2xl">
-                  Maximize your cloud investment with our comprehensive operations services. We optimize 
-                  performance, ensure reliability, and drive cost efficiency for your mission-critical 
-                  cloud infrastructure.
+                  Optimize your cloud environment with our expert cloud operations services. We ensure your infrastructure runs efficiently, securely, and cost-effectively with 24/7 monitoring and management.
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <motion.button
-                    className="bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white px-8 py-3 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-[#00b8ff]/20 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Operational Assessment <ArrowRight className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-medium border border-white/10 hover:border-white/30 transition-all flex items-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    View Service Details
-                  </motion.button>
-                </div>
               </motion.div>
             </div>
             

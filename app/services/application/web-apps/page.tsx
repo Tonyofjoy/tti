@@ -474,27 +474,9 @@ export default function WebAppsPage() {
                     Next-Generation
                   </span> Web Applications
                 </h1>
-                <p className="text-xl text-gray-300 mb-8 max-w-2xl">
-                  We build immersive, high-performance web applications using cutting-edge technologies 
-                  and modern development practices to deliver exceptional user experiences.
+                <p className="text-lg text-white/80 mb-6">
+                  Build responsive, user-friendly web applications that deliver exceptional experiences. Our full-stack development approach ensures your applications are robust, secure, and scalable.
                 </p>
-                
-                <div className="flex flex-wrap gap-4">
-                  <motion.button
-                    className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-8 py-3 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-indigo-500/20 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Start Your Project <ArrowRight className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="bg-white/5 text-white px-8 py-3 rounded-lg font-medium border border-white/10 hover:border-white/30 transition-all flex items-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    View Case Studies
-                  </motion.button>
-                </div>
               </motion.div>
             </div>
             
@@ -792,14 +774,6 @@ export default function WebAppsPage() {
                   </div>
                 </div>
               </div>
-              
-              <motion.button
-                className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-8 py-4 rounded-lg font-medium flex items-center gap-2 whitespace-nowrap self-start md:self-center hover:shadow-lg hover:shadow-indigo-500/20 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Start Your Project <ArrowRight className="h-4 w-4" />
-              </motion.button>
             </div>
           </motion.div>
         </div>

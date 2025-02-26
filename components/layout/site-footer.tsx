@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input"
 import Logo from "@/components/ui/logo"
 import { cn } from "@/lib/utils"
 import { footerLinks } from "@/lib/navigation-data"
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const socialLinks = [
   { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
@@ -19,6 +21,7 @@ const socialLinks = [
 ]
 
 export default function SiteFooter() {
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubscribed, setIsSubscribed] = useState(false)
@@ -50,9 +53,17 @@ export default function SiteFooter() {
       
       setIsSubscribed(true)
       setEmail('')
+      
+      // Show success message
+      toast.success('Successfully subscribed to newsletter! Redirecting...')
+      
+      // Redirect to thank you page after a short delay
+      setTimeout(() => {
+        router.push('/about/thank-you?type=newsletter')
+      }, 1500)
     } catch (error) {
       console.error('Error subscribing to newsletter:', error)
-      alert('Failed to subscribe. Please try again later.')
+      toast.error('Failed to subscribe. Please try again later.')
     } finally {
       setIsSubmitting(false)
     }

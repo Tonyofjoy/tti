@@ -84,3 +84,24 @@ div[style*="position: fixed"][style*="bottom: 0"][style*="right: 0"] {
   display: none !important;
 }
 
+/* 3D Card Effect Styles */
+.perspective {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.my-rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.group:hover .group-hover\:my-rotate-y-180 {
+  transform: rotateY(180deg);
+}
+

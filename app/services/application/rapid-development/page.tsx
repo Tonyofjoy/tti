@@ -31,10 +31,6 @@ import {
   Users
 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-
 // Create a named fallback component
 const RapidDevFallback = () => (
   <div className="flex items-center justify-center h-full flex-col">
@@ -619,44 +615,9 @@ export default function RapidDevelopmentPage() {
               >
                 Rapid Development Solutions
               </motion.h1>
-              <motion.p 
-                className="text-xl text-slate-300 mb-8 max-w-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                Accelerate your project delivery with our cutting-edge rapid development methodologies and tools. Build better applications in a fraction of the time.
-              </motion.p>
-              
-              <motion.div 
-                className="flex flex-wrap gap-4 mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <a href="#contact" className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-all flex items-center gap-2">
-                  Start Your Project <ArrowRight className="h-4 w-4" />
-                </a>
-                <a href="#methodologies" className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-all">
-                  Explore Methodologies
-                </a>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-center gap-4 text-slate-400"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <span className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-cyan-400" />
-                  Up to 5x faster delivery
-                </span>
-                <span className="flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-cyan-400" />
-                  60%+ cost reduction
-                </span>
-              </motion.div>
+              <p className="text-lg text-white/80 mb-6">
+                Accelerate your application development with our agile methodologies and modern toolsets. We help you bring your ideas to market faster without compromising on quality.
+              </p>
             </div>
             
             <div className="md:w-1/2 h-[400px] relative">

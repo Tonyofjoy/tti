@@ -239,24 +239,9 @@ export default function MobileAppsPage() {
               >
                 Transform Your Digital Presence with Custom Mobile Apps
               </motion.h2>
-              <motion.p 
-                className="text-white/70 text-lg"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                Create seamless, engaging mobile experiences that connect with your customers anywhere, anytime. Our cross-platform approach ensures maximum reach with optimal efficiency.
-              </motion.p>
-              <motion.button
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] rounded-lg text-white font-medium w-fit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                Start Your Mobile Journey <ArrowRight className="h-4 w-4" />
-              </motion.button>
+              <p className="text-lg text-white/80 mb-6">
+                Create powerful, intuitive mobile experiences that engage users and drive business growth. Our end-to-end mobile app development services combine stunning design with robust functionality.
+              </p>
             </div>
             
             {/* Mobile Device Animation */}

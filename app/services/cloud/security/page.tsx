@@ -205,26 +205,8 @@ export default function SecurityPage() {
                   </span> Services
                 </h1>
                 <p className="text-xl text-white/70 mb-8 max-w-2xl">
-                  Protect your digital assets with enterprise-grade security. Our comprehensive 
-                  approach ensures your data, applications, and infrastructure remain secure in today's 
-                  threat landscape.
+                  Protect your cloud infrastructure and data with our comprehensive security services. Our experts implement robust safeguards, conduct regular assessments, and provide continuous monitoring to defend against evolving threats.
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <motion.button
-                    className="bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white px-8 py-3 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-[#00b8ff]/20 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Security Assessment <ArrowRight className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-medium border border-white/10 hover:border-white/30 transition-all flex items-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    View Security Solutions
-                  </motion.button>
-                </div>
               </motion.div>
             </div>
             

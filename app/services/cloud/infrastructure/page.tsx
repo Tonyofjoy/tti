@@ -203,25 +203,8 @@ export default function CloudInfrastructurePage() {
                   </span> Services
                 </h1>
                 <p className="text-xl text-white/70 mb-8 max-w-2xl">
-                  Build, deploy, and scale your applications with our enterprise-grade cloud infrastructure solutions. 
-                  Optimize performance, enhance security, and reduce operational costs.
+                  Build robust, scalable, and secure cloud infrastructure solutions tailored to your business needs. Our expert team designs and implements highly available, cost-effective cloud environments.
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <motion.button
-                    className="bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white px-8 py-3 rounded-lg font-medium flex items-center gap-2 hover:shadow-lg hover:shadow-[#00b8ff]/20 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Explore Solutions <ArrowRight className="h-4 w-4" />
-                  </motion.button>
-                  <motion.button
-                    className="bg-white/10 backdrop-blur-sm text-white px-8 py-3 rounded-lg font-medium border border-white/10 hover:border-white/30 transition-all flex items-center gap-2"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    View Case Studies
-                  </motion.button>
-                </div>
               </motion.div>
             </div>
             

@@ -225,18 +225,8 @@ export default function ConversationalAIPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                Create natural, engaging conversational experiences powered by state-of-the-art AI models that understand context, sentiment, and intent.
+                Create intelligent, responsive, and human-like conversational experiences that transform how you engage with customers and streamline operations.
               </motion.p>
-              <motion.button
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] rounded-lg text-white font-medium w-fit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-              >
-                Schedule a Demo <ArrowRight className="h-4 w-4" />
-              </motion.button>
             </div>
             
             {/* AI Brain Visualization */}

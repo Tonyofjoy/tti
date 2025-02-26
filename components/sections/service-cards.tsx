@@ -3,9 +3,10 @@
 import type React from "react"
 
 import { motion } from "framer-motion"
-import { ArrowRight, Code2, Database, Brain, Cloud, Rocket } from "lucide-react"
+import { ArrowRight, Code2, Database, Brain, Cloud, Rocket, PenTool } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 interface ServiceCard {
   icon: React.ReactNode
@@ -20,19 +21,18 @@ interface ServiceCard {
 
 const services: ServiceCard[] = [
   {
-    icon: <Rocket className="size-6" />,
-    title: "Digital Transformation",
-    description:
-      "Navigate your organization's complete digital evolution with our comprehensive strategy and execution",
+    icon: <PenTool className="size-6" />,
+    title: "Marketing and Branding",
+    description: "Create compelling brand experiences and marketing strategies that connect with your target audience",
     featured: true,
     gradient: {
       from: "#00b8ff",
-      to: "#0021a7",
+      to: "#ff6b6b",
     },
   },
   {
     icon: <Code2 className="size-6" />,
-    title: "Application Development & Modernization",
+    title: "Application Development",
     description:
       "Transform legacy systems and build cutting-edge applications using modern architectures and technologies",
     gradient: {
@@ -161,14 +161,32 @@ const ServiceCards = () => {
                     whileHover={{ x: 5 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    <span className="font-medium">Learn More</span>
-                    <ArrowRight className="size-4" />
+                    <Link href="/services" className="inline-flex items-center gap-2">
+                      <span className="font-medium">Learn More</span>
+                      <ArrowRight className="size-4" />
+                    </Link>
                   </motion.div>
                 </div>
               </Card>
             </motion.div>
           ))}
         </div>
+
+        {/* View All Services Button */}
+        <motion.div
+          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white font-medium hover:opacity-90 transition-opacity"
+          >
+            View All Services <ArrowRight className="size-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   )

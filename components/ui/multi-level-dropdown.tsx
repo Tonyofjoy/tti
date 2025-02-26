@@ -60,6 +60,14 @@ export default function MultiLevelDropdown({
                 ))}
               </div>
             ))}
+            <div className="col-span-2 mt-2 pt-2 border-t border-white/10">
+              <Link
+                href="/services"
+                className="flex items-center justify-center gap-1 px-3 py-2 text-sm font-medium text-[#00b8ff] hover:bg-[#00b8ff]/10 rounded-md transition-colors"
+              >
+                View All Services
+              </Link>
+            </div>
           </div>
         </div>
       )}

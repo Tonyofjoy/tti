@@ -21,7 +21,7 @@ type NavigationData = {
 export const navigationData: NavigationData = {
   services: [
     {
-      name: "Digital Experience & Branding",
+      name: "Marketing and Branding",
       items: [
         { name: "Digital Marketing", path: "/services/digital/marketing" },
         { name: "Design & Animation", path: "/services/digital/design" },
@@ -30,7 +30,7 @@ export const navigationData: NavigationData = {
       ],
     },
     {
-      name: "Custom Software Solutions",
+      name: "Application Development",
       items: [
         { name: "Enterprise Software", path: "/services/application/enterprise-solutions" },
         { name: "Mobile Apps", path: "/services/application/mobile-apps" },
@@ -39,7 +39,7 @@ export const navigationData: NavigationData = {
       ],
     },
     {
-      name: "Data Intelligence & Analytics",
+      name: "Data Services",
       items: [
         { name: "Data Architecture", path: "/services/data/architecture" },
         { name: "Data Pipeline", path: "/services/data/pipeline" },
@@ -47,14 +47,14 @@ export const navigationData: NavigationData = {
       ],
     },
     {
-      name: "AI-Powered Solutions",
+      name: "AI & Automation",
       items: [
         { name: "Conversational AI", path: "/services/ai/conversational" },
         { name: "AI Solutions", path: "/services/ai/solutions" },
       ],
     },
     {
-      name: "Cloud & Infrastructure",
+      name: "Cloud Services",
       items: [
         { name: "Cloud Infrastructure", path: "/services/cloud/infrastructure" },
         { name: "Cloud Operations", path: "/services/cloud/operations" },
@@ -68,8 +68,6 @@ export const navigationData: NavigationData = {
       items: [
         { name: "Case Studies", path: "/work/case-studies" },
         { name: "Industries", path: "/work/industries" },
-        { name: "Portfolio", path: "/work/portfolio" },
-        { name: "Testimonials", path: "/work/testimonials" },
       ],
     },
   ],
@@ -77,18 +75,13 @@ export const navigationData: NavigationData = {
     {
       items: [
         { name: "Blog", path: "/resources/blog" },
-        { name: "Whitepapers", path: "/resources/whitepapers" },
-        { name: "Tech Guides", path: "/resources/guides" },
-        { name: "Webinars", path: "/resources/webinars" },
       ],
     },
   ],
   about: [
     {
       items: [
-        { name: "Our Team", path: "/about/team" },
-        { name: "Mission & Vision", path: "/about/mission" },
-        { name: "Our Process", path: "/about/process" },
+        { name: "About Us", path: "/about" },
         { name: "Careers", path: "/about/careers" },
         { name: "Contact Us", path: "/about/contact" },
       ],
@@ -98,23 +91,21 @@ export const navigationData: NavigationData = {
 
 export const footerLinks = {
   services: [
-    { name: "Digital Experience & Branding", href: "/services/digital/marketing" },
-    { name: "Custom Software Solutions", href: "/services/application/enterprise-solutions" },
-    { name: "Cloud & Infrastructure", href: "/services/cloud/infrastructure" },
-    { name: "AI-Powered Solutions", href: "/services/ai/solutions" },
-    { name: "Data Intelligence & Analytics", href: "/services/data/architecture" },
+    { name: "All Services", href: "/services" },
+    { name: "Marketing and Branding", href: "/services/digital/marketing" },
+    { name: "Application Development", href: "/services/application/enterprise-solutions" },
+    { name: "Cloud Services", href: "/services/cloud/infrastructure" },
+    { name: "AI & Automation", href: "/services/ai/solutions" },
+    { name: "Data Services", href: "/services/data/architecture" },
   ],
   company: [
     { name: "About Us", href: "/about" },
-    { name: "Our Team", href: "/about/team" },
     { name: "Contact", href: "/about/contact" },
     { name: "Admin Login", href: "/admin/login" },
   ],
   resources: [
     { name: "Blog", href: "/resources/blog" },
     { name: "Case Studies", href: "/work/case-studies" },
-    { name: "Whitepapers", href: "/resources/whitepapers" },
-    { name: "Webinars", href: "/resources/webinars" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/legal/privacy" },

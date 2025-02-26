@@ -1,187 +1,173 @@
 "use client"
 
-import { useCallback } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import useEmblaCarousel from "embla-carousel-react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowRight, Globe, LineChart, Shield, Smartphone, Cloud, Monitor } from "lucide-react"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-// Case studies data
-const caseStudies = [
+// Case studies data using real case studies from the case studies page
+const featuredCaseStudies = [
   {
-    id: 1,
-    title: "Digital Transformation Journey",
-    client: "Global Retail Corp",
-    category: "Digital Transformation",
-    description: "Complete digital overhaul leading to significant business growth",
-    metrics: [
-      { label: "Revenue Growth", value: "150%" },
-      { label: "Customer Engagement", value: "3x" },
-      { label: "Operational Efficiency", value: "60%" },
-    ],
-    image: "/images/header.png",
-    link: "/work/case-studies/global-retail-corp",
-  },
-  {
-    id: 2,
-    title: "AI-Powered Customer Service",
-    client: "TechServe Solutions",
-    category: "AI & Automation",
-    description: "Implementing conversational AI to revolutionize customer support",
-    metrics: [
-      { label: "Response Time", value: "-85%" },
-      { label: "Customer Satisfaction", value: "95%" },
-      { label: "Cost Reduction", value: "40%" },
-    ],
-    image: "/images/header.png",
-    link: "/work/case-studies/techserve-solutions",
-  },
-  {
-    id: 3,
-    title: "Cloud Migration & Modernization",
-    client: "FinanceHub",
-    category: "Cloud Services",
-    description: "Seamless transition to cloud infrastructure with zero downtime",
-    metrics: [
-      { label: "System Uptime", value: "99.99%" },
-      { label: "Processing Speed", value: "5x" },
-      { label: "Cost Savings", value: "45%" },
-    ],
-    image: "/images/header.png",
-    link: "/work/case-studies/financehub",
-  },
-  {
-    id: 4,
-    title: "Enterprise Mobile Platform",
-    client: "HealthTech Plus",
+    id: "enterprise-digital-transformation",
+    title: "Enterprise Digital Transformation",
+    client: "Fortune 500 Company",
     category: "Application Development",
-    description: "Cross-platform mobile solution for healthcare providers",
-    metrics: [
-      { label: "User Adoption", value: "92%" },
-      { label: "Time Saved", value: "65%" },
-      { label: "ROI", value: "280%" },
-    ],
+    description: "Complete digital overhaul for Fortune 500 company with cloud migration and process automation, resulting in significant business growth.",
     image: "/images/header.png",
-    link: "/work/case-studies/healthtech-plus",
+    link: "/work/case-studies/enterprise-digital-transformation",
+    testimonial: "Tony Tech Insight delivered a transformation that redefined our business operations and competitive advantage.",
+    results: "200% Efficiency Increase and $2M Cost Savings",
+    color: "from-blue-500 to-indigo-600",
+    icon: Globe,
+    technologies: ["Cloud Architecture", "Process Automation", "Microservices", "DevOps"],
   },
-]
+  {
+    id: "ai-powered-analytics",
+    title: "AI-Powered Analytics Platform",
+    client: "Data-Driven Enterprise",
+    category: "AI & Automation",
+    description: "Machine learning solution for data-driven decisions with real-time insights and predictive modeling to revolutionize business intelligence.",
+    image: "/images/header.png",
+    link: "/work/case-studies/ai-powered-analytics",
+    testimonial: "The AI solution delivered insights and predictive capabilities beyond what we thought possible.",
+    results: "85% Faster Analysis with 3x ROI",
+    color: "from-purple-500 to-pink-600",
+    icon: LineChart,
+    technologies: ["Machine Learning", "Big Data", "Real-time Analytics", "TensorFlow"],
+  },
+  {
+    id: "mobile-commerce-platform",
+    title: "Mobile Commerce Platform",
+    client: "Retail Innovation Co",
+    category: "Marketing and Branding",
+    description: "Cross-platform retail solution with AR features and seamless payment processing to enhance the customer shopping experience.",
+    image: "/images/header.png",
+    link: "/work/case-studies/mobile-commerce-platform",
+    testimonial: "Our customers love the new shopping experience, and our engagement metrics prove it.",
+    results: "150% User Engagement and 2M+ Downloads",
+    color: "from-orange-500 to-red-600",
+    icon: Smartphone,
+    technologies: ["React Native", "AR Kit", "Payment Integration", "GraphQL"],
+  },
+];
 
-// Image component with error handling
-const CaseStudyImage = ({ src, alt }: { src: string; alt: string }) => {
+// Function to render tech badge - matching the case studies page
+function TechBadge({ name }: { name: string }) {
   return (
-    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover transition-transform duration-500 group-hover:scale-110"
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        priority
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-    </div>
-  )
+    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/10 text-white/80 border border-white/10 hover:bg-white/20 transition-colors">
+      {name}
+    </span>
+  );
 }
 
 const CaseStudiesSection = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    loop: false,
-    skipSnaps: false,
-    dragFree: true,
-  })
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
-
+  const [activeStudy, setActiveStudy] = useState(0);
+  
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
-
+    <section className="relative py-24 overflow-hidden bg-black">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(to_bottom,transparent,black)]" />
+      
       <div className="relative container mx-auto px-4">
         {/* Section Header */}
-        <div className="flex items-end justify-between mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl"
-          >
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
-              Featured Work
-            </h2>
-            <p className="text-lg text-white/70">
-              Discover how we've helped businesses transform and grow through innovative technology solutions.
-            </p>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+            Featured Work
+          </h2>
+          <p className="text-lg text-white/70">
+            Discover how we've transformed businesses through innovative technology solutions. 
+            These success stories showcase our expertise and approach to driving growth and efficiency.
+          </p>
+        </motion.div>
 
-          {/* Carousel Navigation */}
-          <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={scrollPrev}
-              className={cn(
-                "p-3 rounded-lg border border-white/10",
-                "hover:bg-white/5 transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20",
-              )}
+        {/* Featured Case Studies - Matching case studies page layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {featuredCaseStudies.map((study, index) => (
+            <motion.div
+              key={study.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group flex flex-col overflow-hidden rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
+              onMouseEnter={() => setActiveStudy(index)}
             >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={scrollNext}
-              className={cn(
-                "p-3 rounded-lg border border-white/10",
-                "hover:bg-white/5 transition-colors",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20",
-              )}
-            >
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Carousel */}
-        <div className="overflow-hidden -mx-4" ref={emblaRef}>
-          <div className="flex">
-            {caseStudies.map((study, index) => (
-              <motion.div
-                key={study.id}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex-[0_0_100%] min-w-0 px-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
-              >
-                <Link href={study.link} className="block group">
-                  <CaseStudyImage src={study.image} alt={study.title} />
-
-                  <h3 className="text-xl font-semibold mb-2 mt-4 group-hover:text-[#00b8ff] transition-colors">
-                    {study.title}
-                  </h3>
-                  <p className="text-white/70 mb-2">{study.client}</p>
-                  <p className="text-white/50 text-sm mb-6">{study.description}</p>
-
-                  {/* Metrics Grid */}
-                  <div className="grid grid-cols-3 gap-4">
-                    {study.metrics.map((metric, idx) => (
-                      <div
-                        key={idx}
-                        className="text-center p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10"
-                      >
-                        <div className="text-xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
-                          {metric.value}
-                        </div>
-                        <div className="text-sm text-white/50 mt-1">{metric.label}</div>
-                      </div>
-                    ))}
+              {/* Icon header area with gradient background - like case studies page */}
+              <div className="relative h-48 overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-r ${study.color} opacity-80`}></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <study.icon className="h-16 w-16 text-white/90" />
+                </div>
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/30 text-white">
+                    {study.category}
+                  </span>
+                </div>
+                
+                {/* Client name - subtle overlay at bottom of image area */}
+                <div className="absolute bottom-4 right-4 z-10">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/30 text-white/90">
+                    {study.client}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex-1 p-6">
+                {/* Title with hover effect */}
+                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-[#00b8ff] transition-colors">
+                  {study.title}
+                </h3>
+                
+                {/* Description */}
+                <p className="text-white/70 mb-4 line-clamp-2">
+                  {study.description}
+                </p>
+                
+                {/* Result metrics - enhanced from original */}
+                <div className="bg-white/5 rounded-lg p-3 mb-4 border border-white/10">
+                  <div className="text-sm text-white/90 font-medium">
+                    <span className="text-[#00b8ff]">Results:</span> {study.results}
                   </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+                </div>
+                
+                {/* Testimonial - added element not in original */}
+                <div className="mb-4 pl-3 border-l-2 border-[#00b8ff]/70 italic text-white/70 text-sm line-clamp-2">
+                  "{study.testimonial}"
+                </div>
+                
+                {/* Technology badges - matching case studies page */}
+                <div className="mb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {study.technologies.slice(0, 3).map((tech) => (
+                      <TechBadge key={tech} name={tech} />
+                    ))}
+                    {study.technologies.length > 3 && (
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-white/5 text-white/60">
+                        +{study.technologies.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                {/* CTA Link - matching case studies page */}
+                <div className="mt-auto">
+                  <Link 
+                    href={study.link}
+                    className="inline-flex items-center text-[#00b8ff] hover:text-white transition-colors"
+                  >
+                    View Case Study <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
         {/* View All Link */}
@@ -190,19 +176,18 @@ const CaseStudiesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mt-12 text-center"
+          className="text-center"
         >
           <Link
             href="/work/case-studies"
-            className={cn(
-              "inline-flex items-center gap-2 px-6 py-3 rounded-lg",
-              "bg-white/5 hover:bg-white/10 border border-white/10",
-              "transition-colors",
-            )}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-[#0021a7] to-[#00b8ff] text-white font-medium hover:opacity-90 transition-opacity"
           >
-            View All Case Studies
-            <ArrowRight className="w-4 h-4" />
+            View All Case Studies <ArrowRight className="w-5 h-5" />
           </Link>
+          
+          <p className="mt-4 text-white/60 text-sm max-w-lg mx-auto">
+            Explore our comprehensive portfolio of successful projects across various industries and technologies.
+          </p>
         </motion.div>
       </div>
     </section>

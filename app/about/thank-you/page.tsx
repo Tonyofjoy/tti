@@ -1,11 +1,17 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CheckCircle, ArrowLeft } from "lucide-react"
+import { CheckCircle, ArrowLeft, Mail } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useSearchParams } from "next/navigation"
 
 export default function ThankYouPage() {
+  const searchParams = useSearchParams()
+  const type = searchParams.get('type') || 'contact' // Default to contact if no type specified
+  
+  const isNewsletter = type === 'newsletter'
+  
   return (
     <div className="min-h-screen pt-32 pb-16 px-4">
       <div className="container mx-auto max-w-3xl">
@@ -21,16 +27,24 @@ export default function ThankYouPage() {
             transition={{ delay: 0.2 }}
             className="inline-flex p-4 rounded-full bg-gradient-to-br from-[#00b8ff]/20 to-[#0021a7]/20 border border-[#00b8ff]/20"
           >
-            <CheckCircle className="w-12 h-12 text-[#00b8ff]" />
+            {isNewsletter ? (
+              <Mail className="w-12 h-12 text-[#00b8ff]" />
+            ) : (
+              <CheckCircle className="w-12 h-12 text-[#00b8ff]" />
+            )}
           </motion.div>
 
           {/* Thank You Message */}
           <div className="space-y-4">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
-              Thank You for Contacting Us!
+              {isNewsletter 
+                ? "Thanks for Subscribing!" 
+                : "Thank You for Contacting Us!"}
             </h1>
             <p className="text-white/60 text-lg">
-              We've received your message and will get back to you shortly.
+              {isNewsletter
+                ? "You've been added to our newsletter. We'll keep you updated with the latest insights."
+                : "We've received your message and will get back to you shortly."}
             </p>
           </div>
 
@@ -38,9 +52,19 @@ export default function ThankYouPage() {
           <div className="mt-8 p-6 rounded-xl bg-white/5 border border-white/10 text-left">
             <h2 className="text-xl font-semibold mb-4">What to Expect</h2>
             <ul className="space-y-3 text-white/60">
-              <li>• Our team will review your message within 24 hours</li>
-              <li>• You'll receive a confirmation email shortly</li>
-              <li>• A team member will contact you to discuss your needs</li>
+              {isNewsletter ? (
+                <>
+                  <li>• You'll receive a confirmation email shortly</li>
+                  <li>• Our newsletter is sent out bi-weekly</li>
+                  <li>• You can unsubscribe at any time using the link in the emails</li>
+                </>
+              ) : (
+                <>
+                  <li>• Our team will review your message within 24 hours</li>
+                  <li>• You'll receive a confirmation email shortly</li>
+                  <li>• A team member will contact you to discuss your needs</li>
+                </>
+              )}
             </ul>
           </div>
 

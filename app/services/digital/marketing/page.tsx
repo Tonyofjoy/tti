@@ -117,14 +117,6 @@ export default function DigitalMarketingPage() {
             <p className="text-lg text-white/80 mb-6">
               In today's digital landscape, effective marketing is essential for business growth. Our comprehensive digital marketing services help you connect with your audience, drive engagement, and achieve measurable results.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-white text-[#0021a7] hover:bg-white/90">
-                Get a Free Consultation
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                View Case Studies
-              </Button>
-            </div>
           </div>
         </div>
       </motion.div>
