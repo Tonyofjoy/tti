@@ -29,7 +29,7 @@ const teamMembers: TeamMember[] = [
     name: "Sarah Johnson",
     role: "CEO & Founder",
     bio: "Sarah has over 15 years of experience in technology leadership. Before founding Tony Tech Insights, she led digital transformation initiatives at Fortune 500 companies. Her vision drives our company's innovation and growth strategy.",
-    image: "/images/team/duyen.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Leadership",
     social: {
       twitter: "https://twitter.com/sarahjohnson",
@@ -41,7 +41,7 @@ const teamMembers: TeamMember[] = [
     name: "David Chen",
     role: "CTO",
     bio: "David brings 12+ years of software architecture experience. He specializes in cloud infrastructure and AI integration, ensuring our technical solutions are cutting-edge and scalable for enterprises of all sizes.",
-    image: "/images/team/david.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Leadership",
     social: {
       twitter: "https://twitter.com/davidchen",
@@ -54,7 +54,7 @@ const teamMembers: TeamMember[] = [
     name: "Michael Rodriguez",
     role: "Lead Developer",
     bio: "Michael is an expert in full-stack development with particular focus on React and Node.js. He leads our development team in creating robust, scalable applications that exceed client expectations.",
-    image: "/images/team/michael.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Development",
     social: {
       linkedin: "https://linkedin.com/in/michaelrodriguez",
@@ -66,7 +66,7 @@ const teamMembers: TeamMember[] = [
     name: "Emily Wong",
     role: "UX/UI Designer",
     bio: "Emily combines artistic talent with user-centered design principles to create intuitive, engaging interfaces. Her work has helped our clients achieve significant improvements in user engagement and conversion rates.",
-    image: "/images/team/emily.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Design",
     social: {
       twitter: "https://twitter.com/emilywong",
@@ -78,7 +78,7 @@ const teamMembers: TeamMember[] = [
     name: "James Wilson",
     role: "Data Scientist",
     bio: "James specializes in machine learning and predictive analytics. He helps our clients transform their data into actionable insights that drive business growth and operational efficiency.",
-    image: "/images/team/james.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Data",
     social: {
       linkedin: "https://linkedin.com/in/jameswilson",
@@ -90,7 +90,7 @@ const teamMembers: TeamMember[] = [
     name: "Sophia Patel",
     role: "Project Manager",
     bio: "Sophia excels at coordinating complex projects and ensuring timely delivery. Her methodical approach and communication skills keep our projects on track and clients informed at every stage.",
-    image: "/images/team/sophia.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Operations",
     social: {
       linkedin: "https://linkedin.com/in/sophiapatel",
@@ -101,7 +101,7 @@ const teamMembers: TeamMember[] = [
     name: "Robert Kim",
     role: "DevOps Engineer",
     bio: "Robert is an expert in CI/CD pipelines and cloud infrastructure. He ensures our development processes are efficient and our deployments are seamless and reliable.",
-    image: "/images/team/robert.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Development",
     social: {
       linkedin: "https://linkedin.com/in/robertkim",
@@ -113,7 +113,7 @@ const teamMembers: TeamMember[] = [
     name: "Lisa Thompson",
     role: "Marketing Director",
     bio: "Lisa has a decade of experience in digital marketing. She develops strategies that amplify our clients' brand presence and drive meaningful engagement with their target audiences.",
-    image: "/images/team/lisa.jpg",
+    image: "/images/team/tony info.jpg",
     department: "Marketing",
     social: {
       twitter: "https://twitter.com/lisathompson",
@@ -385,16 +385,15 @@ function AboutPageClient() {
                   {/* Front Card */}
                   <div className="backface-hidden p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm h-full">
                     <div className="aspect-square rounded-lg overflow-hidden mb-4 bg-gradient-to-br from-[#00b8ff]/20 to-[#0021a7]/20">
-                      <div className="relative w-full h-full grayscale">
-                        <Image
-                          src={member.image}
-                          alt={member.name}
-                          width={300}
-                          height={300}
-                          className="object-cover w-full h-full"
-                        />
-                        <div className="absolute inset-0 bg-black/20 mix-blend-overlay"></div>
-                      </div>
+                        <div className="relative w-full h-full">
+                            <Image
+                                src={member.image}
+                                alt={member.name}
+                                width={300}
+                                height={300}
+                                className="object-cover w-full h-full"
+                            />
+                        </div>
                     </div>
                     <h4 className="text-lg font-semibold">{member.name}</h4>
                     <p className="text-white/60 mb-3">{member.role}</p>
