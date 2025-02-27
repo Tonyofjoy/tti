@@ -11,6 +11,9 @@ module.exports = {
         raleway: ['var(--font-raleway)'],
         deltha: ['var(--font-deltha)'],
       },
+      screens: {
+        'xs': '480px',
+      },
     },
   },
   plugins: [],
