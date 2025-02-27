@@ -146,9 +146,7 @@ export default function IndustriesPage() {
                   ))}
                 </ul>
                 
-                <Link href={`/work/industries/${industry.id}`} className="inline-flex items-center text-[#00b8ff] hover:text-white transition-colors group-hover:underline">
-                  Explore solutions <FiArrowRight className="ml-2" />
-                </Link>
+                <div className="h-6"></div>
               </div>
             </motion.div>
           ))}
@@ -194,12 +192,7 @@ export default function IndustriesPage() {
                 <p className="text-white/70 mb-4">
                   {study.summary}
                 </p>
-                <Link 
-                  href={`/case-studies/${study.id}`}
-                  className="inline-flex items-center text-[#00b8ff] hover:text-white transition-colors"
-                >
-                  Read Case Study <FiArrowRight className="ml-2" />
-                </Link>
+                <div className="h-6"></div>
               </div>
             </motion.div>
           ))}
@@ -207,7 +200,7 @@ export default function IndustriesPage() {
         
         <div className="text-center mt-10">
           <Link 
-            href="/case-studies" 
+            href="/work/case-studies" 
             className="inline-flex items-center px-6 py-3 border border-[#00b8ff] text-base font-medium rounded-lg text-[#00b8ff] hover:bg-[#00b8ff] hover:text-black transition-colors"
           >
             View All Case Studies <FiArrowRight className="ml-2" />
@@ -232,16 +225,16 @@ export default function IndustriesPage() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
-              href="/contact" 
+              href="/about/contact" 
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg bg-white text-[#0021a7] hover:bg-gray-100 transition-colors"
             >
               Schedule a Consultation
             </Link>
             <Link 
-              href="/demo" 
+              href="/services" 
               className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-lg text-white hover:bg-white/10 transition-colors"
             >
-              Request a Demo
+              Explore Our Services
             </Link>
           </div>
         </motion.div>

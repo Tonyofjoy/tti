@@ -253,11 +253,11 @@ export default function CaseStudiesPage() {
             Ready to create your success story?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto text-white/90 px-4">
-            Let's discuss how our expertise can help you achieve your business goals.
+            Let's discuss how we can transform your business challenges into innovative solutions.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
-              href="/contact" 
+              href="/about/contact" 
               className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg bg-white text-[#0021a7] hover:bg-gray-100 transition-colors"
             >
               Schedule a Consultation
