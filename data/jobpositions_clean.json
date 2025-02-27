@@ -1,0 +1,41 @@
+[
+  {
+    "id": "position-1",
+    "title": "Senior AI Engineer",
+    "department": "Engineering",
+    "location": "London, UK (Hybrid)",
+    "description": "Lead the development of cutting-edge AI solutions for enterprise clients.",
+    "requirements": [
+      "5+ years experience in ML/AI",
+      "Strong Python skills",
+      "Experience with TensorFlow or PyTorch"
+    ],
+    "icon": "Briefcase"
+  },
+  {
+    "id": "position-2",
+    "title": "Technical Project Manager",
+    "department": "Project Management", 
+    "location": "London, UK",
+    "description": "Oversee the successful delivery of complex technical projects for our clients.",
+    "requirements": [
+      "PMP or Agile certification",
+      "5+ years managing tech projects",
+      "Client-facing experience"
+    ],
+    "icon": "Lightbulb"
+  },
+  {
+    "id": "position-3",
+    "title": "UX/UI Designer",
+    "department": "Design",
+    "location": "Remote (UK-based)",
+    "description": "Create intuitive and engaging user experiences for our digital products.",
+    "requirements": [
+      "3+ years in UX/UI design",
+      "Proficiency in Figma",
+      "Portfolio of digital products"
+    ],
+    "icon": "Users"
+  }
+]

@@ -171,22 +171,6 @@ const ServiceCards = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* View All Services Button */}
-        <motion.div
-          className="mt-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <Link
-            href="/services"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white font-medium hover:opacity-90 transition-opacity"
-          >
-            View All Services <ArrowRight className="size-4" />
-          </Link>
-        </motion.div>
       </div>
     </section>
   )
