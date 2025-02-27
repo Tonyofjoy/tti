@@ -45,10 +45,17 @@ export default function BlogPage() {
                 <div className="relative h-64 md:h-full">
                   <div className="absolute inset-0 bg-gradient-to-r from-[#0021a7]/40 to-[#00b8ff]/20"></div>
                   <div className="relative h-full w-full">
-                    {/* Replace with actual Image component when you have the images */}
-                    <div className="w-full h-full bg-[#000000]/80 flex items-center justify-center">
-                      <span className="text-[#00b8ff]">Featured Image</span>
-                    </div>
+                    {featuredPost.imageUrl ? (
+                      <img
+                        src={featuredPost.imageUrl}
+                        alt={featuredPost.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#000000]/80 flex items-center justify-center">
+                        <span className="text-[#00b8ff]">Featured Image</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="p-6 md:p-8 flex flex-col justify-center">
@@ -98,10 +105,17 @@ export default function BlogPage() {
                   <div className="relative h-48">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0021a7]/30 to-[#00b8ff]/10"></div>
                     <div className="relative h-full w-full">
-                      {/* Replace with actual Image component when you have the images */}
-                      <div className="w-full h-full bg-[#000000]/80 flex items-center justify-center">
-                        <span className="text-[#00b8ff]">Post Image</span>
-                      </div>
+                      {post.imageUrl ? (
+                        <img
+                          src={post.imageUrl}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#000000]/80 flex items-center justify-center">
+                          <span className="text-[#00b8ff]">Post Image</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="p-6">
@@ -140,32 +154,6 @@ export default function BlogPage() {
               <p className="text-white/60">No articles found. Check back soon for new content!</p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-16 md:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0021a7]/30 to-[#00b8ff]/10"></div>
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Stay Updated with Our Newsletter</h2>
-            <p className="text-lg text-white/70 mb-8">
-              Subscribe to receive the latest insights, trends, and expert advice directly to your inbox.
-            </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="py-3 px-6 rounded-full border border-[#0021a7] bg-black/40 text-white focus:outline-none focus:ring-2 focus:ring-[#00b8ff] focus:border-transparent w-full md:w-96"
-              />
-              <button className="bg-gradient-to-r from-[#0021a7] to-[#00b8ff] text-white font-medium py-3 px-8 rounded-full hover:opacity-90 transition-opacity">
-                Subscribe
-              </button>
-            </div>
-            <p className="text-xs text-white/50 mt-4">
-              By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-            </p>
-          </div>
         </div>
       </section>
 

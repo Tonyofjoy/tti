@@ -22,7 +22,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'May 15, 2024',
     author: 'Tony Nguyen',
     category: 'Technology',
-    imageUrl: '/images/blog/ai-business.jpg',
+    imageUrl: '/images/header.png',
     readTime: '5 min read',
     published: true
   },
@@ -34,7 +34,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'May 10, 2024',
     author: 'Linh Tran',
     category: 'Web Development',
-    imageUrl: '/images/blog/web-dev-future.jpg',
+    imageUrl: '/images/header.png',
     readTime: '7 min read',
     published: true
   },
@@ -46,7 +46,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'May 5, 2024',
     author: 'Minh Pham',
     category: 'Branding',
-    imageUrl: '/images/blog/digital-brand.jpg',
+    imageUrl: '/images/header.png',
     readTime: '6 min read',
     published: true
   },
@@ -58,7 +58,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'April 28, 2024',
     author: 'Hoa Nguyen',
     category: 'E-commerce',
-    imageUrl: '/images/blog/ecommerce-opt.jpg',
+    imageUrl: '/images/header.png',
     readTime: '8 min read',
     published: true
   },
@@ -70,7 +70,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'April 20, 2024',
     author: 'Tuan Le',
     category: 'Marketing',
-    imageUrl: '/images/blog/data-marketing.jpg',
+    imageUrl: '/images/header.png',
     readTime: '5 min read',
     published: true
   },
@@ -82,7 +82,7 @@ export const initialBlogPosts: BlogPost[] = [
     date: 'April 15, 2024',
     author: 'Lan Vo',
     category: 'Security',
-    imageUrl: '/images/blog/cybersecurity.jpg',
+    imageUrl: '/images/header.png',
     readTime: '6 min read',
     published: true
   }

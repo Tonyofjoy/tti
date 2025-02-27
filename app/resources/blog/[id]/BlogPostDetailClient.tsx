@@ -89,10 +89,10 @@ export default function BlogPostDetailClient({ blogPost }: { blogPost: BlogPost 
   return (
     <div className="min-h-screen bg-[#000000] text-white">
       {/* Hero Section with Title */}
-      <section className="relative py-16 md:py-24">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0021a7] to-[#00b8ff] opacity-20"></div>
+      <section className="relative py-16 md:py-24 select-text">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0021a7] to-[#00b8ff] opacity-20 pointer-events-none"></div>
         <div className="container mx-auto px-4">
-          <Link href="/resources/blog" className="inline-flex items-center text-[#00b8ff] hover:text-white mb-8">
+          <Link href="/resources/blog" className="inline-flex items-center text-[#00b8ff] hover:text-white mb-8 z-10 relative">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Blog
           </Link>
