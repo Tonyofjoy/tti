@@ -22,20 +22,13 @@ export default function HeroSection() {
 
       {/* Content Container */}
       <div className="relative z-10 min-h-screen w-full">
-        {/* 3D Brain - Lower z-index */}
-        <div className="absolute top-1/4 right-0 w-full md:w-1/2 h-[300px] sm:h-[350px] md:h-[400px] lg:h-[600px] z-10 opacity-90">
-          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-            <BrainModel />
-          </Canvas>
-        </div>
-
         {/* Text Content - Higher z-index */}
-        <div className="container relative z-20 mx-auto flex flex-col items-center lg:items-start justify-center min-h-screen px-6 py-20">
+        <div className="container relative z-20 mx-auto flex flex-col items-center lg:items-start justify-center min-h-screen lg:min-h-0 lg:h-screen px-6 py-20">
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left pt-10 w-full max-w-2xl"
+            className="text-center lg:text-left w-full lg:max-w-xl xl:max-w-2xl pt-8 lg:pt-0"
           >
             <h1 className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent leading-tight">
               <span className="inline-block">Empowering</span>{' '}
@@ -44,7 +37,7 @@ export default function HeroSection() {
               <span className="inline-block">AI</span>{' '}
               <span className="inline-block">Innovation</span>
             </h1>
-            <p className="mt-3 md:mt-6 text-base sm:text-lg md:text-xl text-slate-300 max-w-xl">
+            <p className="mt-3 md:mt-6 text-base sm:text-lg md:text-xl text-slate-300 max-w-xl mx-auto lg:mx-0">
               Transforming industries through cutting-edge AI solutions and technology
             </p>
 
@@ -53,6 +46,16 @@ export default function HeroSection() {
               <AnimatedButton href="#contact">Get In Touch</AnimatedButton>
             </div>
           </motion.div>
+        </div>
+
+        {/* 3D Brain - Different positioning based on screen size */}
+        <div className="absolute z-10 w-full 
+                       lg:w-1/2 lg:right-0 lg:top-1/2 lg:-translate-y-1/2
+                       bottom-0 xs:bottom-10 sm:bottom-20
+                       h-[180px] xs:h-[220px] sm:h-[250px] md:h-[300px] lg:h-[500px]">
+          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+            <BrainModel />
+          </Canvas>
         </div>
       </div>
     </div>

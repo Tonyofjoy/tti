@@ -7,13 +7,26 @@ export default function BrainModel(props: any) {
   const group = useRef<THREE.Group>(null)
   const isMobile = useMediaQuery("(max-width: 768px)")
   const isVerySmall = useMediaQuery("(max-width: 480px)")
+  const isTablet = useMediaQuery("(max-width: 1024px)")
+  const isSmallLaptop = useMediaQuery("(max-width: 1280px)")
   
   // Adjust scale for different screen sizes
   const modelScale = useMemo(() => {
-    if (isVerySmall) return 0.75
-    if (isMobile) return 0.85
-    return 1
-  }, [isMobile, isVerySmall])
+    if (isVerySmall) return 0.55
+    if (isMobile) return 0.65
+    if (isTablet) return 0.75
+    if (isSmallLaptop) return 0.85
+    return 0.95
+  }, [isMobile, isVerySmall, isTablet, isSmallLaptop])
+  
+  // Position adjustments for different screen sizes
+  // On smaller screens, we adjust X position for better centering when below text
+  const modelPosition = useMemo(() => {
+    if (isVerySmall) return [0, -0.3, 0]
+    if (isMobile) return [0, -0.2, 0]
+    if (isTablet) return [0, -0.1, 0]
+    return [0, 0, 0]
+  }, [isMobile, isVerySmall, isTablet])
   
   // Create a tech-inspired brain using primitives
   const brainGeometry = useMemo(() => new THREE.SphereGeometry(1, 32, 32), [])
@@ -21,12 +34,12 @@ export default function BrainModel(props: any) {
     color: 0x00ffff,
     wireframe: true,
     transparent: true,
-    opacity: 0.8
-  }), [])
+    opacity: isMobile ? 0.7 : 0.8
+  }), [isMobile])
 
   // Create floating particles around the brain - reduce on mobile
-  const particleCount = isMobile ? 400 : 1000
-  const particleArea = isMobile ? 3.5 : 4
+  const particleCount = isVerySmall ? 200 : isMobile ? 300 : isTablet ? 500 : 900
+  const particleArea = isVerySmall ? 2.6 : isMobile ? 3.0 : isTablet ? 3.4 : 4
   
   const positions = useMemo(() => {
     const positions = new Float32Array(particleCount * 3)
@@ -47,19 +60,24 @@ export default function BrainModel(props: any) {
   
   const particleMaterial = useMemo(() => new THREE.PointsMaterial({
     color: 0xffffff,
-    size: isMobile ? 0.03 : 0.02,
-    sizeAttenuation: true
-  }), [isMobile])
+    size: isVerySmall ? 0.035 : isMobile ? 0.03 : 0.02,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: isMobile ? 0.65 : isTablet ? 0.75 : 0.9
+  }), [isMobile, isVerySmall, isTablet])
 
   useFrame(({ clock }) => {
     if (group.current) {
       // Slower rotation on mobile for better performance
-      group.current.rotation.y = clock.getElapsedTime() * (isMobile ? 0.05 : 0.1)
+      const rotationSpeed = isVerySmall ? 0.025 : isMobile ? 0.035 : isTablet ? 0.06 : 0.08
+      group.current.rotation.y = clock.getElapsedTime() * rotationSpeed
     }
   })
 
   return (
-    <group ref={group} {...props} dispose={null} scale={[modelScale, modelScale, modelScale]}>
+    <group ref={group} {...props} dispose={null} 
+          scale={[modelScale, modelScale, modelScale]} 
+          position={modelPosition}>
       <mesh geometry={brainGeometry} material={brainMaterial} />
       <points geometry={particleGeometry} material={particleMaterial} />
     </group>
