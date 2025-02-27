@@ -52,7 +52,7 @@ export default function HeroSection() {
         <div className="absolute z-10 w-full 
                        lg:w-1/2 lg:right-0 lg:top-1/2 lg:-translate-y-1/2
                        bottom-0 xs:bottom-10 sm:bottom-20
-                       h-[180px] xs:h-[220px] sm:h-[250px] md:h-[300px] lg:h-[500px]">
+                       h-[250px] xs:h-[280px] sm:h-[320px] md:h-[350px] lg:h-[500px]">
           <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
             <BrainModel />
           </Canvas>

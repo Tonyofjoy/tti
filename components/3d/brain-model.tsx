@@ -10,20 +10,20 @@ export default function BrainModel(props: any) {
   const isTablet = useMediaQuery("(max-width: 1024px)")
   const isSmallLaptop = useMediaQuery("(max-width: 1280px)")
   
-  // Adjust scale for different screen sizes
+  // Adjust scale for different screen sizes - increased for mobile views
   const modelScale = useMemo(() => {
-    if (isVerySmall) return 0.55
-    if (isMobile) return 0.65
-    if (isTablet) return 0.75
-    if (isSmallLaptop) return 0.85
+    if (isVerySmall) return 0.85  // Increased from 0.55
+    if (isMobile) return 0.95     // Increased from 0.65
+    if (isTablet) return 0.85
+    if (isSmallLaptop) return 0.9
     return 0.95
   }, [isMobile, isVerySmall, isTablet, isSmallLaptop])
   
   // Position adjustments for different screen sizes
-  // On smaller screens, we adjust X position for better centering when below text
+  // Adjusted Y position to accommodate larger model size on mobile
   const modelPosition = useMemo(() => {
-    if (isVerySmall) return [0, -0.3, 0]
-    if (isMobile) return [0, -0.2, 0]
+    if (isVerySmall) return [0, -0.5, 0]  // Adjusted for larger size
+    if (isMobile) return [0, -0.4, 0]     // Adjusted for larger size
     if (isTablet) return [0, -0.1, 0]
     return [0, 0, 0]
   }, [isMobile, isVerySmall, isTablet])
@@ -37,9 +37,9 @@ export default function BrainModel(props: any) {
     opacity: isMobile ? 0.7 : 0.8
   }), [isMobile])
 
-  // Create floating particles around the brain - reduce on mobile
-  const particleCount = isVerySmall ? 200 : isMobile ? 300 : isTablet ? 500 : 900
-  const particleArea = isVerySmall ? 2.6 : isMobile ? 3.0 : isTablet ? 3.4 : 4
+  // Create floating particles around the brain - adjusted for better visibility on mobile
+  const particleCount = isVerySmall ? 250 : isMobile ? 350 : isTablet ? 500 : 900
+  const particleArea = isVerySmall ? 2.8 : isMobile ? 3.2 : isTablet ? 3.4 : 4
   
   const positions = useMemo(() => {
     const positions = new Float32Array(particleCount * 3)
@@ -60,10 +60,10 @@ export default function BrainModel(props: any) {
   
   const particleMaterial = useMemo(() => new THREE.PointsMaterial({
     color: 0xffffff,
-    size: isVerySmall ? 0.035 : isMobile ? 0.03 : 0.02,
+    size: isVerySmall ? 0.045 : isMobile ? 0.04 : 0.02,  // Increased particle size on mobile
     sizeAttenuation: true,
     transparent: true,
-    opacity: isMobile ? 0.65 : isTablet ? 0.75 : 0.9
+    opacity: isMobile ? 0.75 : isTablet ? 0.75 : 0.9     // Increased opacity on mobile
   }), [isMobile, isVerySmall, isTablet])
 
   useFrame(({ clock }) => {
