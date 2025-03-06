@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { footerLinks } from "@/lib/navigation-data"
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import Script from 'next/script'
 
 const socialLinks = [
   { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
@@ -31,6 +32,20 @@ export default function SiteFooter() {
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  // Add useEffect to load DMCA script
+  useEffect(() => {
+    // Create a script element for the DMCA Badge Helper
+    const script = document.createElement('script');
+    script.src = 'https://images.dmca.com/Badges/DMCABadgeHelper.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Cleanup function to remove the script when component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -214,9 +229,22 @@ export default function SiteFooter() {
         <div className="border-t border-white/10">
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-white/60">
-                © {new Date().getFullYear()} <span className="font-deltha">Tony Tech Insights</span>. All rights reserved.
-              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-sm text-white/60">
+                  © {new Date().getFullYear()} <span className="font-deltha">Tony Tech Insights</span>. All rights reserved.
+                </p>
+                {/* DMCA Badge */}
+                <a 
+                  href="//www.dmca.com/Protection/Status.aspx?ID=faf2680b-1766-413e-891a-beda9a21ed4b" 
+                  title="DMCA.com Protection Status" 
+                  className="dmca-badge"
+                >
+                  <img 
+                    src="https://images.dmca.com/Badges/dmca-badge-w100-2x1-03.png?ID=faf2680b-1766-413e-891a-beda9a21ed4b" 
+                    alt="DMCA.com Protection Status" 
+                  />
+                </a>
+              </div>
 
               <ul className="flex flex-wrap gap-4 sm:gap-6">
                 {footerLinks.legal.map((link) => (
