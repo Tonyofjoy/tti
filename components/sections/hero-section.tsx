@@ -14,9 +14,6 @@ export default function HeroSection() {
     <div className="relative min-h-screen w-full overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
-        <video ref={videoRef} autoPlay muted loop playsInline className="h-full w-full object-cover">
-          <source src="/videos/ai-background.mp4" type="video/mp4" />
-        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-800/50 to-indigo-900/80" />
       </div>
 

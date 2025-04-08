@@ -54,7 +54,7 @@ const caseStudies: CaseStudy[] = [
     title: "Enterprise Digital Transformation",
     description: "Complete digital overhaul for Fortune 500 company with cloud migration and process automation",
     fullDescription: "A Fortune 500 manufacturing company was struggling with outdated legacy systems that were hindering productivity and growth. We implemented a comprehensive digital transformation strategy that included cloud migration, process automation, and a modern microservices architecture.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Enterprise.png",
     category: "Enterprise Solutions",
     client: "Global Manufacturing Leader",
     duration: "12 Months",
@@ -97,7 +97,7 @@ const caseStudies: CaseStudy[] = [
     title: "AI-Powered Analytics Platform",
     description: "Machine learning solution for data-driven decisions with real-time insights and predictive modeling",
     fullDescription: "A leading financial services company needed to leverage their vast data resources to improve decision-making and customer insights. We developed a comprehensive AI-powered analytics platform that transformed raw data into actionable intelligence.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/AI-Powered.png",
     category: "AI & Analytics",
     client: "Financial Services Provider",
     duration: "6 Months",
@@ -140,7 +140,7 @@ const caseStudies: CaseStudy[] = [
     title: "Secure Banking Infrastructure",
     description: "Modern banking platform with enhanced security protocols and seamless API integrations",
     fullDescription: "A regional bank was facing increasing security threats and integration challenges with their legacy banking systems. We developed a secure, modern banking infrastructure that enhanced protection while enabling seamless integration with fintech partners.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Secure Banking.png",
     category: "FinTech",
     client: "Regional Banking Institution",
     duration: "18 Months",
@@ -183,7 +183,7 @@ const caseStudies: CaseStudy[] = [
     title: "Mobile Commerce Platform",
     description: "Cross-platform retail solution with AR features and seamless payment processing",
     fullDescription: "A retail chain wanted to transform their customer experience with an innovative mobile commerce platform. We developed a cross-platform solution with augmented reality features that revolutionized how customers shop both online and in-store.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Mobile Commerce.png",
     category: "Mobile Development",
     client: "National Retail Chain",
     duration: "9 Months",
@@ -226,7 +226,7 @@ const caseStudies: CaseStudy[] = [
     title: "SaaS Application Modernization",
     description: "Legacy system transformation with modern architecture and improved developer experience",
     fullDescription: "A growing SaaS company was struggling with an outdated codebase that was limiting their ability to add features and scale. We completely modernized their application architecture while maintaining business continuity throughout the transition.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/SaaS Application.png",
     category: "Cloud Solutions",
     client: "B2B SaaS Provider",
     duration: "8 Months",
@@ -269,7 +269,7 @@ const caseStudies: CaseStudy[] = [
     title: "E-commerce Platform Transformation",
     description: "Complete redesign with modern tech stack and optimized conversion funnel",
     fullDescription: "An established online retailer was experiencing performance issues and declining conversion rates with their aging e-commerce platform. We delivered a complete transformation using modern technologies that dramatically improved performance and user experience.",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/E-commerce Platform.png",
     category: "Web Development",
     client: "Online Retail Company",
     duration: "5 Months",
@@ -609,10 +609,16 @@ export default function CaseStudyDetailPage() {
                 className="group flex flex-col overflow-hidden rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
               >
                 <div className="relative h-48 overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-r ${study.color} opacity-80`}></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <StudyIcon className="h-16 w-16 text-white/90" />
-                  </div>
+                  <div className={`absolute inset-0 bg-gradient-to-r ${study.color} opacity-40`}></div>
+                  
+                  {/* Background image */}
+                  <Image 
+                    src={study.image}
+                    alt={study.title}
+                    fill
+                    className="object-cover object-center opacity-60 mix-blend-overlay"
+                  />
+                  
                   <div className="absolute top-4 left-4 z-10">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/30 text-white">
                       {study.category}

@@ -261,7 +261,7 @@ export default function CareersPage() {
             className="relative rounded-xl overflow-hidden max-w-5xl mx-auto aspect-[16/9] shadow-2xl shadow-[#00b8ff]/10"
           >
             <Image
-              src="/images/team-collaboration.jpg"
+              src="/Website_image/Website/About/Nhóm.png"
               alt="Team collaboration at Tony Tech Insights"
               fill
               className="object-cover"

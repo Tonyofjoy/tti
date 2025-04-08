@@ -1,22 +1,15 @@
 import localFont from "next/font/local"
+import { Raleway } from "next/font/google"
 
 export const betelgeuse = localFont({
   src: "../public/font/betelguesse/Betelguesse.ttf",
   variable: "--font-betelgeuse"
 })
 
-export const raleway = localFont({
-  src: [
-    {
-      path: "../public/font/Raleway/Raleway-VariableFont_wght.ttf",
-      style: "normal",
-    },
-    {
-      path: "../public/font/Raleway/Raleway-Italic-VariableFont_wght.ttf",
-      style: "italic",
-    },
-  ],
-  variable: "--font-raleway"
+export const raleway = Raleway({
+  subsets: ["latin"],
+  variable: "--font-raleway",
+  display: "swap",
 })
 
 export const deltha = localFont({

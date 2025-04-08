@@ -18,42 +18,42 @@ const industries = [
     id: 'healthcare',
     title: 'Healthcare',
     description: 'Digital solutions for modern healthcare delivery and patient care.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Patient Management Systems', 'Telemedicine Platforms', 'Medical Data Analytics']
   },
   {
     id: 'finance',
     title: 'Finance',
     description: 'Innovative technology for financial services and fintech.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Payment Processing', 'Wealth Management', 'Fraud Detection']
   },
   {
     id: 'education',
     title: 'Education',
     description: 'Digital transformation solutions for educational institutions.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Learning Management', 'Student Analytics', 'Virtual Classrooms']
   },
   {
     id: 'ecommerce',
     title: 'E-Commerce',
     description: 'Driving online retail growth with innovative technology solutions.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Custom Shopping Platforms', 'Payment Integration', 'Inventory Management']
   },
   {
     id: 'manufacturing',
     title: 'Manufacturing',
     description: 'Streamlining production processes with advanced technology.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Supply Chain Optimization', 'Quality Control Systems', 'Production Analytics']
   },
   {
     id: 'hospitality',
     title: 'Hospitality',
     description: 'Enhancing guest experiences through digital innovation.',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
     solutions: ['Booking Systems', 'Guest Experience Platforms', 'Operational Efficiency']
   }
 ];
@@ -65,21 +65,21 @@ const caseStudies = [
     client: 'VN Healthcare Provider',
     industry: 'Healthcare',
     summary: 'Implemented telemedicine platform resulting in 40% increase in patient accessibility',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
   },
   {
     id: 'case2',
     client: 'Leading Financial Institution',
     industry: 'Finance',
     summary: 'Developed secure payment system processing over 1 million transactions monthly',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
   },
   {
     id: 'case3',
     client: 'E-Commerce Marketplace',
     industry: 'E-Commerce',
     summary: 'Increased online sales by 150% with custom marketplace solution',
-    image: '/images/team/duyen.jpg',
+    image: '/Website_image/Website/Industry/lobby.png',
   }
 ];
 

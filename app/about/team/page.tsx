@@ -74,57 +74,6 @@ const teamMembers: TeamMember[] = [
       email: "emma@example.com"
     }
   },
-  {
-    id: "5",
-    name: "David Kim",
-    role: "Marketing Director",
-    bio: "Strategic marketer with experience across digital channels. Previously led growth at several successful startups.",
-    image: "/images/team/duyen.jpg",
-    department: "marketing",
-    social: {
-      linkedin: "https://linkedin.com",
-      twitter: "https://twitter.com",
-      email: "david@example.com"
-    }
-  },
-  {
-    id: "6",
-    name: "Priya Patel",
-    role: "Backend Engineer",
-    bio: "Systems architect specializing in high-performance, scalable backend solutions. Expert in database optimization and API design.",
-    image: "/images/team/duyen.jpg",
-    department: "engineering",
-    social: {
-      linkedin: "https://linkedin.com",
-      email: "priya@example.com"
-    }
-  },
-  {
-    id: "7",
-    name: "James Wilson",
-    role: "Product Manager",
-    bio: "Experienced in bringing products from concept to market. Focused on user needs and business outcomes.",
-    image: "/images/team/duyen.jpg",
-    department: "leadership",
-    social: {
-      linkedin: "https://linkedin.com",
-      twitter: "https://twitter.com",
-      email: "james@example.com"
-    }
-  },
-  {
-    id: "8",
-    name: "Olivia Martinez",
-    role: "Motion Designer",
-    bio: "Creative professional specializing in animation and interactive experiences. Brings brands to life through movement and storytelling.",
-    image: "/images/team/duyen.jpg",
-    department: "design",
-    social: {
-      linkedin: "https://linkedin.com",
-      twitter: "https://twitter.com",
-      email: "olivia@example.com"
-    }
-  }
 ];
 
 export default function TeamPage() {

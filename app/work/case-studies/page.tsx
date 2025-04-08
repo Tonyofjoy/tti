@@ -27,7 +27,7 @@ const caseStudies = [
     id: "enterprise-digital-transformation",
     title: "Enterprise Digital Transformation",
     description: "Complete digital overhaul for Fortune 500 company with cloud migration and process automation",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Enterprise.png",
     category: "Enterprise Solutions",
     stats: {
       improvement: "200% Efficiency Increase",
@@ -42,7 +42,7 @@ const caseStudies = [
     id: "ai-powered-analytics",
     title: "AI-Powered Analytics Platform",
     description: "Machine learning solution for data-driven decisions with real-time insights and predictive modeling",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/AI-Powered.png",
     category: "AI & Analytics",
     stats: {
       improvement: "85% Faster Analysis",
@@ -57,7 +57,7 @@ const caseStudies = [
     id: "secure-banking-infrastructure",
     title: "Secure Banking Infrastructure",
     description: "Modern banking platform with enhanced security protocols and seamless API integrations",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Secure Banking.png",
     category: "FinTech",
     stats: {
       improvement: "99.99% Uptime",
@@ -72,7 +72,7 @@ const caseStudies = [
     id: "mobile-commerce-platform",
     title: "Mobile Commerce Platform",
     description: "Cross-platform retail solution with AR features and seamless payment processing",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/Mobile Commerce.png",
     category: "Mobile Development",
     stats: {
       improvement: "150% User Engagement",
@@ -87,7 +87,7 @@ const caseStudies = [
     id: "saas-application-modernization",
     title: "SaaS Application Modernization",
     description: "Legacy system transformation with modern architecture and improved developer experience",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/SaaS Application.png",
     category: "Cloud Solutions",
     stats: {
       improvement: "3x Development Speed",
@@ -102,7 +102,7 @@ const caseStudies = [
     id: "ecommerce-platform-transformation",
     title: "E-commerce Platform Transformation",
     description: "Complete redesign with modern tech stack and optimized conversion funnel",
-    image: "/images/header.png",
+    image: "/Website_image/Website/Trang chủ/366x192/E-commerce Platform.png",
     category: "Web Development",
     stats: {
       improvement: "64% Conversion Rate",
@@ -194,10 +194,16 @@ export default function CaseStudiesPage() {
               className="group flex flex-col overflow-hidden rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
             >
               <div className="relative h-48 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-r ${study.color} opacity-80`}></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <study.icon className="h-16 w-16 text-white/90" />
-                </div>
+                <div className={`absolute inset-0 bg-gradient-to-r ${study.color} opacity-40`}></div>
+                
+                {/* Background image */}
+                <Image 
+                  src={study.image}
+                  alt={study.title}
+                  fill
+                  className="object-cover object-center opacity-60 mix-blend-overlay"
+                />
+                
                 <div className="absolute top-4 left-4 z-10">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black/30 text-white">
                     {study.category}
