@@ -11,7 +11,8 @@ export default function ContactPage() {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
+    subscribeToNewsletter: true
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -39,8 +40,22 @@ export default function ContactPage() {
         throw new Error(data.error || 'Failed to submit form')
       }
 
-      // Successful form submission - redirect to thank you page
-      window.location.href = '/about/thank-you'
+      // Show success message
+      toast.success('Message sent successfully! Redirecting to thank you page...')
+      
+      // Reset form data
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        subscribeToNewsletter: true
+      })
+      
+      // Successful form submission - redirect to thank you page after a delay
+      setTimeout(() => {
+        window.location.href = '/about/thank-you'
+      }, 1500)
       
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -178,6 +193,24 @@ export default function ContactPage() {
                     required
                   />
                 </div>
+                
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="subscribeToNewsletter"
+                      type="checkbox"
+                      checked={formData.subscribeToNewsletter}
+                      onChange={(e) => setFormData({ ...formData, subscribeToNewsletter: e.target.checked })}
+                      className="w-4 h-4 border border-white/10 rounded bg-white/5 focus:ring-[#00b8ff] focus:ring-2"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label htmlFor="subscribeToNewsletter" className="text-white/70">
+                      Subscribe to our newsletter to receive updates and insights
+                    </label>
+                  </div>
+                </div>
+
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

@@ -12,7 +12,8 @@ export default function ContactFormSection() {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
+    subscribeToNewsletter: true
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -46,7 +47,8 @@ export default function ContactFormSection() {
         name: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
+        subscribeToNewsletter: true
       })
       
       // Show success message
@@ -173,6 +175,23 @@ export default function ContactFormSection() {
                             required
                           />
                         </div>
+
+                        <div className="flex items-start">
+                          <div className="flex items-center h-5">
+                            <input
+                              id="subscribeToNewsletter"
+                              type="checkbox"
+                              checked={formData.subscribeToNewsletter}
+                              onChange={(e) => setFormData({ ...formData, subscribeToNewsletter: e.target.checked })}
+                              className="w-4 h-4 border border-white/10 rounded bg-white/5 focus:ring-[#00b8ff] focus:ring-2"
+                            />
+                          </div>
+                          <div className="ml-3 text-sm">
+                            <label htmlFor="subscribeToNewsletter" className="text-white/70">
+                              Subscribe to our newsletter to receive updates and insights
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       
                       <motion.button
@@ -223,7 +242,7 @@ export default function ContactFormSection() {
                         </div>
                         <div>
                           <h4 className="text-sm font-medium text-white/60 mb-1">Email Us</h4>
-                          <p className="text-white font-medium">hello@tonytechinsight.vn</p>
+                          <p className="text-white font-medium">contact@tonytechinsight.com</p>
                         </div>
                       </div>
                       
