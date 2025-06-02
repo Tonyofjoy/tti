@@ -54,7 +54,7 @@ export default function ContactPage() {
       
       // Successful form submission - redirect to thank you page after a delay
       setTimeout(() => {
-        window.location.href = '/about/thank-you'
+      window.location.href = '/about/thank-you'
       }, 1500)
       
     } catch (error) {

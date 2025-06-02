@@ -1,9 +1,18 @@
 import md5 from 'md5';
 
-// Mailchimp configuration
-const API_KEY = '51554d640881b87e3fdc7ed575347202-us10';
-const API_SERVER = 'us10';
-const AUDIENCE_ID = '3dc648c101'; // Replace with your Mailchimp audience/list ID
+// Mailchimp configuration from environment variables
+const API_KEY = process.env.MAILCHIMP_API_KEY;
+const API_SERVER = process.env.MAILCHIMP_API_SERVER || 'us10';
+const AUDIENCE_ID = process.env.MAILCHIMP_AUDIENCE_ID;
+
+// Validate environment variables
+if (!API_KEY) {
+  console.warn('MAILCHIMP_API_KEY environment variable is not set. Mailchimp integration will be disabled.');
+}
+
+if (!AUDIENCE_ID) {
+  console.warn('MAILCHIMP_AUDIENCE_ID environment variable is not set. Mailchimp integration will be disabled.');
+}
 
 // Define merge field mapping
 // These correspond to the merge tags you set up in your Mailchimp audience
@@ -29,6 +38,15 @@ export async function subscribeToMailchimp(email: string, contactData: {
   company?: string;
   [key: string]: any;
 } = {}) {
+  // Check if Mailchimp is properly configured
+  if (!API_KEY || !AUDIENCE_ID) {
+    console.warn('Mailchimp is not properly configured. Skipping subscription for:', email);
+    return { 
+      success: false, 
+      error: 'Mailchimp configuration missing. Please set MAILCHIMP_API_KEY and MAILCHIMP_AUDIENCE_ID environment variables.'
+    };
+  }
+
   try {
     // Create a subscriber hash for the provided email (md5 hash of lowercase email)
     const subscriberHash = md5(email.toLowerCase());
