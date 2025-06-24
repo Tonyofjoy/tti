@@ -6,15 +6,29 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-// Job position type
+// Job position type - supports both legacy and comprehensive formats
 interface JobPosition {
   id: string
   title: string
   department: string
   location: string
-  description: string
+  description?: string // Optional for backward compatibility
   requirements: string[]
   icon: string
+  
+  // Comprehensive format fields
+  heritage?: string
+  culture?: {
+    description: string
+    values: string[]
+  }
+  responsibilities?: string[]
+  workingSchedule?: {
+    description: string
+    hours: string
+  }
+  benefits?: string[]
+  callToAction?: string
 }
 
 // Animation variants
@@ -77,136 +91,115 @@ export default function CareersPage() {
   
   useEffect(() => {
     const fetchJobPositions = async () => {
+      console.log('Careers page: Starting to fetch job positions...');
+      setIsLoading(true);
+      setError("");
+      
       try {
-        console.log('Careers page: Fetching job positions...');
-        const response = await fetch('/api/jobpositions');
-        console.log('Careers page: Response status:', response.status);
+        console.log('Careers page: Making API request to /api/jobpositions');
+        const response = await fetch('/api/jobpositions', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store' // Ensure fresh data
+        });
+        
+        console.log('Careers page: Response received - Status:', response.status, 'OK:', response.ok);
         
         if (response.ok) {
           const data = await response.json();
-          console.log('Careers page: Received job positions:', data);
-          console.log('Careers page: Number of positions:', Array.isArray(data) ? data.length : 'not an array');
+          console.log('Careers page: Raw API response:', JSON.stringify(data, null, 2));
+          console.log('Careers page: Data type:', typeof data, 'Is array:', Array.isArray(data));
           
-          if (Array.isArray(data) && data.length > 0) {
-            console.log('Careers page: Setting job positions with API data');
-            setJobPositions(data);
+          if (Array.isArray(data)) {
+            console.log(`Careers page: Found ${data.length} job positions in API response`);
+            
+            // Validate each position has required fields
+            // Support both legacy format (with description) and comprehensive format (with heritage/culture/etc)
+            const validPositions = data.filter(pos => 
+              pos && 
+              typeof pos === 'object' && 
+              pos.id && 
+              pos.title && 
+              pos.department && 
+              pos.location && 
+              (pos.description || pos.heritage) // Accept either description OR heritage (comprehensive format)
+            );
+            
+            console.log(`Careers page: ${validPositions.length} valid positions after filtering`);
+            
+            if (validPositions.length > 0) {
+              console.log('Careers page: Setting job positions with API data');
+              setJobPositions(validPositions);
+            } else {
+              console.log('Careers page: No valid positions found, using fallback data');
+              setJobPositions(getFallbackPositions());
+            }
           } else {
-            console.log('Careers page: No positions found or data is not an array with items, using fallback data');
-            // Generate unique IDs for fallback positions to avoid conflicts
-            const timestamp = Date.now();
-            // Fallback to default data if API returns empty array or invalid data
-            setJobPositions([
-              {
-                id: `fallback-1-${timestamp}`,
-                title: "Senior AI Engineer",
-                department: "Engineering",
-                location: "London, UK (Hybrid)",
-                description: "Lead the development of cutting-edge AI solutions for enterprise clients.",
-                requirements: ["5+ years experience in ML/AI", "Strong Python skills", "Experience with TensorFlow or PyTorch"],
-                icon: "Briefcase"
-              },
-              {
-                id: `fallback-2-${timestamp}`,
-                title: "UX/UI Designer",
-                department: "Design",
-                location: "Remote (UK-based)",
-                description: "Create intuitive and engaging user experiences for our digital products.",
-                requirements: ["3+ years in UX/UI design", "Proficiency in Figma", "Portfolio of digital products"],
-                icon: "Users"
-              },
-              {
-                id: `fallback-3-${timestamp}`,
-                title: "Technical Project Manager",
-                department: "Project Management",
-                location: "London, UK",
-                description: "Oversee the successful delivery of complex technical projects for our clients.",
-                requirements: ["PMP or Agile certification", "5+ years managing tech projects", "Client-facing experience"],
-                icon: "Lightbulb"
-              }
-            ]);
+            console.log('Careers page: API response is not an array, using fallback data');
+            setJobPositions(getFallbackPositions());
           }
         } else {
           console.error('Careers page: Response not OK:', response.status, response.statusText);
+          
           // Attempt to get error message from response
           try {
             const errorData = await response.json();
             console.error('Careers page: Error details:', errorData);
+            setError(`Failed to load job positions: ${errorData.error || response.statusText}`);
           } catch (e) {
             console.error('Careers page: Could not parse error response');
+            setError(`Failed to load job positions: ${response.statusText}`);
           }
           
-          setError('Failed to load job positions');
-          // Generate unique IDs for fallback positions
-          const timestamp = Date.now();
-          // Use default data as fallback
-          setJobPositions([
-            {
-              id: `fallback-1-${timestamp}`,
-              title: "Senior AI Engineer",
-              department: "Engineering",
-              location: "London, UK (Hybrid)",
-              description: "Lead the development of cutting-edge AI solutions for enterprise clients.",
-              requirements: ["5+ years experience in ML/AI", "Strong Python skills", "Experience with TensorFlow or PyTorch"],
-              icon: "Briefcase"
-            },
-            {
-              id: `fallback-2-${timestamp}`,
-              title: "UX/UI Designer",
-              department: "Design",
-              location: "Remote (UK-based)",
-              description: "Create intuitive and engaging user experiences for our digital products.",
-              requirements: ["3+ years in UX/UI design", "Proficiency in Figma", "Portfolio of digital products"],
-              icon: "Users"
-            },
-            {
-              id: `fallback-3-${timestamp}`,
-              title: "Technical Project Manager",
-              department: "Project Management",
-              location: "London, UK",
-              description: "Oversee the successful delivery of complex technical projects for our clients.",
-              requirements: ["PMP or Agile certification", "5+ years managing tech projects", "Client-facing experience"],
-              icon: "Lightbulb"
-            }
-          ]);
+          // Use fallback data
+          setJobPositions(getFallbackPositions());
         }
       } catch (error) {
-        console.error('Careers page: Error fetching job positions:', error);
-        setError('Failed to load job positions');
-        // Generate unique IDs for fallback positions
-        const timestamp = Date.now();
-        // Use default data as fallback
-        setJobPositions([
-          {
-            id: `fallback-1-${timestamp}`,
-            title: "Senior AI Engineer",
-            department: "Engineering",
-            location: "London, UK (Hybrid)",
-            description: "Lead the development of cutting-edge AI solutions for enterprise clients.",
-            requirements: ["5+ years experience in ML/AI", "Strong Python skills", "Experience with TensorFlow or PyTorch"],
-            icon: "Briefcase"
-          },
-          {
-            id: `fallback-2-${timestamp}`,
-            title: "UX/UI Designer",
-            department: "Design",
-            location: "Remote (UK-based)",
-            description: "Create intuitive and engaging user experiences for our digital products.",
-            requirements: ["3+ years in UX/UI design", "Proficiency in Figma", "Portfolio of digital products"],
-            icon: "Users"
-          },
-          {
-            id: `fallback-3-${timestamp}`,
-            title: "Technical Project Manager",
-            department: "Project Management",
-            location: "London, UK",
-            description: "Oversee the successful delivery of complex technical projects for our clients.",
-            requirements: ["PMP or Agile certification", "5+ years managing tech projects", "Client-facing experience"],
-            icon: "Lightbulb"
-          }
-        ]);
+        console.error('Careers page: Network or parsing error:', error);
+        setError(`Failed to load job positions: ${error instanceof Error ? error.message : 'Network error'}`);
+        
+        // Use fallback data
+        setJobPositions(getFallbackPositions());
       } finally {
+        console.log('Careers page: Finished fetching, setting loading to false');
         setIsLoading(false);
       }
+    };
+    
+    // Helper function to get fallback positions
+    const getFallbackPositions = () => {
+      const timestamp = Date.now();
+      return [
+        {
+          id: `fallback-1-${timestamp}`,
+          title: "Senior AI Engineer",
+          department: "Engineering",
+          location: "London, UK (Hybrid)",
+          description: "Lead the development of cutting-edge AI solutions for enterprise clients.",
+          requirements: ["5+ years experience in ML/AI", "Strong Python skills", "Experience with TensorFlow or PyTorch"],
+          icon: "Briefcase"
+        },
+        {
+          id: `fallback-2-${timestamp}`,
+          title: "UX/UI Designer",
+          department: "Design",
+          location: "Remote (UK-based)",
+          description: "Create intuitive and engaging user experiences for our digital products.",
+          requirements: ["3+ years in UX/UI design", "Proficiency in Figma", "Portfolio of digital products"],
+          icon: "Users"
+        },
+        {
+          id: `fallback-3-${timestamp}`,
+          title: "Technical Project Manager",
+          department: "Project Management",
+          location: "London, UK",
+          description: "Oversee the successful delivery of complex technical projects for our clients.",
+          requirements: ["PMP or Agile certification", "5+ years managing tech projects", "Client-facing experience"],
+          icon: "Lightbulb"
+        }
+      ];
     };
     
     fetchJobPositions();
@@ -354,28 +347,39 @@ export default function CareersPage() {
             {isLoading ? (
               <div className="text-center py-12">
                 <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#00b8ff] border-r-transparent"></div>
-                <p className="mt-4 text-white/70">Loading job openings...</p>
+                <p className="mt-4 text-white/70">Loading job openings from our database...</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-12 bg-red-900/20 rounded-xl border border-red-500/30">
+                <div className="text-red-400 mb-4">⚠️ Unable to load positions</div>
+                <p className="text-white/70 mb-4">{error}</p>
+                <p className="text-white/50 text-sm">Showing default positions below:</p>
               </div>
             ) : jobPositions.length === 0 ? (
               <div className="text-center py-12 bg-white/5 rounded-xl">
                 <Briefcase className="h-12 w-12 mx-auto mb-4 text-white/40" />
                 <p className="text-white/70">No open positions at the moment. Please check back later!</p>
               </div>
-            ) : (
-              jobPositions.map((job, index) => (
-                <motion.div
-                  key={job.id}
-                  variants={itemFadeIn}
-                  className="bg-white/5 rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors"
-                >
-                  <div className="flex flex-col md:flex-row gap-6">
-                    <div className="flex-1">
+            ) : null}
+            
+            {/* Always render job positions if they exist, regardless of error state */}
+            {jobPositions.length > 0 && jobPositions.map((job, index) => (
+              <motion.div
+                key={job.id}
+                variants={itemFadeIn}
+                className="bg-white/5 rounded-xl border border-white/10 p-6 hover:bg-white/10 transition-colors group"
+              >
+                <div className="flex flex-col md:flex-row gap-6">
+                  <div className="flex-1">
+                    <Link href={`/about/careers/${job.id}`} className="block">
                       <div className="flex items-start gap-4 mb-4">
-                        <div className="p-3 bg-white/5 rounded-lg">
+                        <div className="p-3 bg-white/5 rounded-lg group-hover:bg-white/10 transition-colors">
                           {renderIcon(job.icon)}
                         </div>
                         <div>
-                          <h3 className="text-xl font-semibold text-white">{job.title}</h3>
+                          <h3 className="text-xl font-semibold text-white group-hover:text-[#00b8ff] transition-colors">
+                            {job.title}
+                          </h3>
                           <div className="flex flex-wrap gap-2 mt-1">
                             <span className="text-sm bg-white/10 text-white/70 px-2 py-1 rounded-full">
                               {job.department}
@@ -387,37 +391,51 @@ export default function CareersPage() {
                         </div>
                       </div>
                       
-                      <p className="text-white/80 mb-4">
-                        {job.description}
+                      <p className="text-white/80 mb-4 line-clamp-2">
+                        {job.description || (job.heritage ? job.heritage.substring(0, 150) + "..." : "Join our dynamic team and create exceptional solutions that bridge cultural and technological gaps.")}
                       </p>
                       
                       <div className="space-y-1 mb-4">
                         <h4 className="text-sm font-semibold text-white/90">Key Requirements:</h4>
                         <ul className="list-disc list-inside text-white/70 text-sm">
-                          {job.requirements.map((req, i) => (
+                          {job.requirements && job.requirements.slice(0, 2).map((req, i) => (
                             <li key={i}>{req}</li>
                           ))}
+                          {job.requirements && job.requirements.length > 2 && (
+                            <li className="text-[#00b8ff]">And {job.requirements.length - 2} more...</li>
+                          )}
                         </ul>
                       </div>
-                    </div>
-                    
-                    <div className="flex-shrink-0">
-                      <motion.div
-                        whileHover={{ x: 5 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      >
-                        <Link 
-                          href={`/about/careers/apply?position=${encodeURIComponent(job.title)}`}
-                          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white font-medium hover:opacity-90 transition-opacity"
-                        >
-                          Apply Now <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </motion.div>
-                    </div>
+                    </Link>
                   </div>
-                </motion.div>
-              ))
-            )}
+                  
+                  <div className="flex-shrink-0 flex flex-col gap-2">
+                    <motion.div
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      <Link 
+                        href={`/about/careers/${job.id}`}
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-lg border border-[#00b8ff]/50 text-[#00b8ff] font-medium hover:bg-[#00b8ff]/10 transition-colors"
+                      >
+                        View Details <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      <Link 
+                        href={`/about/careers/apply?position=${encodeURIComponent(job.title)}`}
+                        className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white font-medium hover:opacity-90 transition-opacity"
+                      >
+                        Apply Now <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>

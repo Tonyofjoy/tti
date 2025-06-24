@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "verify-db": "npx ts-node --project tsconfig.scripts.json scripts/verify-db.ts"
+    "verify-db": "npx ts-node --project tsconfig.scripts.json scripts/verify-db.ts",
+    "migrate-jobpositions": "npx ts-node --project tsconfig.scripts.json scripts/migrate-jobpositions.ts"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",

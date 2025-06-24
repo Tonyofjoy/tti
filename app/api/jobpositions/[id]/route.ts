@@ -1,56 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
 import { JobPosition } from '../route'
+import clientPromise from '@/lib/mongodb'
 
-// Path to store job positions data
-const DATA_DIR = path.join(process.cwd(), 'data')
-const POSITIONS_FILE = path.join(DATA_DIR, 'jobpositions.json')
+// Database collection name
+const COLLECTION_NAME = 'jobpositions'
 
-// Get all job positions
-function getPositions(): JobPosition[] {
+// Helper function to get database collection
+async function getCollection() {
+  const client = await clientPromise
+  const db = client.db()
+  return db.collection(COLLECTION_NAME)
+}
+
+// Get all job positions from MongoDB
+async function getPositions(): Promise<JobPosition[]> {
   try {
-    console.log('API ID: Getting positions from file');
+    console.log('API ID: Getting positions from MongoDB');
     
-    if (!fs.existsSync(POSITIONS_FILE)) {
-      console.log('API ID: Positions file does not exist, returning empty array');
-      return [];
-    }
+    const collection = await getCollection()
+    const positions = await collection.find({}).toArray()
     
-    const data = fs.readFileSync(POSITIONS_FILE, 'utf-8');
+    // Convert MongoDB _id to our id format and remove _id
+    const formattedPositions = positions.map(pos => ({
+      id: pos.id || pos._id.toString(),
+      title: pos.title,
+      department: pos.department,
+      location: pos.location,
+      description: pos.description,
+      heritage: pos.heritage,
+      culture: pos.culture,
+      responsibilities: pos.responsibilities || [],
+      requirements: pos.requirements || [],
+      workingSchedule: pos.workingSchedule,
+      benefits: pos.benefits || [],
+      callToAction: pos.callToAction,
+      icon: pos.icon || 'Briefcase'
+    }))
     
-    try {
-      const positions = JSON.parse(data);
-      
-      // Validate it's an array
-      if (!Array.isArray(positions)) {
-        console.error('API ID: Positions file does not contain an array');
-        return [];
-      }
-      
-      console.log(`API ID: Successfully loaded ${positions.length} positions`);
-      return positions;
-    } catch (e) {
-      console.error('API ID: Error parsing positions file:', e);
-      // If we can't parse the file, return an empty array
-      return [];
-    }
+    console.log(`API ID: Successfully loaded ${formattedPositions.length} positions from MongoDB`);
+    return formattedPositions;
   } catch (error) {
-    console.error('API ID: Error reading positions file:', error);
+    console.error('API ID: Error reading positions from MongoDB:', error);
     return [];
   }
 }
 
-// Save job positions
-function savePositions(positions: JobPosition[]): boolean {
+// Save job positions to MongoDB
+async function savePositions(positions: JobPosition[]): Promise<boolean> {
   console.log('API ID: Saving positions, count:', positions.length);
   
   try {
-    if (!fs.existsSync(DATA_DIR)) {
-      console.log('API ID: Creating data directory');
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    
     // Validate positions is an array
     if (!Array.isArray(positions)) {
       console.error('API ID: Cannot save - positions is not an array');
@@ -61,92 +60,119 @@ function savePositions(positions: JobPosition[]): boolean {
     const validPositions = positions.filter(pos => pos && typeof pos === 'object' && pos.id && pos.title);
     console.log(`API ID: Filtered out ${positions.length - validPositions.length} invalid positions`);
     
-    // Write the file with 'w' flag to ensure overwrite
-    fs.writeFileSync(POSITIONS_FILE, JSON.stringify(validPositions, null, 2), { flag: 'w' });
-    console.log('API ID: Successfully wrote positions file');
+    const collection = await getCollection()
     
-    // Verify the file was written correctly
-    const verifyData = fs.readFileSync(POSITIONS_FILE, 'utf-8');
-    try {
-      const parsedData = JSON.parse(verifyData);
-      if (Array.isArray(parsedData)) {
-        console.log(`API ID: Verified file contains array with ${parsedData.length} positions`);
-        return true;
-      } else {
-        console.error('API ID: Verification failed - file does not contain an array');
-        return false;
-      }
-    } catch (e) {
-      console.error('API ID: Verification failed - file contains invalid JSON:', e);
-      return false;
+    // Clear existing positions and insert new ones
+    await collection.deleteMany({})
+    
+    if (validPositions.length > 0) {
+      await collection.insertMany(validPositions)
     }
+    
+    console.log(`API ID: Successfully saved ${validPositions.length} positions to MongoDB`);
+    return true;
   } catch (error) {
-    console.error('API ID: Error saving positions:', error);
+    console.error('API ID: Error saving positions to MongoDB:', error);
     return false;
   }
 }
 
-// Get position by ID
-function getPositionById(id: string): JobPosition | undefined {
+// Get position by ID from MongoDB
+async function getPositionById(id: string): Promise<JobPosition | undefined> {
   console.log(`API ID: Finding position with ID: ${id}`);
-  const positions = getPositions();
-  const position = positions.find(pos => pos.id === id);
-  console.log(`API ID: Position found: ${!!position}`);
-  return position;
+  try {
+    const collection = await getCollection()
+    const position = await collection.findOne({ id })
+    
+    if (!position) {
+      console.log(`API ID: Position not found: ${id}`);
+      return undefined
+    }
+    
+    const formattedPosition = {
+      id: position.id,
+      title: position.title,
+      department: position.department,
+      location: position.location,
+      description: position.description,
+      heritage: position.heritage,
+      culture: position.culture,
+      responsibilities: position.responsibilities || [],
+      requirements: position.requirements || [],
+      workingSchedule: position.workingSchedule,
+      benefits: position.benefits || [],
+      callToAction: position.callToAction,
+      icon: position.icon || 'Briefcase'
+    }
+    
+    console.log(`API ID: Position found: ${!!formattedPosition}`);
+    return formattedPosition
+  } catch (error) {
+    console.error('API ID: Error getting position by ID from MongoDB:', error);
+    return undefined
+  }
 }
 
-// Update position
-function updatePosition(id: string, updates: Partial<JobPosition>): JobPosition | null {
+// Update position in MongoDB
+async function updatePosition(id: string, updates: Partial<JobPosition>): Promise<JobPosition | null> {
   console.log(`API ID: Updating position with ID: ${id}`);
-  const positions = getPositions();
-  const index = positions.findIndex(pos => pos.id === id);
-  
-  if (index === -1) {
-    console.log(`API ID: Position not found for update: ${id}`);
-    return null;
-  }
-  
-  const updatedPosition = {
-    ...positions[index],
-    ...updates
-  };
-  
-  positions[index] = updatedPosition;
-  const success = savePositions(positions);
-  
-  if (success) {
+  try {
+    const collection = await getCollection()
+    const result = await collection.findOneAndUpdate(
+      { id },
+      { $set: updates },
+      { returnDocument: 'after' }
+    )
+    
+    if (!result) {
+      console.log(`API ID: Position not found for update: ${id}`);
+      return null;
+    }
+    
+    const updatedPosition = {
+      id: result.id,
+      title: result.title,
+      department: result.department,
+      location: result.location,
+      description: result.description,
+      heritage: result.heritage,
+      culture: result.culture,
+      responsibilities: result.responsibilities || [],
+      requirements: result.requirements || [],
+      workingSchedule: result.workingSchedule,
+      benefits: result.benefits || [],
+      callToAction: result.callToAction,
+      icon: result.icon || 'Briefcase'
+    }
+    
     console.log(`API ID: Successfully updated position: ${id}`);
     return updatedPosition;
-  } else {
-    console.error(`API ID: Failed to save positions after update: ${id}`);
+  } catch (error) {
+    console.error(`API ID: Failed to update position: ${id}`, error);
     return null;
   }
 }
 
-// Delete position
-function deletePosition(id: string): {success: boolean, positions: JobPosition[]} {
+// Delete position from MongoDB
+async function deletePosition(id: string): Promise<{success: boolean, positions: JobPosition[]}> {
   console.log(`API ID: Deleting position with ID: ${id}`);
-  const positions = getPositions();
-  const positionExists = positions.some(pos => pos.id === id);
-  
-  if (!positionExists) {
-    console.log(`API ID: Position not found for deletion: ${id}`);
-    return { success: false, positions };
-  }
-  
-  console.log(`API ID: Position exists, proceeding with deletion`);
-  const filteredPositions = positions.filter(pos => pos.id !== id);
-  console.log(`API ID: Filtered positions count: ${filteredPositions.length} (original: ${positions.length})`);
-  
-  const success = savePositions(filteredPositions);
-  
-  if (success) {
+  try {
+    const collection = await getCollection()
+    const result = await collection.deleteOne({ id })
+    
+    if (result.deletedCount === 0) {
+      console.log(`API ID: Position not found for deletion: ${id}`);
+      const positions = await getPositions()
+      return { success: false, positions };
+    }
+    
     console.log(`API ID: Successfully deleted position: ${id}`);
     // Get the latest positions to return
-    const updatedPositions = getPositions();
+    const updatedPositions = await getPositions();
     return { success: true, positions: updatedPositions };
-  } else {
-    console.error(`API ID: Failed to save positions after deletion: ${id}`);
+  } catch (error) {
+    console.error(`API ID: Failed to delete position: ${id}`, error);
+    const positions = await getPositions()
     return { success: false, positions };
   }
 }
@@ -157,7 +183,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const position = getPositionById(params.id)
+    const position = await getPositionById(params.id)
     
     if (!position) {
       return NextResponse.json(
@@ -166,7 +192,13 @@ export async function GET(
       )
     }
     
-    return NextResponse.json(position)
+    return NextResponse.json(position, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    })
   } catch (error) {
     console.error('Error fetching job position:', error)
     return NextResponse.json(
@@ -185,14 +217,14 @@ export async function PUT(
     const body = await request.json()
     
     // Validate required fields if it's a full update
-    if (!body.title || !body.department || !body.location || !body.description) {
+    if (!body.title || !body.department || !body.location) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: title, department, location' },
         { status: 400 }
       )
     }
     
-    const updatedPosition = updatePosition(params.id, body)
+    const updatedPosition = await updatePosition(params.id, body)
     
     if (!updatedPosition) {
       return NextResponse.json(
@@ -218,7 +250,7 @@ export async function PATCH(
   try {
     const body = await request.json()
     
-    const updatedPosition = updatePosition(params.id, body)
+    const updatedPosition = await updatePosition(params.id, body)
     
     if (!updatedPosition) {
       return NextResponse.json(
@@ -246,7 +278,7 @@ export async function DELETE(
     console.log('API ID: DELETE - Deleting position with ID:', params.id);
     
     // Check if the position exists before trying to delete it
-    const position = getPositionById(params.id);
+    const position = await getPositionById(params.id);
     if (!position) {
       console.log('API ID: DELETE - Position not found for deletion:', params.id);
       return NextResponse.json(
@@ -256,11 +288,11 @@ export async function DELETE(
     }
     
     // Get all positions to log the count
-    const allPositions = getPositions();
+    const allPositions = await getPositions();
     console.log('API ID: DELETE - Current positions count before deletion:', allPositions.length);
     
     // Delete the position
-    const result = deletePosition(params.id);
+    const result = await deletePosition(params.id);
     
     if (!result.success) {
       console.log('API ID: DELETE - Deletion failed for position:', params.id);

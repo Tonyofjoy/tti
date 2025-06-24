@@ -1,104 +1,82 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
+import clientPromise from '@/lib/mongodb'
 
-// Define the job position type
+// Define the comprehensive job position type
 export type JobPosition = {
   id: string
   title: string
   department: string
   location: string
-  description: string
-  requirements: string[]
+  description?: string // Keep for backward compatibility
+  
+  // Comprehensive job details
+  heritage?: string
+  culture?: {
+    description: string
+    values: string[]
+  }
+  responsibilities?: string[]
+  requirements?: string[]
+  workingSchedule?: {
+    description: string
+    hours: string
+  }
+  benefits?: string[]
+  callToAction?: string
+  
   icon: string
 }
 
-// Path to store job positions data
-const DATA_DIR = path.join(process.cwd(), 'data')
-const POSITIONS_FILE = path.join(DATA_DIR, 'jobpositions.json')
+// Database collection name
+const COLLECTION_NAME = 'jobpositions'
 
-// Ensure directories exist
-function ensureDirectoriesExist() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true })
-  }
-  
-  if (!fs.existsSync(POSITIONS_FILE)) {
-    // Create default positions if the file doesn't exist
-    const defaultPositions: JobPosition[] = [
-      {
-        id: uuidv4(),
-        title: "Senior AI Engineer",
-        department: "Engineering",
-        location: "London, UK (Hybrid)",
-        description: "Lead the development of cutting-edge AI solutions for enterprise clients.",
-        requirements: ["5+ years experience in ML/AI", "Strong Python skills", "Experience with TensorFlow or PyTorch"],
-        icon: "Briefcase"
-      },
-      {
-        id: uuidv4(),
-        title: "UX/UI Designer",
-        department: "Design",
-        location: "Remote (UK-based)",
-        description: "Create intuitive and engaging user experiences for our digital products.",
-        requirements: ["3+ years in UX/UI design", "Proficiency in Figma", "Portfolio of digital products"],
-        icon: "Users"
-      },
-      {
-        id: uuidv4(),
-        title: "Technical Project Manager",
-        department: "Project Management",
-        location: "London, UK",
-        description: "Oversee the successful delivery of complex technical projects for our clients.",
-        requirements: ["PMP or Agile certification", "5+ years managing tech projects", "Client-facing experience"],
-        icon: "Lightbulb"
-      }
-    ]
-    fs.writeFileSync(POSITIONS_FILE, JSON.stringify(defaultPositions, null, 2))
-  }
+// Helper function to get database collection
+async function getCollection() {
+  const client = await clientPromise
+  const db = client.db()
+  return db.collection(COLLECTION_NAME)
 }
 
-// Get all job positions
-function getPositions(): JobPosition[] {
+// Get all job positions from MongoDB
+async function getPositions(): Promise<JobPosition[]> {
   try {
-    console.log('API: Fetching all job positions from file');
-    ensureDirectoriesExist();
+    console.log('API: Fetching all job positions from MongoDB');
+    const collection = await getCollection()
+    const positions = await collection.find({}).toArray()
     
-    if (!fs.existsSync(POSITIONS_FILE)) {
-      console.log('API: Positions file does not exist, creating default positions');
-      // Create default positions if the file doesn't exist
-      const defaultPositions = getDefaultPositions();
-      savePositions(defaultPositions);
-      return defaultPositions;
+    // Convert MongoDB _id to our id format and remove _id
+    const formattedPositions = positions.map(pos => ({
+      id: pos.id || pos._id.toString(),
+      title: pos.title,
+      department: pos.department,
+      location: pos.location,
+      description: pos.description,
+      heritage: pos.heritage,
+      culture: pos.culture,
+      responsibilities: pos.responsibilities || [],
+      requirements: pos.requirements || [],
+      workingSchedule: pos.workingSchedule,
+      benefits: pos.benefits || [],
+      callToAction: pos.callToAction,
+      icon: pos.icon || 'Briefcase'
+    }))
+    
+    console.log(`API: Successfully loaded ${formattedPositions.length} positions from MongoDB`);
+    
+    // If no positions exist, create default ones
+    if (formattedPositions.length === 0) {
+      console.log('API: No positions found, creating default positions');
+      const defaultPositions = getDefaultPositions()
+      await savePositions(defaultPositions)
+      return defaultPositions
     }
     
-    // Read file with explicit utf8 encoding
-    const data = fs.readFileSync(POSITIONS_FILE, 'utf8');
-    
-    try {
-      const positions = JSON.parse(data);
-      
-      // Validate it's an array
-      if (!Array.isArray(positions)) {
-        console.error('API: Positions file does not contain an array, resetting to defaults');
-        const defaultPositions = getDefaultPositions();
-        savePositions(defaultPositions);
-        return defaultPositions;
-      }
-      
-      console.log(`API: Successfully loaded ${positions.length} positions`);
-      return positions;
-    } catch (parseError) {
-      console.error('API: Error parsing positions file, resetting to defaults:', parseError);
-      // If JSON parse fails, create new default positions
-      const defaultPositions = getDefaultPositions();
-      savePositions(defaultPositions);
-      return defaultPositions;
-    }
+    return formattedPositions
   } catch (error) {
-    console.error('API: Error reading positions file:', error);
-    return [];
+    console.error('API: Error reading positions from MongoDB:', error);
+    // Return default positions as fallback
+    return getDefaultPositions()
   }
 }
 
@@ -135,16 +113,10 @@ function getDefaultPositions(): JobPosition[] {
   ];
 }
 
-// Save job positions
-function savePositions(positions: JobPosition[]) {
+// Save job positions to MongoDB
+async function savePositions(positions: JobPosition[]): Promise<boolean> {
   try {
-    console.log(`API: Saving ${positions.length} positions to file`);
-    
-    // Create directory if it doesn't exist
-    if (!fs.existsSync(DATA_DIR)) {
-      console.log('API: Creating data directory');
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
+    console.log(`API: Saving ${positions.length} positions to MongoDB`);
     
     // Validate that positions is actually an array before saving
     if (!Array.isArray(positions)) {
@@ -152,86 +124,126 @@ function savePositions(positions: JobPosition[]) {
       throw new Error('Cannot save positions: data is not an array');
     }
     
-    // Ensure we're writing valid JSON by validating each position
+    // Ensure we're writing valid data by validating each position
     const validPositions = positions.filter(pos => {
       return pos && typeof pos === 'object' && pos.id && pos.title;
     });
     console.log(`API: Filtered ${positions.length - validPositions.length} invalid positions`);
     
-    // Convert to JSON with pretty formatting
-    const jsonData = JSON.stringify(validPositions, null, 2);
+    const collection = await getCollection()
     
-    // Use writeFileSync with explicit overwrite flag
-    fs.writeFileSync(POSITIONS_FILE, jsonData, { flag: 'w' });
+    // Clear existing positions and insert new ones
+    await collection.deleteMany({})
     
-    // Verify the file was written correctly by reading it back
-    const verifyData = fs.readFileSync(POSITIONS_FILE, 'utf-8');
-    try {
-      const parsedData = JSON.parse(verifyData);
-      console.log(`API: Verified saved data, found ${parsedData.length} positions`);
-    } catch (e) {
-      console.error('API: WARNING - File verification failed, saved data may be corrupt');
-      throw new Error('File verification failed after save');
+    if (validPositions.length > 0) {
+      await collection.insertMany(validPositions)
     }
     
+    console.log(`API: Successfully saved ${validPositions.length} positions to MongoDB`);
     return true;
   } catch (error) {
-    console.error('API: Error saving positions:', error);
+    console.error('API: Error saving positions to MongoDB:', error);
     throw error;
   }
 }
 
-// Get position by ID
-function getPositionById(id: string): JobPosition | undefined {
-  const positions = getPositions()
-  return positions.find(pos => pos.id === id)
+// Get position by ID from MongoDB
+async function getPositionById(id: string): Promise<JobPosition | undefined> {
+  try {
+    const collection = await getCollection()
+    const position = await collection.findOne({ id })
+    
+    if (!position) {
+      return undefined
+    }
+    
+    return {
+      id: position.id,
+      title: position.title,
+      department: position.department,
+      location: position.location,
+      description: position.description,
+      heritage: position.heritage,
+      culture: position.culture,
+      responsibilities: position.responsibilities || [],
+      requirements: position.requirements || [],
+      workingSchedule: position.workingSchedule,
+      benefits: position.benefits || [],
+      callToAction: position.callToAction,
+      icon: position.icon || 'Briefcase'
+    }
+  } catch (error) {
+    console.error('API: Error getting position by ID from MongoDB:', error);
+    return undefined
+  }
 }
 
-// Update position
-function updatePosition(id: string, updates: Partial<JobPosition>): JobPosition | null {
-  const positions = getPositions()
-  const index = positions.findIndex(pos => pos.id === id)
-  
-  if (index === -1) {
+// Update position in MongoDB
+async function updatePosition(id: string, updates: Partial<JobPosition>): Promise<JobPosition | null> {
+  try {
+    const collection = await getCollection()
+    const result = await collection.findOneAndUpdate(
+      { id },
+      { $set: updates },
+      { returnDocument: 'after' }
+    )
+    
+    if (!result) {
+      return null
+    }
+    
+    return {
+      id: result.id,
+      title: result.title,
+      department: result.department,
+      location: result.location,
+      description: result.description,
+      heritage: result.heritage,
+      culture: result.culture,
+      responsibilities: result.responsibilities || [],
+      requirements: result.requirements || [],
+      workingSchedule: result.workingSchedule,
+      benefits: result.benefits || [],
+      callToAction: result.callToAction,
+      icon: result.icon || 'Briefcase'
+    }
+  } catch (error) {
+    console.error('API: Error updating position in MongoDB:', error);
     return null
   }
-  
-  const updatedPosition = {
-    ...positions[index],
-    ...updates
-  }
-  
-  positions[index] = updatedPosition
-  savePositions(positions)
-  
-  return updatedPosition
 }
 
-// Delete position
-function deletePosition(id: string): boolean {
-  const positions = getPositions()
-  const initialLength = positions.length
-  const filteredPositions = positions.filter(pos => pos.id !== id)
-  
-  if (filteredPositions.length === initialLength) {
+// Delete position from MongoDB
+async function deletePosition(id: string): Promise<boolean> {
+  try {
+    const collection = await getCollection()
+    const result = await collection.deleteOne({ id })
+    return result.deletedCount > 0
+  } catch (error) {
+    console.error('API: Error deleting position from MongoDB:', error);
     return false
   }
-  
-  savePositions(filteredPositions)
-  return true
 }
 
 // GET - Retrieve all job positions
 export async function GET(request: NextRequest) {
   try {
     console.log('API: GET - Fetching all job positions');
-    const positions = getPositions();
+    const positions = await getPositions();
     console.log(`API: GET - Found ${positions.length} positions`);
-    return NextResponse.json(positions);
+    
+    return NextResponse.json(positions, {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   } catch (error) {
-    console.error('API: GET - Error fetching job positions:', error);
+    console.error('API: GET - Error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch job positions', details: String(error) },
+      { error: 'Failed to retrieve job positions' },
       { status: 500 }
     );
   }
@@ -242,52 +254,56 @@ export async function POST(request: NextRequest) {
   try {
     console.log('API: POST - Creating new job position');
     const body = await request.json();
-    console.log('API: POST - Received job position data:', body);
+    console.log('API: POST - Request body:', body);
     
     // Validate required fields
-    if (!body.title || !body.department || !body.location || !body.description) {
-      console.log('API: POST - Missing required fields in job position data');
+    if (!body.title || !body.department || !body.location) {
+      console.log('API: POST - Missing required fields');
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields: title, department, location' },
         { status: 400 }
       );
     }
     
-    // Create new position
+    // Create new position with comprehensive structure
     const newPosition: JobPosition = {
-      id: body.id || uuidv4(),
+      id: uuidv4(),
       title: body.title,
       department: body.department,
       location: body.location,
       description: body.description,
+      heritage: body.heritage,
+      culture: body.culture,
+      responsibilities: body.responsibilities || [],
       requirements: body.requirements || [],
+      workingSchedule: body.workingSchedule,
+      benefits: body.benefits || [],
+      callToAction: body.callToAction,
       icon: body.icon || 'Briefcase'
     };
-    console.log('API: POST - Created new job position object:', newPosition);
     
-    // Get existing positions
-    const positions = getPositions();
-    console.log('API: POST - Current positions count before adding:', positions.length);
+    console.log('API: POST - Created position object:', newPosition);
     
-    // Save to file
-    positions.push(newPosition);
-    savePositions(positions);
+    // Get current positions and add the new one
+    const currentPositions = await getPositions();
+    const updatedPositions = [...currentPositions, newPosition];
     
-    // Get updated positions to verify
-    const updatedPositions = getPositions();
-    console.log('API: POST - Positions count after adding:', updatedPositions.length);
+    // Save updated positions
+    await savePositions(updatedPositions);
     
+    console.log('API: POST - Successfully created position');
     return NextResponse.json({
       success: true,
       position: newPosition,
       message: 'Job position created successfully',
       totalPositions: updatedPositions.length,
-      allPositions: updatedPositions // Return all positions for immediate UI update
-    });
+      allPositions: updatedPositions
+    }, { status: 201 });
+    
   } catch (error) {
-    console.error('API: POST - Error creating job position:', error);
+    console.error('API: POST - Error:', error);
     return NextResponse.json(
-      { error: 'Failed to create job position', details: String(error) },
+      { error: 'Failed to create job position' },
       { status: 500 }
     );
   }
@@ -313,7 +329,7 @@ export async function PUT(request: NextRequest) {
       )
     }
     
-    const updatedPosition = updatePosition(body.id, body)
+    const updatedPosition = await updatePosition(body.id, body)
     
     if (!updatedPosition) {
       return NextResponse.json(
@@ -345,7 +361,7 @@ export async function DELETE(request: NextRequest) {
       )
     }
     
-    const success = deletePosition(id)
+    const success = await deletePosition(id)
     
     if (!success) {
       return NextResponse.json(
