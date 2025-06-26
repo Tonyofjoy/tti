@@ -101,7 +101,7 @@ export default function ToolsPage() {
     const toolUrls: Record<string, string> = {
       'qr-generator': 'https://qr.tonytechinsights.com/',
       'email-generator': 'https://emailgen.tonytechinsights.com/',
-      'life-in-weeks': 'https://lifespan.tonytechinsights.com/'
+      'life-in-weeks': 'https://lifespanweek.vercel.app/'
     };
     
     const url = toolUrls[toolId];
