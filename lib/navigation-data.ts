@@ -75,6 +75,7 @@ export const navigationData: NavigationData = {
     {
       items: [
         { name: "Blog", path: "/resources/blog" },
+        { name: "Tools", path: "/resources/tools" },
       ],
     },
   ],
@@ -105,6 +106,7 @@ export const footerLinks = {
   ],
   resources: [
     { name: "Blog", href: "/resources/blog" },
+    { name: "Tools", href: "/resources/tools" },
     { name: "Case Studies", href: "/work/case-studies" },
   ],
   legal: [
