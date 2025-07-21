@@ -133,10 +133,10 @@ export const pricingItems: PricingItem[] = [
   },
   {
     id: 'mobile-optimization',
-    name: 'Mobile Optimization',
+    name: 'Responsiveness',
     description: 'Responsive for all screen sizes',
     unit: 'Per project',
-    unitPrice: 500,
+    unitPrice: 200,
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization'
@@ -146,7 +146,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Speed Optimization',
     description: 'PageSpeed (GTMetrix / Google) tuning',
     unit: 'Per project',
-    unitPrice: 400,
+    unitPrice: 100,
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization'
@@ -156,7 +156,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Basic SEO setup',
     description: 'Meta tags, schema, sitemap, robots.txt',
     unit: 'Per project',
-    unitPrice: 400,
+    unitPrice: 100,
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization'
@@ -166,7 +166,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Domain & Hosting Setup',
     description: 'Domain DNS + hosting configuration',
     unit: 'Per project',
-    unitPrice: 250,
+    unitPrice: 150,
     defaultQty: 1,
     maxQty: 1,
     category: 'hosting'
