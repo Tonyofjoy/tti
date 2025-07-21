@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from "framer-motion"
-import { Mail, Calendar, ArrowLeft, LogOut, Users, Briefcase, Download, CheckCircle, XCircle, Clock, Edit, Plus, Trash } from "lucide-react"
+import { Mail, Calendar, ArrowLeft, LogOut, Users, Briefcase, Download, CheckCircle, XCircle, Clock, Edit, Plus, Trash, Calculator } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { 
   BlogPost, 
@@ -634,6 +634,12 @@ export default function AdminDashboard() {
               >
                 <Plus className="h-4 w-4" /> Job Positions
               </button>
+              <Link
+                href="/admin/bookings"
+                className={`px-5 py-3 rounded-lg font-medium transition-colors flex items-center gap-2 text-white/60 hover:text-white hover:bg-white/5`}
+              >
+                <Calculator className="h-4 w-4" /> Project Bookings
+              </Link>
               <button
                 onClick={() => setActiveTab('users')}
                 className={`px-5 py-3 rounded-lg font-medium transition-colors ${
