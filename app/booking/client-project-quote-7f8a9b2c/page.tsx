@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Calculator, DollarSign, CheckCircle, Circle, Plus, Minus } from 'lucide-react'
+
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { BookingFormData } from '@/types/booking'
-import { pricingItems, categoryColors, categoryIcons } from '@/data/pricing'
+import { pricingItems, categoryColors } from '@/data/pricing'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
@@ -174,7 +174,7 @@ export default function ClientProjectBookingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 pt-16 sm:pt-24 pb-8 sm:pb-12 px-3 sm:px-6 lg:px-8">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-black to-[#0021a7]/10" />
       <div className="absolute inset-0 overflow-hidden">
@@ -187,20 +187,20 @@ export default function ClientProjectBookingPage() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-[#00b8ff] to-[#0021a7] bg-clip-text text-transparent px-2">
             Premium Web Development Quote
           </h1>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto mb-3">
+          <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto mb-2 sm:mb-3 px-4">
             Select your desired services and get an instant project estimate. Our team will review your requirements and provide a detailed proposal.
           </p>
-          <p className="text-sm text-white/50 max-w-3xl mx-auto">
+          <p className="text-xs sm:text-sm text-white/50 max-w-3xl mx-auto px-4">
             Last updated: 1/1/2025
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Left Column - Client Information Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -209,9 +209,9 @@ export default function ClientProjectBookingPage() {
             className="lg:col-span-1"
           >
             <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-              <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6">
-                <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-                  📋 Client Information
+              <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white">
+                  Client Information
                 </h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -313,9 +313,9 @@ export default function ClientProjectBookingPage() {
             className="lg:col-span-1"
           >
             <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-              <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6">
-                <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-                  🛠️ Project Scope & Pricing
+              <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 sm:p-6">
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white">
+                  Project Scope & Pricing
                 </h2>
                 
                 <div className="space-y-4 max-h-[800px] overflow-y-auto scrollbar-none">
@@ -327,8 +327,7 @@ export default function ClientProjectBookingPage() {
                     }, {} as Record<string, typeof pricingItems>)
                   ).map(([category, items]) => (
                     <div key={category} className="space-y-2">
-                      <h3 className="text-lg font-semibold text-white/90 flex items-center gap-2">
-                        {categoryIcons[category as keyof typeof categoryIcons]} 
+                      <h3 className="text-lg font-semibold text-white/90">
                         {category.charAt(0).toUpperCase() + category.slice(1)}
                       </h3>
                       
@@ -339,7 +338,7 @@ export default function ClientProjectBookingPage() {
                         return (
                           <div
                             key={item.id}
-                            className={`p-4 rounded-lg border transition-all cursor-pointer ${
+                            className={`p-3 sm:p-4 rounded-lg border transition-all cursor-pointer ${
                               selection.enabled
                                 ? 'border-[#00b8ff] bg-[#00b8ff]/10'
                                 : 'border-white/10 bg-white/5 hover:border-white/20'
@@ -349,11 +348,15 @@ export default function ClientProjectBookingPage() {
                             <div className="flex items-start justify-between">
                               <div className="flex items-start gap-3 flex-1">
                                 <div className="mt-1">
-                                  {selection.enabled ? (
-                                    <CheckCircle className="h-5 w-5 text-[#00b8ff]" />
-                                  ) : (
-                                    <Circle className="h-5 w-5 text-white/40" />
-                                  )}
+                                  <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                                    selection.enabled 
+                                      ? 'border-[#00b8ff] bg-[#00b8ff]' 
+                                      : 'border-white/40'
+                                  }`}>
+                                    {selection.enabled && (
+                                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                                    )}
+                                  </div>
                                 </div>
                                 <div className="flex-1">
                                   <h4 className="font-semibold text-white">{item.name}</h4>
@@ -379,12 +382,12 @@ export default function ClientProjectBookingPage() {
                                         e.stopPropagation()
                                         updateQuantity(item.id, selection.quantity - 1)
                                       }}
-                                      className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
+                                      className="w-8 h-8 sm:w-6 sm:h-6 rounded bg-white/10 hover:bg-white/20 text-white text-sm font-bold flex items-center justify-center touch-manipulation"
                                       disabled={selection.quantity <= 1}
                                     >
-                                      <Minus className="h-3 w-3" />
+                                      −
                                     </button>
-                                    <span className="w-8 text-center text-white font-medium">
+                                    <span className="w-10 sm:w-8 text-center text-white font-medium">
                                       {selection.quantity}
                                     </span>
                                     <button
@@ -393,10 +396,10 @@ export default function ClientProjectBookingPage() {
                                         e.stopPropagation()
                                         updateQuantity(item.id, selection.quantity + 1)
                                       }}
-                                      className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
+                                      className="w-8 h-8 sm:w-6 sm:h-6 rounded bg-white/10 hover:bg-white/20 text-white text-sm font-bold flex items-center justify-center touch-manipulation"
                                       disabled={selection.quantity >= (item.maxQty || 99)}
                                     >
-                                      <Plus className="h-3 w-3" />
+                                      +
                                     </button>
                                   </div>
                                 </div>
@@ -425,12 +428,11 @@ export default function ClientProjectBookingPage() {
             transition={{ delay: 0.6 }}
             className="lg:col-span-1"
           >
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Budget Calculator */}
               <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6">
-                  <h2 className="text-2xl font-bold mb-6 text-white flex items-center gap-2">
-                    <Calculator className="h-6 w-6" />
+                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 sm:p-6">
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white">
                     Budget Calculator
                   </h2>
                   
@@ -460,12 +462,12 @@ export default function ClientProjectBookingPage() {
                               const subtotal = item.unitPrice * selection.quantity
                               
                               return (
-                                <div key={itemId} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-                                  <div>
+                                <div key={itemId} className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 bg-white/5 rounded-lg gap-1 sm:gap-0">
+                                  <div className="flex items-center">
                                     <span className="text-white text-sm font-medium">{item.name}</span>
                                     <span className="text-white/60 text-xs ml-2">×{selection.quantity}</span>
                                   </div>
-                                  <span className="text-[#00b8ff] font-semibold">
+                                  <span className="text-[#00b8ff] font-semibold text-right">
                                     ${subtotal.toLocaleString()}
                                   </span>
                                 </div>
@@ -480,7 +482,7 @@ export default function ClientProjectBookingPage() {
 
               {/* Submit Button */}
               <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6">
+                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 sm:p-6">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -496,16 +498,13 @@ export default function ClientProjectBookingPage() {
                         <span>Submitting...</span>
                       </>
                     ) : (
-                      <>
-                        <span>Request Quote</span>
-                        <Send className="h-5 w-5" />
-                      </>
+                      <span>Request Quote</span>
                     )}
                   </motion.button>
                   
                   <div className="mt-4 pt-4 border-t border-white/10">
-                    <h4 className="text-lg font-semibold mb-4 text-white">What happens next?</h4>
-                    <ol className="space-y-3">
+                    <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">What happens next?</h4>
+                    <ol className="space-y-2 sm:space-y-3">
                       <li className="flex items-start gap-3">
                         <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#00b8ff]/20 flex items-center justify-center text-sm font-bold text-[#00b8ff]">1</span>
                         <span className="text-white/80 text-sm">We'll review your requirements within 24 hours</span>
@@ -531,16 +530,16 @@ export default function ClientProjectBookingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-12"
+          className="mt-8 sm:mt-10 lg:mt-12"
         >
           <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-            <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-8">
-              <h2 className="text-3xl font-bold mb-8 text-white flex items-center gap-3">
-                📋 Project Terms & Details
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="space-y-6">
+            <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 sm:p-6 lg:p-8">
+                                           <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white">
+                 Project Terms & Details
+               </h2>
+               
+                               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
                     <div>
@@ -558,7 +557,7 @@ export default function ClientProjectBookingPage() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
                     <div>
@@ -576,7 +575,7 @@ export default function ClientProjectBookingPage() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
                     <div>
