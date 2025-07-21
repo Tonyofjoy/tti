@@ -451,7 +451,7 @@ export default function ClientProjectBookingPage() {
                     {Object.entries(formData.selectedItems).some(([_, selection]) => selection.enabled) && (
                       <div className="space-y-2">
                         <h3 className="font-semibold text-white/90">Selected Services:</h3>
-                        <div className="max-h-60 overflow-y-auto scrollbar-none space-y-2">
+                        <div className="max-h-[400px] overflow-y-auto scrollbar-none space-y-2">
                           {Object.entries(formData.selectedItems)
                             .filter(([_, selection]) => selection.enabled)
                             .map(([itemId, selection]) => {
@@ -460,12 +460,12 @@ export default function ClientProjectBookingPage() {
                               const subtotal = item.unitPrice * selection.quantity
                               
                               return (
-                                <div key={itemId} className="flex justify-between items-center p-2 bg-white/5 rounded">
+                                <div key={itemId} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
                                   <div>
-                                    <span className="text-white text-sm">{item.name}</span>
+                                    <span className="text-white text-sm font-medium">{item.name}</span>
                                     <span className="text-white/60 text-xs ml-2">×{selection.quantity}</span>
                                   </div>
-                                  <span className="text-[#00b8ff] font-medium">
+                                  <span className="text-[#00b8ff] font-semibold">
                                     ${subtotal.toLocaleString()}
                                   </span>
                                 </div>
@@ -474,67 +474,6 @@ export default function ClientProjectBookingPage() {
                         </div>
                       </div>
                     )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Terms & Conditions */}
-              <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
-                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6">
-                  <h2 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
-                    📋 Project Terms & Details
-                  </h2>
-                  
-                  <div className="space-y-4 text-sm">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#00b8ff] mt-2"></div>
-                      <div>
-                        <span className="font-semibold text-white">Payment:</span>
-                        <span className="text-white/80 ml-1">50% upfront payment, 50% upon project handover</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#00b8ff] mt-2"></div>
-                      <div>
-                        <span className="font-semibold text-white">Timeline:</span>
-                        <span className="text-white/80 ml-1">~3–5 weeks from start date</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#00b8ff] mt-2"></div>
-                      <div>
-                        <span className="font-semibold text-white">Revisions:</span>
-                        <span className="text-white/80 ml-1">Up to 2 rounds included per deliverable</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#00b8ff] mt-2"></div>
-                      <div>
-                        <span className="font-semibold text-white">Validity:</span>
-                        <span className="text-white/80 ml-1">Quote valid for 14 days</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#00b8ff] mt-2"></div>
-                      <div>
-                        <span className="font-semibold text-white">Maintenance:</span>
-                        <span className="text-white/80 ml-1">Always free of charge (applicable only if error comes from our production)</span>
-                      </div>
-                    </div>
-                    
-                    <div className="pt-3 border-t border-white/10">
-                      <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 w-2 h-2 rounded-full bg-orange-400 mt-2"></div>
-                        <div>
-                          <span className="font-semibold text-white">Optional add-ons:</span>
-                          <span className="text-white/80 ml-1">Google Ads setup, Video shooting, CRM integration (quoted separately)</span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -586,6 +525,78 @@ export default function ClientProjectBookingPage() {
             </div>
           </motion.div>
         </div>
+
+        {/* Project Terms & Details Section - Now standalone below the main grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mt-12"
+        >
+          <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl">
+            <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-8">
+              <h2 className="text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                📋 Project Terms & Details
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Payment:</span>
+                      <p className="text-white/80 mt-1">50% upfront payment, 50% upon project handover</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Timeline:</span>
+                      <p className="text-white/80 mt-1">~3–5 weeks from start date</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Revisions:</span>
+                      <p className="text-white/80 mt-1">Up to 2 rounds included per deliverable</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Validity:</span>
+                      <p className="text-white/80 mt-1">Quote valid for 14 days</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-[#00b8ff] mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Maintenance:</span>
+                      <p className="text-white/80 mt-1">Always free of charge (applicable only if error comes from our production)</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-3 h-3 rounded-full bg-orange-400 mt-2"></div>
+                    <div>
+                      <span className="font-semibold text-white text-lg">Optional add-ons:</span>
+                      <p className="text-white/80 mt-1">Google Ads setup, Video shooting, CRM integration (quoted separately)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   )
