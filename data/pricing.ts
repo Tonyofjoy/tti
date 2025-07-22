@@ -126,7 +126,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Website full package',
     description: 'Full custom website (5-10 pages, responsive, UI/UX)',
     unit: 'Per project',
-    unitPrice: 8000,
+    unitPrice: 6000,
     defaultQty: 1,
     maxQty: 1,
     category: 'development'
