@@ -26,7 +26,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Subpage',
     description: 'Inner pages (e.g., About, Contact, etc)',
     unit: 'Per page',
-    unitPrice: 500,
+    unitPrice: 250,
     defaultQty: 4,
     maxQty: 20,
     category: 'development'
