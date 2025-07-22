@@ -56,7 +56,7 @@ export const pricingItems: PricingItem[] = [
     name: 'Animation - Advance',
     description: 'Parallax or immersive effects',
     unit: 'Per page',
-    unitPrice: 800,
+    unitPrice: 600,
     defaultQty: 2,
     maxQty: 10,
     category: 'development'
