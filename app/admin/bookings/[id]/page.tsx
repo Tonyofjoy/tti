@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ArrowLeft, CheckCircle, XCircle, Clock, Users, Mail, Phone, Calendar, Calculator, DollarSign, FileText, Building, MessageSquare } from 'lucide-react'
 import { BookingSubmission } from '@/types/booking'
 import { pricingItems } from '@/data/pricing'
+import { basicPricingItems } from '@/data/basic-pricing'
 
 interface ExtendedBookingSubmission extends BookingSubmission {
   _id?: string
@@ -186,10 +187,11 @@ export default function BookingDetails() {
   }
 
   // Get selected services details
+  const allPricingItems = booking.quoteType === 'basic' ? basicPricingItems : pricingItems
   const selectedServices = Object.entries(booking.selectedItems)
     .filter(([_, selection]) => selection.enabled)
     .map(([itemId, selection]) => {
-      const item = pricingItems.find(p => p.id === itemId)
+      const item = allPricingItems.find(p => p.id === itemId)
       return item ? {
         ...item,
         quantity: selection.quantity,
@@ -219,10 +221,19 @@ export default function BookingDetails() {
                     <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
                       {booking.clientName}
                     </h1>
-                    <div className="flex items-center gap-2 text-white/60">
+                    <div className="flex items-center gap-2 text-white/60 mb-2">
                       <Calculator className="h-4 w-4" />
                       <span>{booking.projectName || 'Project Booking'}</span>
                     </div>
+                    {booking.quoteType && (
+                      <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                        booking.quoteType === 'basic' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'bg-purple-500/20 text-purple-400'
+                      }`}>
+                        {booking.quoteType === 'basic' ? '💡 Basic Package' : '⭐ Premium Package'}
+                      </div>
+                    )}
                   </div>
                   <div>
                     {getStatusBadge(booking.status)}

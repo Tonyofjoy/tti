@@ -110,7 +110,7 @@ export default function MainNavigation() {
             />
 
             <Link
-              href="/about/contact"
+              href="/quotes"
               className={cn(
                 "px-4 py-2 text-sm font-medium rounded-lg",
                 "bg-gradient-to-r from-[#00b8ff] to-[#0021a7]",
@@ -118,7 +118,7 @@ export default function MainNavigation() {
               )}
               onMouseEnter={() => setActiveDropdown(null)}
             >
-              Get in Touch
+              Get Quote
             </Link>
           </div>
 

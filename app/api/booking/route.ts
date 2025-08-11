@@ -3,14 +3,18 @@ import { v4 as uuidv4 } from 'uuid'
 import clientPromise from '@/lib/mongodb'
 import { BookingFormData, BookingSubmission } from '@/types/booking'
 import { pricingItems } from '@/data/pricing'
+import { basicPricingItems } from '@/data/basic-pricing'
 
 // Calculate total estimate based on selected items
-function calculateTotal(selectedItems: BookingFormData['selectedItems']): number {
+function calculateTotal(selectedItems: BookingFormData['selectedItems'], quoteType?: 'premium' | 'basic'): number {
   let total = 0
+  
+  // Determine which pricing items to use based on quote type
+  const allPricingItems = quoteType === 'basic' ? basicPricingItems : pricingItems
   
   for (const [itemId, selection] of Object.entries(selectedItems)) {
     if (selection.enabled) {
-      const pricingItem = pricingItems.find(item => item.id === itemId)
+      const pricingItem = allPricingItems.find(item => item.id === itemId)
       if (pricingItem) {
         total += pricingItem.unitPrice * selection.quantity
       }
@@ -43,7 +47,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Calculate total estimate
-    const totalEstimate = calculateTotal(body.selectedItems)
+    const totalEstimate = calculateTotal(body.selectedItems, body.quoteType)
     
     // Create booking submission object
     const bookingSubmission: BookingSubmission = {

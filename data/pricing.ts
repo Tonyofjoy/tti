@@ -9,7 +9,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 2500,
     defaultQty: 1,
     maxQty: 1,
-    category: 'design'
+    category: 'design',
+    quoteType: 'premium'
   },
   {
     id: 'homepage',
@@ -19,7 +20,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 1000,
     defaultQty: 1,
     maxQty: 1,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'subpage',
@@ -29,7 +31,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 250,
     defaultQty: 4,
     maxQty: 20,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'popup',
@@ -39,7 +42,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 150,
     defaultQty: 2,
     maxQty: 10,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'animation-medium',
@@ -49,7 +53,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 300,
     defaultQty: 3,
     maxQty: 15,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'animation-advance',
@@ -59,7 +64,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 600,
     defaultQty: 2,
     maxQty: 10,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'content-writing',
@@ -69,7 +75,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 150,
     defaultQty: 5,
     maxQty: 20,
-    category: 'content'
+    category: 'content',
+    quoteType: 'premium'
   },
   {
     id: 'image-optimization',
@@ -79,7 +86,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 10,
     defaultQty: 20,
     maxQty: 100,
-    category: 'optimization'
+    category: 'optimization',
+    quoteType: 'premium'
   },
   {
     id: '3d-element-non-interactive',
@@ -89,7 +97,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 500,
     defaultQty: 1,
     maxQty: 5,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: '3d-element-interactive',
@@ -99,7 +108,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 1200,
     defaultQty: 1,
     maxQty: 3,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'virtual-tour',
@@ -109,7 +119,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 2500,
     defaultQty: 1,
     maxQty: 1,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'multilingual-support',
@@ -119,7 +130,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 300,
     defaultQty: 2,
     maxQty: 10,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'website-package',
@@ -129,7 +141,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 6000,
     defaultQty: 1,
     maxQty: 1,
-    category: 'development'
+    category: 'development',
+    quoteType: 'premium'
   },
   {
     id: 'mobile-optimization',
@@ -139,7 +152,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 200,
     defaultQty: 1,
     maxQty: 1,
-    category: 'optimization'
+    category: 'optimization',
+    quoteType: 'premium'
   },
   {
     id: 'speed-optimization',
@@ -149,7 +163,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 100,
     defaultQty: 1,
     maxQty: 1,
-    category: 'optimization'
+    category: 'optimization',
+    quoteType: 'premium'
   },
   {
     id: 'basic-seo-setup',
@@ -159,7 +174,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 100,
     defaultQty: 1,
     maxQty: 1,
-    category: 'optimization'
+    category: 'optimization',
+    quoteType: 'premium'
   },
   {
     id: 'domain-hosting-setup',
@@ -169,7 +185,8 @@ export const pricingItems: PricingItem[] = [
     unitPrice: 150,
     defaultQty: 1,
     maxQty: 1,
-    category: 'hosting'
+    category: 'hosting',
+    quoteType: 'premium'
   }
 ]
 

@@ -102,6 +102,7 @@ export const footerLinks = {
   company: [
     { name: "About Us", href: "/about" },
     { name: "Contact", href: "/about/contact" },
+    { name: "Get Quote", href: "/quotes" },
     { name: "Admin Login", href: "/admin/login" },
   ],
   resources: [

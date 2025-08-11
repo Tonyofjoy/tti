@@ -197,6 +197,15 @@ export default function AdminBookings() {
                                 {booking.phone && (
                                   <div className="text-white/40 text-xs">{booking.phone}</div>
                                 )}
+                                {booking.quoteType && (
+                                  <div className={`text-xs px-2 py-1 rounded-full mt-1 inline-block ${
+                                    booking.quoteType === 'basic' 
+                                      ? 'bg-green-500/20 text-green-400' 
+                                      : 'bg-purple-500/20 text-purple-400'
+                                  }`}>
+                                    {booking.quoteType === 'basic' ? 'Basic' : 'Premium'}
+                                  </div>
+                                )}
                               </div>
                             </td>
                             <td className="px-4 py-4">
