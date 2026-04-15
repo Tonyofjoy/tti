@@ -7,6 +7,7 @@ import { ArrowLeft, CheckCircle, XCircle, Clock, Users, Mail, Phone, Calendar, C
 import { BookingSubmission } from '@/types/booking'
 import { pricingItems } from '@/data/pricing'
 import { basicPricingItems } from '@/data/basic-pricing'
+import { computeQuote } from '@/lib/pricing-engine'
 
 interface ExtendedBookingSubmission extends BookingSubmission {
   _id?: string
@@ -186,17 +187,24 @@ export default function BookingDetails() {
     }
   }
 
-  // Get selected services details
+  // Get selected services details + modular quote view
   const allPricingItems = booking.quoteType === 'basic' ? basicPricingItems : pricingItems
+  const quote = computeQuote(booking.selectedItems, booking.quoteType)
+  const breakdownById = Object.fromEntries(quote.breakdown.map((b) => [b.itemId, b]))
+
   const selectedServices = Object.entries(booking.selectedItems)
     .filter(([_, selection]) => selection.enabled)
     .map(([itemId, selection]) => {
-      const item = allPricingItems.find(p => p.id === itemId)
-      return item ? {
+      const item = allPricingItems.find((p) => p.id === itemId)
+      if (!item) return null
+      const line = breakdownById[itemId]
+      const subtotal = item.unitPrice * selection.quantity
+      return {
         ...item,
         quantity: selection.quantity,
-        subtotal: item.unitPrice * selection.quantity
-      } : null
+        subtotal,
+        linePoints: line?.points ?? item.pointsPerUnit * selection.quantity,
+      }
     })
     .filter(Boolean)
 
@@ -225,15 +233,24 @@ export default function BookingDetails() {
                       <Calculator className="h-4 w-4" />
                       <span>{booking.projectName || 'Project Booking'}</span>
                     </div>
-                    {booking.quoteType && (
-                      <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
-                        booking.quoteType === 'basic' 
-                          ? 'bg-green-500/20 text-green-400' 
-                          : 'bg-purple-500/20 text-purple-400'
-                      }`}>
-                        {booking.quoteType === 'basic' ? '💡 Basic Package' : '⭐ Premium Package'}
-                      </div>
-                    )}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {booking.quoteType && (
+                        <div
+                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm ${
+                            booking.quoteType === 'basic'
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-purple-500/20 text-purple-400'
+                          }`}
+                        >
+                          {booking.quoteType === 'basic' ? '💡 Basic Package' : '⭐ Premium Package'}
+                        </div>
+                      )}
+                      {booking.salesTier && booking.salesTier !== 'custom' && (
+                        <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-white/10 text-white/80">
+                          Scope tier: {booking.salesTier}
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div>
                     {getStatusBadge(booking.status)}
@@ -324,15 +341,24 @@ export default function BookingDetails() {
                       <div className="flex-1">
                         <h3 className="font-semibold text-white">{service.name}</h3>
                         <p className="text-white/60 text-sm mb-2">{service.description}</p>
-                        <div className="flex items-center gap-4 text-sm">
+                        <div className="flex flex-wrap items-center gap-3 text-sm">
                           <span className="text-white/50">{service.unit}</span>
-                          <span className="text-white/50">Quantity: {service.quantity}</span>
-                          <span className="text-[#00b8ff]">${service.unitPrice.toLocaleString()} each</span>
+                          <span className="text-white/50">Qty: {service.quantity}</span>
+                          <span className="text-white/50 capitalize">Layer: {service.layer}</span>
+                          <span className="text-amber-200/90">Points: {service.linePoints}</span>
+                          {service.layer !== 'effort' && (
+                            <span className="text-[#00b8ff]">${service.unitPrice.toLocaleString()} each</span>
+                          )}
+                          {service.layer === 'effort' && service.globalMultiplier && (
+                            <span className="text-[#00b8ff]">×{service.globalMultiplier} on line items</span>
+                          )}
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-lg font-bold text-[#00b8ff]">
-                          ${service.subtotal.toLocaleString()}
+                          {service.layer === 'effort' && service.globalMultiplier
+                            ? `×${service.globalMultiplier}`
+                            : `$${service.subtotal.toLocaleString()}`}
                         </div>
                       </div>
                     </div>
@@ -346,6 +372,36 @@ export default function BookingDetails() {
                       </span>
                     </div>
                     <p className="text-white/60 text-sm mt-1">USD • Excluding taxes and hosting fees</p>
+                    {(booking.totalPoints != null || quote.totalPoints > 0) && (
+                      <div className="mt-4 rounded-lg border border-white/10 bg-black/40 p-4 text-sm">
+                        <div className="font-semibold text-white mb-2">Modular scope (internal)</div>
+                        <p className="text-white/70">
+                          Stored points:{' '}
+                          <span className="text-amber-200">{booking.totalPoints ?? quote.totalPoints}</span>
+                          {booking.combinedMultiplier != null && booking.combinedMultiplier !== 1 && (
+                            <span className="text-white/60"> • Effort ×{booking.combinedMultiplier}</span>
+                          )}
+                          {(!booking.combinedMultiplier || booking.combinedMultiplier === 1) &&
+                            quote.combinedMultiplier !== 1 && (
+                              <span className="text-white/60"> • Effort ×{quote.combinedMultiplier} (live)</span>
+                            )}
+                        </p>
+                        {(booking.effortApplied?.length ?? quote.effortApplied.length) > 0 && (
+                          <ul className="mt-2 list-disc list-inside text-white/60">
+                            {(booking.effortApplied ?? quote.effortApplied).map((e) => (
+                              <li key={e.itemId}>
+                                {e.name} (×{e.multiplier})
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {booking.quoteBreakdown && booking.quoteBreakdown.length > 0 && (
+                          <p className="text-xs text-white/45 mt-2">
+                            Snapshot lines stored at submission: {booking.quoteBreakdown.length}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

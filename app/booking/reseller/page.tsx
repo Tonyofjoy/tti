@@ -1,8 +1,9 @@
 "use client"
 
 import React from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Check, Globe, Package, Settings, Shield, TrendingUp, Sparkles } from 'lucide-react'
+import { Check, Globe, Package, Settings, Shield, TrendingUp, Sparkles, ArrowRight } from 'lucide-react'
 
 export default function ResellerPricingPage() {
   return (
@@ -46,67 +47,11 @@ export default function ResellerPricingPage() {
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Website Development</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            {/* Basic Website Package */}
+          <div className="max-w-2xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-            >
-              <div className="bg-gradient-to-r p-[1px] from-green-500 to-green-600 rounded-2xl h-full">
-                <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 h-full flex flex-col">
-                  <h3 className="text-2xl font-bold text-white mb-4">Basic Website</h3>
-                  
-                  <div className="mb-6">
-                    <div className="flex items-baseline gap-2 mb-2">
-                      <span className="text-3xl font-bold text-white">$1,200</span>
-                      <span className="text-white/60 text-sm">Reseller Price</span>
-                    </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg text-green-400">$1,800 – $2,200</span>
-                      <span className="text-white/60 text-sm">Suggested Retail</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 mb-6 flex-1">
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">1 Homepage + up to 4 subpages</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Fully responsive (optimized for all devices)</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Basic SEO setup</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Speed optimization</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Basic animations and transitions</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Basic UX/UI design</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80 text-sm">Up to 5 revisions</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Premium Website Package */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
             >
               <div className="bg-gradient-to-r p-[1px] from-[#0021a7] to-[#00b8ff] rounded-2xl h-full">
                 <div className="bg-black/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 h-full flex flex-col">
@@ -207,10 +152,6 @@ export default function ResellerPricingPage() {
                   <div className="flex items-start gap-3">
                     <Check className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
                     <span className="text-white/80 text-sm">Speed optimization</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-white/80 text-sm">Advanced visual effects (3D, interactive)</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <Check className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
@@ -342,6 +283,27 @@ export default function ResellerPricingPage() {
               </div>
             </div>
           </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.75 }}
+          className="mt-12 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto sm:max-w-none pb-4"
+        >
+          <Link
+            href="/quotes"
+            className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-sm font-medium text-white/85 hover:bg-white/5 transition-colors"
+          >
+            Quote page
+          </Link>
+          <Link
+            href="/booking/client-project-quote-7f8a9b2c"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-[#00b8ff] to-[#0021a7] text-white font-semibold hover:opacity-95 transition-opacity"
+          >
+            Build your quote
+            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
+          </Link>
         </motion.div>
       </div>
     </div>

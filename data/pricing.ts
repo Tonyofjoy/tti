@@ -6,11 +6,13 @@ export const pricingItems: PricingItem[] = [
     name: 'Brand guideline',
     description: 'Visual identity: logo, color palette, typography, usage',
     unit: 'Per brand',
-    unitPrice: 2500,
+    unitPrice: 2000,
     defaultQty: 1,
     maxQty: 1,
     category: 'design',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'structure',
+    pointsPerUnit: 40,
   },
   {
     id: 'homepage',
@@ -21,7 +23,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'structure',
+    pointsPerUnit: 20,
+    mutuallyExclusiveWith: ['website-package'],
   },
   {
     id: 'subpage',
@@ -32,29 +37,24 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 4,
     maxQty: 20,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'structure',
+    pointsPerUnit: 4,
+    mutuallyExclusiveWith: ['website-package'],
   },
   {
     id: 'popup',
     name: 'Popup',
     description: 'Conversion-driven popup',
     unit: 'Per popup',
-    unitPrice: 150,
+    unitPrice: 50,
     defaultQty: 2,
     maxQty: 10,
     category: 'development',
-    quoteType: 'premium'
-  },
-  {
-    id: 'animation-medium',
-    name: 'Animation - Medium',
-    description: 'Basic scroll/fade transitions',
-    unit: 'Per project',
-    unitPrice: 300,
-    defaultQty: 3,
-    maxQty: 15,
-    category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'component',
+    componentTier: 'simple',
+    pointsPerUnit: 1,
   },
   {
     id: 'animation-advance',
@@ -65,29 +65,38 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 2,
     maxQty: 10,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'component',
+    componentTier: 'complex',
+    pointsPerUnit: 12,
   },
   {
     id: 'content-writing',
     name: 'Content writing',
-    description: 'SEO-optimized, brand-aligned content',
-    unit: 'Per page',
-    unitPrice: 150,
-    defaultQty: 5,
-    maxQty: 20,
+    description: 'SEO-optimized, brand-aligned copy for the project (scope agreed in proposal)',
+    unit: 'Per project',
+    unitPrice: 200,
+    defaultQty: 1,
+    maxQty: 5,
     category: 'content',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'medium',
+    pointsPerUnit: 4,
   },
   {
     id: 'image-optimization',
     name: 'Image optimization',
-    description: 'Crop, resize, convert for web (webp/avif)',
-    unit: 'Per image',
+    description: 'Crop, resize, convert for web (webp/avif) — billed per batch of 10 images',
+    unit: 'Per 10 images',
     unitPrice: 10,
-    defaultQty: 20,
-    maxQty: 100,
+    defaultQty: 2,
+    maxQty: 10,
     category: 'optimization',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'component',
+    componentTier: 'simple',
+    pointsPerUnit: 1,
   },
   {
     id: '3d-element-non-interactive',
@@ -98,7 +107,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 5,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'component',
+    componentTier: 'medium',
+    pointsPerUnit: 10,
   },
   {
     id: '3d-element-interactive',
@@ -109,7 +121,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 3,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'component',
+    componentTier: 'complex',
+    pointsPerUnit: 24,
   },
   {
     id: 'virtual-tour',
@@ -120,7 +135,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'advanced',
+    pointsPerUnit: 50,
   },
   {
     id: 'multilingual-support',
@@ -131,18 +149,24 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 2,
     maxQty: 10,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'medium',
+    pointsPerUnit: 6,
   },
   {
     id: 'website-package',
-    name: 'Website full package',
+    name: 'Website enterprise package',
     description: 'Full custom website (5-10 pages, responsive, UI/UX)',
     unit: 'Per project',
     unitPrice: 6000,
     defaultQty: 1,
     maxQty: 1,
     category: 'development',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'structure',
+    pointsPerUnit: 120,
+    mutuallyExclusiveWith: ['homepage', 'subpage'],
   },
   {
     id: 'mobile-optimization',
@@ -153,7 +177,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'basic',
+    pointsPerUnit: 4,
   },
   {
     id: 'speed-optimization',
@@ -164,7 +191,10 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'basic',
+    pointsPerUnit: 2,
   },
   {
     id: 'basic-seo-setup',
@@ -175,33 +205,61 @@ export const pricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'premium'
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'basic',
+    pointsPerUnit: 2,
   },
   {
     id: 'domain-hosting-setup',
     name: 'Domain & Hosting Setup',
-    description: 'Domain DNS + hosting configuration',
+    description: 'Included — domain DNS + hosting configuration',
     unit: 'Per project',
-    unitPrice: 150,
+    unitPrice: 0,
     defaultQty: 1,
     maxQty: 1,
     category: 'hosting',
-    quoteType: 'premium'
-  }
+    quoteType: 'premium',
+    layer: 'feature',
+    featureTier: 'basic',
+    pointsPerUnit: 0,
+  },
+  {
+    id: 'rush-delivery',
+    name: 'Rush delivery',
+    description: 'Compressed timeline — applies effort multiplier to line-item subtotal',
+    unit: 'Per project',
+    unitPrice: 0,
+    defaultQty: 1,
+    maxQty: 1,
+    category: 'effort',
+    quoteType: 'premium',
+    layer: 'effort',
+    pointsPerUnit: 0,
+    globalMultiplier: 1.35,
+  },
+  {
+    id: 'third-party-integration-risk',
+    name: 'Third-party integration risk',
+    description: 'Fragile or undocumented APIs — applies effort multiplier to line-item subtotal',
+    unit: 'Per project',
+    unitPrice: 0,
+    defaultQty: 1,
+    maxQty: 1,
+    category: 'effort',
+    quoteType: 'premium',
+    layer: 'effort',
+    pointsPerUnit: 0,
+    globalMultiplier: 1.2,
+  },
 ]
 
-export const categoryColors = {
+export const categoryColors: Record<string, string> = {
   design: 'from-purple-500 to-purple-700',
   development: 'from-blue-500 to-blue-700',
   content: 'from-green-500 to-green-700',
   optimization: 'from-orange-500 to-orange-700',
-  hosting: 'from-red-500 to-red-700'
+  hosting: 'from-red-500 to-red-700',
+  effort: 'from-amber-500 to-amber-700',
 }
 
-export const categoryIcons = {
-  design: '🎨',
-  development: '💻',
-  content: '✍️',
-  optimization: '⚡',
-  hosting: '🌐'
-} 

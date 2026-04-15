@@ -10,7 +10,9 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'development',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'structure',
+    pointsPerUnit: 12,
   },
   {
     id: 'basic-subpage',
@@ -21,7 +23,9 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 3,
     maxQty: 10,
     category: 'development',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'structure',
+    pointsPerUnit: 2,
   },
   {
     id: 'basic-content-writing',
@@ -32,18 +36,22 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 3,
     maxQty: 10,
     category: 'content',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'feature',
+    pointsPerUnit: 3,
   },
   {
     id: 'basic-image-optimization',
     name: 'Image Optimization',
-    description: 'Optimize images for web performance',
-    unit: 'Per image',
-    unitPrice: 1,
-    defaultQty: 10,
-    maxQty: 50,
+    description: 'Optimize images for web performance — billed per batch of 10 images',
+    unit: 'Per 10 images',
+    unitPrice: 10,
+    defaultQty: 1,
+    maxQty: 5,
     category: 'optimization',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'component',
+    pointsPerUnit: 2,
   },
   {
     id: 'basic-responsive',
@@ -54,7 +62,9 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'feature',
+    pointsPerUnit: 8,
   },
   {
     id: 'basic-speed-optimization',
@@ -65,7 +75,9 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'feature',
+    pointsPerUnit: 4,
   },
   {
     id: 'basic-seo',
@@ -76,33 +88,45 @@ export const basicPricingItems: PricingItem[] = [
     defaultQty: 1,
     maxQty: 1,
     category: 'optimization',
-    quoteType: 'basic'
+    quoteType: 'basic',
+    layer: 'feature',
+    pointsPerUnit: 6,
   },
   {
     id: 'basic-domain-hosting-setup',
     name: 'Domain & Hosting Setup',
-    description: 'Complete domain registration and hosting configuration',
+    description: 'Included — domain registration and hosting configuration',
     unit: 'Per project',
-    unitPrice: 100,
+    unitPrice: 0,
     defaultQty: 1,
     maxQty: 1,
     category: 'hosting',
-    quoteType: 'basic'
-  }
+    quoteType: 'basic',
+    layer: 'feature',
+    pointsPerUnit: 0,
+  },
+  {
+    id: 'basic-rush-delivery',
+    name: 'Rush delivery',
+    description: 'Compressed timeline — applies effort multiplier to line-item subtotal',
+    unit: 'Per project',
+    unitPrice: 0,
+    defaultQty: 1,
+    maxQty: 1,
+    category: 'effort',
+    quoteType: 'basic',
+    layer: 'effort',
+    pointsPerUnit: 0,
+    globalMultiplier: 1.2,
+  },
 ]
 
-export const basicCategoryColors = {
+export const basicCategoryColors: Record<string, string> = {
   design: 'from-purple-400 to-purple-600',
   development: 'from-blue-400 to-blue-600',
   content: 'from-green-400 to-green-600',
   optimization: 'from-orange-400 to-orange-600',
-  hosting: 'from-red-400 to-red-600'
+  hosting: 'from-red-400 to-red-600',
+  effort: 'from-amber-400 to-amber-600',
 }
 
-export const basicCategoryIcons = {
-  design: '🎨',
-  development: '💻',
-  content: '✍️',
-  optimization: '⚡',
-  hosting: '🌐'
-}
